@@ -38,14 +38,16 @@ class CarouselSearch extends Carousel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$pageSize)
     {
-        $query = Carousel::find();
-
+        $query = (isset($params['sort']) && $params['sort']) ? Carousel::find() : Carousel::find()->orderBy(['id' => SORT_DESC]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ],
         ]);
 
         $this->load($params);
