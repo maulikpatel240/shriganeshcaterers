@@ -2,14 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use newerton\fancybox3\FancyBox;
 /* @var $this yii\web\View */
 /* @var $model backend\models\BlogsCategories */
 
 $this->title = $model->english;
-$this->params['breadcrumbs'][] = ['label' => 'Blogs Categories', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
+echo FancyBox::widget();
+$imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/category/' . $model->image, ['width' => '100', 'height' => '100']);
+$imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/category/' . $model->image, ['data-fancybox' => true]);
+
 ?>
 <div class="blogs-categories-view">
 
@@ -19,6 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'english',
             'gujarati',
             'hindi',
+            [
+                'attribute' => 'image',
+                'value' => $imagehtml,
+                'format' => 'raw',
+            ],
             'status',
             [                      // the owner name of the model
                 'attribute' => 'status_at',

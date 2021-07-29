@@ -84,8 +84,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     { 
-        global $vm;
-        $this->layout = 'blank';
+        global $sg;
         return $this->render('index');
     }
     

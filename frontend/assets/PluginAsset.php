@@ -13,13 +13,32 @@ class PluginAsset extends AssetBundle {
         'frontend\assets\AppAsset'
     ];
     //Page css and js
-    public static $pluginMap = [
+    public static $pluginsMap = [
         'blank' => [
             'css' => [
-                'css/main.css',
-                'css/blank.css',
+                'css/styles.css',
                 ],
             'js' => [
+                ],
+        ],
+        'main' => [
+            'css' => [
+                'plugins/animate.css/animate.min.css',
+                'plugins/aos/aos.css',
+                'plugins/bootstrap/css/bootstrap.min.css',
+                'plugins/bootstrap-icons/bootstrap-icons.css',
+                'plugins/boxicons/css/boxicons.min.css',
+                'plugins/glightbox/css/glightbox.min.css',
+                'plugins/swiper/swiper-bundle.min.css',
+                'css/style.css',
+                ],
+            'js' => [
+                'plugins/aos/aos.js',
+                'plugins/bootstrap/js/bootstrap.bundle.min.js',
+                'plugins/glightbox/js/glightbox.min.js',
+                'plugins/isotope-layout/isotope.pkgd.min.js',
+                'plugins/swiper/swiper-bundle.min.js',
+                'js/main.js',
                 ],
         ],
         // 'home' => [
@@ -30,22 +49,22 @@ class PluginAsset extends AssetBundle {
     ];
 
     /**
-     * add a plugin dynamically
-     * @param $pluginName
+     * add a plugins dynamically
+     * @param $pluginsName
      * @return $this
      */
-    public function add($pluginName) {
-        $pluginName = (array) $pluginName;
+    public function add($pluginsName) {
+        $pluginsName = (array) $pluginsName;
 
-        foreach ($pluginName as $name) {
-            $plugin = $this->getPluginConfig($name);
-            if (isset($plugin['css'])) {
-                foreach ((array) $plugin['css'] as $v) {
+        foreach ($pluginsName as $name) {
+            $plugins = $this->getpluginsConfig($name);
+            if (isset($plugins['css'])) {
+                foreach ((array) $plugins['css'] as $v) {
                     $this->css[] = $v;
                 }
             }
-            if (isset($plugin['js'])) {
-                foreach ((array) $plugin['js'] as $v) {
+            if (isset($plugins['js'])) {
+                foreach ((array) $plugins['js'] as $v) {
                     $this->js[] = $v;
                 }
             }
@@ -55,11 +74,11 @@ class PluginAsset extends AssetBundle {
     }
 
     /**
-     * @param $name plugin name
+     * @param $name plugins name
      * @return array|null
      */
-    private function getPluginConfig($name) {
-        return self::$pluginMap[$name] ?? null ?? null;
+    private function getpluginsConfig($name) {
+        return self::$pluginsMap[$name] ?? null ?? null;
     }
 
 }

@@ -36,7 +36,7 @@ class Categories extends \yii\db\ActiveRecord
             [['english'], 'required'],
             [['status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
-            [['english', 'lang_key', 'gujarati', 'hindi'], 'string', 'max' => 255],
+            [['english', 'gujarati', 'hindi'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 200],
             [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => Yii::$app->params['image_extention']],
             [['english'], 'unique'],
@@ -64,7 +64,7 @@ class Categories extends \yii\db\ActiveRecord
     public function upload() {
         if ($this->image) {
             //$this->map->baseName = $this->id.'_state';
-            $filename = 'user_' . $this->id . '.' . $this->image->extension;
+            $filename = 'category_' . $this->id . '_'.time().'.' . $this->image->extension;
             $this->image->saveAs(Yii::getAlias('@webroot') . '/uploads/category/' . $filename, false);
             $this->image = $filename;
             $this->save();

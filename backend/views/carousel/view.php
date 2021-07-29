@@ -2,37 +2,29 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use newerton\fancybox3\FancyBox;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carousel */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Carousels', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
+echo FancyBox::widget();
+$imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/carousel/' . $model->image, ['width' => '100', 'height' => '100']);
+$imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/carousel/' . $model->image, ['data-fancybox' => true]);
+
 ?>
 <div class="carousel-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'title',
             'description:ntext',
-            'image',
+            [
+                'attribute' => 'image',
+                'value' => $imagehtml,
+                'format' => 'raw',
+            ],
             'status',
             'status_at',
             'created_at',

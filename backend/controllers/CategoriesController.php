@@ -11,19 +11,20 @@ use yii\filters\VerbFilter;
 use backend\components\BaseController;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
+
 /**
  * CategoriesController implements the CRUD actions for CategoriesCategories model.
  */
-class CategoriesController extends BaseController
-{
+class CategoriesController extends BaseController {
+
     const ACTIVE = 'Active';
     const INACTIVE = 'Inactive';
     const DELETE = 'Delete';
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -150,15 +151,14 @@ class CategoriesController extends BaseController
         }
         if (Yii::$app->request->isAjax) {
             $model = new Categories();
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
                 $model->image = UploadedFile::getInstance($model, 'image');
-                if($model->image){
+                if ($model->image) {
                     $model->upload();
                 }
                 $model->status_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->created_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->lang_key = str_replace(" ","_",strtolower($model->english)).'_'.$model->id;
                 $model->save();
                 return $model->id;
             }
@@ -179,19 +179,20 @@ class CategoriesController extends BaseController
         if (Yii::$app->user->isGuest) {
             return false;
         }
-        if(empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->id, Yii::$app->controller->id))){
-            throw new \yii\web\HttpException('403',Yii::$app->params['permission_message']);
+        if (empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->id, Yii::$app->controller->id))) {
+            throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
         }
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
-                $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->lang_key = str_replace(" ","_",strtolower($model->english)).'_'.$model->id;
-                $model->save();
                 $model->image = UploadedFile::getInstance($model, 'image');
                 if($model->image){
+                    $model->deleteImage($model->getOldAttribute('image'));
                     $model->upload();
+                }else{
+                    $model->image = $model->getOldAttribute('image');
                 }
+                $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->save();
                 return $model->id;
             }
@@ -229,12 +230,12 @@ class CategoriesController extends BaseController
      * @return Categories the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Categories::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

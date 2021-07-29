@@ -67,7 +67,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'baseUrl' => '/vandemission/',
+            'baseUrl' => '/',
             'rules' => [
             ],
         ],

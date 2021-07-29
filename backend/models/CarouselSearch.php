@@ -18,7 +18,7 @@ class CarouselSearch extends Carousel
     {
         return [
             [['id'], 'integer'],
-            [['title', 'description', 'image', 'status', 'status_at', 'created_at', 'updated_at', 'lang_key'], 'safe'],
+            [['title_english', 'description_english', 'image', 'status', 'status_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -66,11 +66,10 @@ class CarouselSearch extends Carousel
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description])
+        $query->andFilterWhere(['like', 'title_english', $this->title_english])
+            ->andFilterWhere(['like', 'description_english', $this->description_english])
             ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'lang_key', $this->lang_key]);
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

@@ -13,7 +13,7 @@ use newerton\fancybox3\FancyBox;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 echo FancyBox::widget();
-$this->title = 'Categories';
+$this->title = 'Carousel';
 //List Index page
 if (empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->id, Yii::$app->controller->id))) {
     throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
@@ -21,7 +21,7 @@ if (empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->i
 //Create
 $createBtn = "";
 if (!empty(Yii::$app->BackFunctions->checkaccess('create', Yii::$app->controller->id))) {
-    $createBtn = Html::a('<i class="fas fa-plus"></i>', FALSE, ['value' => Url::to(['categories/create']), 'title' => 'Create category', 'class' => 'showModalButton btn btn-primary']);
+    $createBtn = Html::a('<i class="fas fa-plus"></i>', FALSE, ['value' => Url::to(['carousel/create']), 'title' => 'Create carousel', 'class' => 'showModalButton btn btn-primary']);
 }
 //Export
 $exportBtn = '';
@@ -128,37 +128,19 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'attribute' => 'image',
                             'format' => 'raw',
                             'value' => function ($model) {
-                                $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/category/' . $model->image, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror'=>"this.onerror=null;this.src='".Yii::$app->params['default_error_img']."';"]);
-                                $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/category/' . $model->image, ['data-fancybox' => true]);
+                                $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/carousel/' . $model->image, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror'=>"this.onerror=null;this.src='".Yii::$app->params['default_error_img']."';"]);
+                                $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/carousel/' . $model->image, ['data-fancybox' => true]);
 
                                 return $imagehtml;
                             },
                         ],
                         [
-                            'attribute' => 'english',
+                            'attribute' => 'title',
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return $model->english;
-                            },
-                        ],
-                        [
-                            'attribute' => 'gujarati',
-                            'vAlign' => 'middle',
-                            'hAlign' => 'left',
-                            'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return $model->gujarati;
-                            },
-                        ],
-                        [
-                            'attribute' => 'hindi',
-                            'vAlign' => 'middle',
-                            'hAlign' => 'left',
-                            'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return $model->hindi;
+                                return $model->title_english;
                             },
                         ],
                         [
@@ -184,7 +166,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         'id' => 'status_' . $model->id,
                                                         'title' => $model->status,
                                                         'onclick' => '$.post({
-                                                            url: "' . Yii::$app->homeUrl . 'categories/statusupdate?id=' . $model->id . '",
+                                                            url: "' . Yii::$app->homeUrl . 'carousel/statusupdate?id=' . $model->id . '",
                                                             success: function (response) {
                                                                 $.pjax.reload({container: "#gridtable-pjax"});
                                                             },
@@ -216,7 +198,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         '<span class="fas fa-eye"></span>',
                                                         FALSE,
                                                         [
-                                                            'value' => Url::to(['categories/view', 'id' => $model->id]),
+                                                            'value' => Url::to(['carousel/view', 'id' => $model->id]),
                                                             'title' => 'View Category',
                                                             'class' => 'showModalButton ml-1 mr-1 text-warning',
                                                             'data-pjax' => '0',
@@ -231,7 +213,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         '<span class="fas fa-pencil-alt"></span>',
                                                         FALSE,
                                                         [
-                                                            'value' => Url::to(['categories/update', 'id' => $model->id]),
+                                                            'value' => Url::to(['carousel/update', 'id' => $model->id]),
                                                             'title' => 'Edit Category',
                                                             'class' => 'showModalButton ml-1 mr-1 text-primary',
                                                             'data-pjax' => '0',
@@ -304,7 +286,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                         GridView::EXCEL => true
                     ],
                     'itemLabelSingle' => 'Category',
-                    'itemLabelPlural' => 'Categories',
+                    'itemLabelPlural' => 'Carousel',
                 ]);
                 ?>
             </div>
@@ -330,7 +312,7 @@ Modal::end();
             var keys = $('#gridtable').yiiGridView('getSelectedRows');
             var applyoption = $('#applyoption').val();
             $.post({
-                url: '<?= Yii::$app->homeUrl . 'categories/applystatus' ?>',
+                url: '<?= Yii::$app->homeUrl . 'carousel/applystatus' ?>',
                 dataType: 'json',
                 data: {keylist: keys, applyoption: applyoption},
                 success: function (response) {
@@ -368,30 +350,5 @@ Modal::end();
             document.getElementById('formmodal-label').innerHTML = $(this).attr('title');
         }
     });
-    $(document).on("submit", "#countryForm", function () {
-        var data;
-        var data = new FormData(this);
-        var url = $(this).attr('action');
-        $.ajax({
-            url: url, // Url to which the request is send
-            type: "POST", // Type of request to be send, called as method
-            data: data,
-            contentType: false, // The content type used when sending data to the server.
-            cache: false, // To unable request pages to be cached
-            processData: false, // To send DOMDocument or non processed data file it is set to false
-            dataType: 'json',
-            beforeSend: function () {
-                $('.loader_div').show();
-            },
-            complete: function () {
-                $('.loader_div').hide();
-                $('#formmodal').modal('hide');
-            },
-            success: function (response)   // A function to be called if request succeeds
-            {
-                $.pjax.reload({container: "#gridtable-pjax"});
-            }
-        });
-        return false;
-    });
+    
 </script>

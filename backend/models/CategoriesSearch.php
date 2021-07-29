@@ -18,7 +18,7 @@ class CategoriesSearch extends Categories
     {
         return [
             [['id'], 'integer'],
-            [['english', 'status', 'status_at', 'created_at', 'updated_at', 'lang_key', 'gujarati', 'hindi'], 'safe'],
+            [['english', 'status', 'status_at', 'created_at', 'updated_at', 'gujarati', 'hindi'], 'safe'],
         ];
     }
 
@@ -67,7 +67,6 @@ class CategoriesSearch extends Categories
 
         $query->andFilterWhere(['like', 'english', $this->english])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'lang_key', $this->lang_key])
             ->andFilterWhere(['like', 'gujarati', $this->gujarati])
             ->andFilterWhere(['like', 'hindi', $this->hindi]);
 

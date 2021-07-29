@@ -9,11 +9,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Response;
 use yii\web\UploadedFile;
-use frontend\models\Htmlcode;
-use frontend\models\AppModules;
-use frontend\models\UserResponse;
-use frontend\models\roc\User;
-use frontend\models\roc\StaffUser;
 
 class FrontFunctions extends Component {
 
@@ -227,17 +222,7 @@ class FrontFunctions extends Component {
         }
         return $lang;
     }
-    public function AppModules($_module_id = "",$unique_name = ""){
-        if($_module_id == 'All'){
-            return AppModules::find()->where(['status'=>'Active','is_deleted'=>'No'])->asArray()->all();
-        }elseif($_module_id != 'All'){
-            return AppModules::find()->where(['status'=>'Active','is_deleted'=>'No','module_id'=>$_module_id])->asArray()->one();
-        }elseif($unique_name){
-            return AppModules::find()->where(['status'=>'Active','is_deleted'=>'No','unique_name'=>$unique_name])->asArray()->one();
-        }else{
-            return AppModules::find()->where(['status'=>'Active','is_deleted'=>'No'])->asArray()->one();
-        }
-    }
+    
     public function restapicalltocurl($url = '', $data = [], $method = 'post') {
         if ($url) {
             $json = "";

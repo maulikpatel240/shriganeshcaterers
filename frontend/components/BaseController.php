@@ -14,11 +14,11 @@ class BaseController extends Controller {
 
     public function init() {
         parent::init();
-        global $vm;
-        $vm = array();
-        $vm['base_url'] = $vm['site_url'] = Url::base(true).'/vandemission';
-        $vm['base_path'] = $vm['site_path'] = '/vandemission/';
+        global $sg;
+        $sg = array();
+        $sg['base_url'] = $sg['site_url'] = Url::base(true).'/git/shriganeshcaterers';
+        $sg['base_path'] = $sg['site_path'] = '/git/shriganeshcaterers/';
         $user = Yii::$app->user->identity;
-        $vm['user'] = $user;
+        $sg['user'] = $user;
     }
 }

@@ -154,7 +154,7 @@ class CarouselController extends BaseController
         }
         if (Yii::$app->request->isAjax) {
             $model = new Carousel();
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
                 $model->image = UploadedFile::getInstance($model, 'image');
                 if($model->image){
                     $model->upload();
@@ -162,7 +162,6 @@ class CarouselController extends BaseController
                 $model->status_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->created_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->lang_key = str_replace(" ","_",strtolower($model->english)).'_'.$model->id;
                 $model->save();
                 return $model->id;
             }
@@ -189,13 +188,14 @@ class CarouselController extends BaseController
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
-                $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->lang_key = str_replace(" ","_",strtolower($model->english)).'_'.$model->id;
-                $model->save();
                 $model->image = UploadedFile::getInstance($model, 'image');
                 if($model->image){
+                    $model->deleteImage($model->getOldAttribute('image'));
                     $model->upload();
+                }else{
+                    $model->image = $model->getOldAttribute('image');
                 }
+                $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->save();
                 return $model->id;
             }
