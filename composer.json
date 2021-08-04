@@ -35,6 +35,7 @@
         "kartik-v/yii2-datecontrol": "*",
         "kartik-v/yii2-widget-datepicker": "*",
         "kartik-v/yii2-widget-datetimepicker": "*",
+        "kartik-v/yii2-widget-timepicker": "*",
         "kartik-v/yii2-detail-view": "*",
         "kartik-v/yii2-widget-colorinput": "*",
         "kartik-v/yii2-widget-typeahead": "*",

@@ -31,10 +31,11 @@ class Config extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['name', 'value', 'gujarati', 'hindi'], 'required'],
-            [['value', 'type', 'status'], 'string'],
+            [['name'], 'required'],
+            [['value', 'description', 'type', 'status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
             [['name', 'gujarati', 'hindi'], 'string', 'max' => 255],
+            [['name'], 'unique'],
         ];
     }
 
@@ -46,6 +47,8 @@ class Config extends \yii\db\ActiveRecord {
             'id' => 'ID',
             'name' => 'Name',
             'value' => 'Value',
+            'description' => 'Description',
+            'type' => 'Type',
             'status' => 'Status',
             'status_at' => 'Status At',
             'created_at' => 'Created At',

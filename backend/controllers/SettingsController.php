@@ -156,9 +156,12 @@ class SettingsController extends BaseController {
             throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
         }
         if (Yii::$app->request->isAjax) {
+            $type = Yii::$app->request->post('type', '');
             $model = new Config();
+            $type = ($type) ? $type : $model->type;
+            $model->type = $type;
             if ($model->load(Yii::$app->request->post())) {
-                if($model->type == 'File'){
+                if ($model->type == 'File') {
                     $model->value = UploadedFile::getInstance($model, 'value');
                     if ($model->value) {
                         $model->upload();
@@ -171,7 +174,8 @@ class SettingsController extends BaseController {
                 return $model->id;
             }
             return $this->renderAjax('create', [
-                        'model' => $model
+                        'model' => $model,
+                        'type' => $type,
             ]);
         }
     }
@@ -191,22 +195,28 @@ class SettingsController extends BaseController {
             throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
         }
         if (Yii::$app->request->isAjax) {
+            $type = Yii::$app->request->post('type', '');
             $model = $this->findModel($id);
+            $type = (empty($type)) ? $model->type : $type;
             if ($model->load(Yii::$app->request->post())) {
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->save();
-                if($model->type == 'File'){
-                $model->value = UploadedFile::getInstance($model, 'value');
-                if ($model->value) {
-                    $model->upload();
+                if ($model->type == 'File') {
+                    $model->value = UploadedFile::getInstance($model, 'value');
+                    if ($model->value) {
+                        $model->deleteImage($model->getOldAttribute('value'));
+                        $model->upload();
+                    } else {
+                        $model->value = $model->getOldAttribute('value');
+                    }
                 }
                 $model->save();
-                }
+
                 return $model->id;
             }
 
             return $this->renderAjax('update', [
-                        'model' => $model
+                        'model' => $model,
+                        'type' => $type,
             ]);
         }
     }

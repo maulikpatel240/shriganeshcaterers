@@ -2,36 +2,31 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use newerton\fancybox3\FancyBox;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Config */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Configs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+echo FancyBox::widget();
+
+$value = $model->value;
+if ($model->type == 'File') {
+    $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/settings/' . $model->value, ['width' => '100', 'height' => '100']);
+    $value = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/settings/' . $model->value, ['data-fancybox' => true]);
+}
 ?>
 <div class="config-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'name',
-            'value:ntext',
+            [
+                'attribute' => 'value',
+                'value' => $value,
+                'format' => 'raw',
+            ],
             'created_at',
             'updated_at',
         ],

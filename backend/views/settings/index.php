@@ -8,6 +8,7 @@ use yii\widgets\Breadcrumbs;
 use yii\bootstrap4\Modal;
 use yii\bootstrap4\ActiveForm;
 use newerton\fancybox3\FancyBox;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -124,23 +125,25 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
 //                                        'headerOptions' => ['class' => 'kartik-sheet-style'],
 //                                        'expandOneOnly' => true
 //                                    ],
+                        
                         [
-                            'attribute' => 'image',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/setting/' . $model->image, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror'=>"this.onerror=null;this.src='".Yii::$app->params['default_error_img']."';"]);
-                                $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/setting/' . $model->image, ['data-fancybox' => true]);
-
-                                return $imagehtml;
-                            },
-                        ],
-                        [
-                            'attribute' => 'english',
+                            'attribute' => 'name',
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return $model->english;
+                        ],
+                        [
+                            'attribute' => 'value',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                if ($model->type == 'File') {
+                                    $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/settings/' . $model->value, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror' => "this.onerror=null;this.src='" . Yii::$app->params['default_error_img'] . "';"]);
+                                    $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/settings/' . $model->value, ['data-fancybox' => true]);
+
+                                    return $imagehtml;
+                                } else {
+                                    return $model->value;
+                                }
                             },
                         ],
                         [
@@ -325,8 +328,9 @@ Modal::end();
 ?>
 <script type="text/javascript">
     function applyjs(e) {
-        var confirmalert = confirmationAlert(e,'Are you sure want to apply?','text');
-        if(confirmalert == true){;
+        var confirmalert = confirmationAlert(e, 'Are you sure want to apply?', 'text');
+        if (confirmalert == true) {
+            ;
             var keys = $('#gridtable').yiiGridView('getSelectedRows');
             var applyoption = $('#applyoption').val();
             $.post({
