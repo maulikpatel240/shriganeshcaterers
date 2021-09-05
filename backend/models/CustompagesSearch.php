@@ -18,7 +18,7 @@ class CustompagesSearch extends Custompages
     {
         return [
             [['id'], 'integer'],
-            [['image', 'page_name_english', 'page_title_english', 'page_content_english', 'page_name_gujarati', 'page_title_guajrati', 'page_content_guajrati', 'page_name_hindi', 'page_title_hindi', 'page_content_hindi', 'status', 'status_at', 'created_at', 'updated_at'], 'safe'],
+            [['page_name_english', 'page_title_english', 'page_content_english', 'page_name_gujarati', 'page_title_guajrati', 'page_content_guajrati', 'page_name_hindi', 'page_title_hindi', 'page_content_hindi', 'status', 'status_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 

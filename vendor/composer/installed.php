@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd96dd1bb5753ee4b5a969af4051394c743f12d62',
+        'reference' => '7a1ef892de5556427834be401185ffa204c799d7',
         'name' => 'yiisoft/yii2-app-advanced',
         'dev' => true,
     ),
@@ -38,12 +38,12 @@
             'dev_requirement' => false,
         ),
         'bower-asset/jquery' => array(
-            'pretty_version' => '3.5.1',
-            'version' => '3.5.1.0',
+            'pretty_version' => '3.6.0',
+            'version' => '3.6.0.0',
             'type' => 'bower-asset',
             'install_path' => __DIR__ . '/../bower-asset/jquery',
             'aliases' => array(),
-            'reference' => '4c0e4becb8263bb5b3e6dadc448d8e7305ef8215',
+            'reference' => 'e786e3d9707ffd9b0dd330ca135b66344dcef85a',
             'dev_requirement' => false,
         ),
         'bower-asset/jquery-form' => array(
@@ -92,12 +92,12 @@
             'dev_requirement' => false,
         ),
         'codeception/codeception' => array(
-            'pretty_version' => '4.1.21',
-            'version' => '4.1.21.0',
+            'pretty_version' => '4.1.22',
+            'version' => '4.1.22.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../codeception/codeception',
             'aliases' => array(),
-            'reference' => 'c25f20d842a7e3fa0a8e6abf0828f102c914d419',
+            'reference' => '9777ec3690ceedc4bce2ed13af7af4ca4ee3088f',
             'dev_requirement' => true,
         ),
         'codeception/lib-asserts' => array(
@@ -227,12 +227,12 @@
             'dev_requirement' => true,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.8.2',
-            'version' => '1.8.2.0',
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
+            'reference' => '1dc8d9cba3897165e16d12bb13d813afb1eb3fe7',
             'dev_requirement' => true,
         ),
         'kartik-v/bootstrap-fileinput' => array(
@@ -609,6 +609,15 @@
             'reference' => '06e2ebd25f2869e54a306dda991f7db58066f7f6',
             'dev_requirement' => true,
         ),
+        'paragonie/random_compat' => array(
+            'pretty_version' => 'v9.99.100',
+            'version' => '9.99.100.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/random_compat',
+            'aliases' => array(),
+            'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
+            'dev_requirement' => false,
+        ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.3',
             'version' => '2.0.3.0',
@@ -776,6 +785,12 @@
             'aliases' => array(),
             'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
             'dev_requirement' => false,
+        ),
+        'psr/http-factory-implementation' => array(
+            'dev_requirement' => true,
+            'provided' => array(
+                0 => '1.0',
+            ),
         ),
         'psr/http-message' => array(
             'pretty_version' => '1.0.1',
@@ -1147,12 +1162,12 @@
             'dev_requirement' => true,
         ),
         'yiisoft/yii2' => array(
-            'pretty_version' => '2.0.42.1',
-            'version' => '2.0.42.1',
+            'pretty_version' => '2.0.43',
+            'version' => '2.0.43.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../yiisoft/yii2',
             'aliases' => array(),
-            'reference' => '976e2e892af4df933831b5e0a05d0acf4b173d98',
+            'reference' => 'f370955faa3067d9b27879aaf14b0978a805cd59',
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-app-advanced' => array(
@@ -1161,7 +1176,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd96dd1bb5753ee4b5a969af4051394c743f12d62',
+            'reference' => '7a1ef892de5556427834be401185ffa204c799d7',
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-bootstrap4' => array(
@@ -1183,12 +1198,12 @@
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-debug' => array(
-            'pretty_version' => '2.1.17',
-            'version' => '2.1.17.0',
+            'pretty_version' => '2.1.18',
+            'version' => '2.1.18.0',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../yiisoft/yii2-debug',
             'aliases' => array(),
-            'reference' => '21a259c27dacedf19ac1e00d4a7180e3043d7859',
+            'reference' => '45bc5d2ef4e3b0ef6f638190d42f04a77ab1df6c',
             'dev_requirement' => true,
         ),
         'yiisoft/yii2-faker' => array(

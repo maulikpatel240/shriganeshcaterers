@@ -19,8 +19,8 @@ return [
         'FrontFunctions' => [
             'class' => 'frontend\components\FrontFunctions'
         ],
-        'GetObject' => [
-            'class' => 'frontend\components\GetObject'
+        'SqlFunctions' => [
+            'class' => 'frontend\components\SqlFunctions'
         ],
         'assetManager' => [
             'forceCopy' => true,

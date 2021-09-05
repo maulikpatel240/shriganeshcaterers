@@ -25,7 +25,7 @@ $typedata = [
 ];
 $id = ($model->isNewRecord) ? '' : $model->id;
 $ajaxurl = Url::to(['/settings/create'], true);
-$description = '';
+$description = [];
 if($id){
     $ajaxurl = Url::to(['/settings/update', 'id' => $id], true);
     $description = ($model->description) ? json_decode($model->description, true) : '';

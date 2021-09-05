@@ -39,7 +39,7 @@ class Custompages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'page_name_english', 'page_title_english', 'page_content_english'], 'required'],
+            [['page_name_english', 'page_title_english', 'page_content_english'], 'required'],
             [['page_content_english', 'page_content_guajrati', 'page_content_hindi', 'status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
             [['image', 'page_title_english', 'page_title_guajrati', 'page_title_hindi'], 'string', 'max' => 200],

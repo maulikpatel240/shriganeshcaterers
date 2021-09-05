@@ -12,8 +12,9 @@ use common\widgets\Alert;
 AppAsset::register($this);
 
 $pagebundle = \frontend\assets\PluginAsset::register($this)->add(['main']);
-global $sg;
+global $sg, $sconfig;
 $base_url = $sg['base_url'];
+$langs = json_decode($sconfig['language']['description'], true);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -37,16 +38,23 @@ $base_url = $sg['base_url'];
         <!-- ======= Top Bar ======= -->
         <div id="topbar" class="d-flex align-items-center fixed-top">
             <div class="container d-flex justify-content-center justify-content-md-between">
-
                 <div class="contact-info d-flex align-items-center">
-                    <i class="bi bi-phone d-flex align-items-center"><span>+1 5589 55488 55</span></i>
-                    <i class="bi bi-clock d-flex align-items-center ms-4"><span> Mon-Sat: 11AM - 23PM</span></i>
+                    <i class="bi bi-phone d-flex align-items-center"><span><?=$sconfig['phone']['value'];?></span></i>
+                    <i class="bi bi-clock d-flex align-items-center ms-4"><span><?=$sconfig['email']['value'];?></span></i>
                 </div>
-
                 <div class="languages d-none d-md-flex align-items-center">
                     <ul>
-                        <li>En</li>
-                        <li><a href="#">De</a></li>
+                        <?php
+                        if ($langs) {
+                            foreach ($langs as $key => $lang) {
+                                if($sg['lang'] == $key){
+                                    echo '<li>'.$lang.'</li>';
+                                }else{
+                                    echo '<li><a href="?lang='.$key.'">'.$lang.'</a></li>';
+                                }
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -56,7 +64,7 @@ $base_url = $sg['base_url'];
         <header id="header" class="fixed-top d-flex align-items-cente">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="index.html">Restaurantly</a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="<?=$base_url?>"><?=Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value');?></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -100,12 +108,12 @@ $base_url = $sg['base_url'];
             <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1>Welcome to <span>Restaurantly</span></h1>
-                        <h2>Delivering great food for more than 18 years!</h2>
+                        <h1><?=Yii::t('app', 'Welcome to {site_name}', ['site_name' => '<span>'.Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value').'</span>'])?> </h1>
+                        <h2><?=Yii::t('app', 'Has provided excellent service for {age} years!', ['age' => Yii::$app->params['company_ageofyear']]) ?></h2>
 
                         <div class="btns">
-                            <a href="#menu" class="btn-menu animated fadeInUp scrollto">Our Menu</a>
-                            <a href="#book-a-table" class="btn-book animated fadeInUp scrollto">Book a Table</a>
+                            <a href="#menu" class="btn-menu animated fadeInUp scrollto"><?=Yii::t('app', 'Our Menu')?></a>
+                            <a href="#book-a-table" class="btn-book animated fadeInUp scrollto"><?=Yii::t('app', 'Inquiry')?></a>
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in" data-aos-delay="200">

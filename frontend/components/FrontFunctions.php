@@ -158,42 +158,22 @@ class FrontFunctions extends Component {
         return $response;
     }
   
-    public function defaultlanguage($language_id = false,$type = "") {
-        $lang = "en";
-        $langID = 1;
-        $langcountry = "en-US";
-        $displaylang = "English";
+    public function changeLanguage($lang = 'en-US'){
+        global $sg, $sconfig;
+        $getlang = (isset($_REQUEST['lang']) && $_REQUEST['lang']) ? $_REQUEST['lang'] : 'en';
+        $langs = array_keys(json_decode($sconfig['language']['description'], true));
         
-        $data = array();
-        $restapiData = array();
-        $method = "get";
-        $restapiUrl = Yii::$app->params['REST_API_URL'] . 'beforeauth/app-languages';
-        $output = Yii::$app->FrontFunctions->restapicalltocurl($restapiUrl, $restapiData, $method);
-        $outputdata = $this->response($output);
-        if ($outputdata['status'] == 200) {
-            $data = $outputdata['data'];
-        }
-        if (isset($_REQUEST['lang']) && !empty($_REQUEST['lang'])) {
-            $langexp = explode('-', $_REQUEST['lang']);
-            if ($langexp) {
-                $lang = $langexp[0];
-            }
-            if ($data) {
-                $arrayKey = Yii::$app->FrontFunctions->searchArrayKeyVal("key_name", strtoupper($lang), $data);
-                if ($arrayKey !== false) {
-                    Yii::$app->language = $_REQUEST['lang'];
-                    Yii::$app->session->set('lang', $_REQUEST['lang']);
-                }else{
-                    Yii::$app->language = $langcountry;
-                    Yii::$app->session->set('lang', $langcountry);
-                }
-            }else{
-                Yii::$app->language = $langcountry;
-                Yii::$app->session->set('lang', $langcountry);
-            }
-        } else if (Yii::$app->session->has('lang')) {
-            Yii::$app->language = Yii::$app->session->get('lang');
-        }
+        $allowed_languages = $langs;
+
+        $selected_language = in_array($lang, $allowed_languages) ? $lang : 'en-US';
+
+        $session = Yii::$app->session;
+
+        !$session->isActive ? $session->open() : $session->close();
+
+        $session->set('language', $selected_language);
+        \Yii::$app->language = Yii::$app->session->get('language');
+        $session->close();
         
         if (\Yii::$app->language) {
             $langcountry = \Yii::$app->language;
@@ -201,52 +181,20 @@ class FrontFunctions extends Component {
             if ($langexp) {
                 $lang = $langexp[0];
             }
-            if ($data) {
-                $arrayKey = Yii::$app->FrontFunctions->searchArrayKeyVal("key_name", strtoupper($lang), $data);
-                if ($arrayKey!==false) {
-                    $lang = strtolower($data[$arrayKey]['key_name']);
-                    $langID = $data[$arrayKey]['language_id'];
-                    $displaylang = strtolower($data[$arrayKey]['display_name']);
-                }
-                
-            }
         }
-        if($language_id){
-            return $langID;
-        }
-        if($type == "Default"){
-            return $displaylang;
-        }
-        if($type == "All"){
-            return $data;
-        }
-        return $lang;
+        return $langcountry;
+        //return isset($_SERVER['HTTP_REFERER']) ? $this->redirect($_SERVER['HTTP_REFERER']) : $this->redirect(Yii::$app->homeUrl);
+
     }
-    
+    function sqlColumnTranslate($column = '', $key = '') {
+        global $sg, $sconfig;
+        return (isset($column[$sg['language']]) && $column[$sg['language']]) ? $column[$sg['language']] : $column[$key];
+    }
+
     public function restapicalltocurl($url = '', $data = [], $method = 'post') {
         if ($url) {
             $json = "";
             if ($data && $method == 'post') {
-//                if ($url == 'http://192.168.1.107/git/staging_ca_web_new/restapi/A202011271057/beforeauth/signup-step1') {
-//                    $client = new \GuzzleHttp\Client();
-//                    $response = $client->request('POST', $url, ['form_params' => $data]);
-//                    $responsecode = $response->getStatusCode();
-//
-//                    echo "<pre>";print_r($responsecode);exit;
-//                    if ($responsecode == 200) {
-//                        $json = $response->getBody();
-//                    }
-//                } else {
-//
-//                    $client = new \GuzzleHttp\Client();
-//                    $response = $client->request('POST', $url, ['form_params' => $data]);
-//
-//                    $responsecode = $response->getStatusCode();
-//                    if ($responsecode == 200) {
-//                        $json = $response->getBody();
-//                    }
-//                }
-
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_POST, 1);
                 curl_setopt($curl, CURLOPT_POSTFIELDS,$data);
@@ -512,73 +460,6 @@ class FrontFunctions extends Component {
             }
         }
         return $output;
-    }
-    public function getmodificationstatus($type,$value) {
-        $status = "";
-        if ($value && $type) {
-                //echo "<pre>";print_r($value);echo "</pre>";exit;
-                if ($type == "Owner") {
-                    $slotlocumname = $value['staff_first_name'] . " " . $value['staff_last_name'];
-                    
-                    if ($value['change_request_status'] == 1) {
-                        $status = "";
-                    } elseif ($value['change_request_status'] == 2 && $value['change_request_sender'] == 'Owner') {
-                        //$status = Yii::t('app', 'Waiting for a response from') . " " . Yii::t('app', 'Locum') . " " . $slotlocumname . ".";
-                        $status = Yii::t('app', 'Waiting for a response from') . " " . $slotlocumname . " " . Yii::t('app', 'since') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . ".";
-                    } elseif ($value['change_request_status'] == 2 && $value['change_request_sender'] == 'Staff') {
-                        $status = $slotlocumname . " " . Yii::t('app', 'requested a modification on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 3 && $value['change_request_sender'] == 'Owner') {
-                        $status = Yii::t('app', 'Approved') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 3 && $value['change_request_sender'] == 'Staff') {
-                        $slotclinicname = $value['owner_name'];
-                        $status = Yii::t('app', 'Approved') . " " . Yii::t('app', 'by') . " " . $slotclinicname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 4 && $value['change_request_sender'] == 'Owner') {
-                        $status = Yii::t('app', 'Refused') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 4 && $value['change_request_sender'] == 'Staff') {
-                        $slotclinicname = $value['owner_name'];
-                        $status = Yii::t('app', 'Refused') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 5 && $value['change_request_sender'] == 'Owner') {
-                        $slotclinicname = $value['owner_name'];
-                        $status = Yii::t('app', 'Removed') . " " . Yii::t('app', 'by') . " " . $slotclinicname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 5 && $value['change_request_sender'] == 'Staff') {
-                        $status = Yii::t('app', 'Removed') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    }
-                } elseif ($type == "Staff") {
-                    $slotclinicname = $value['owner_name'];
-                    if ($value['change_request_status'] == 1) {
-                        $status = "";
-                    } elseif ($value['change_request_status'] == 2 && $value['change_request_sender'] == 'Staff') {
-                        //$status = Yii::t('app', 'Waiting for a response from') . " " . Yii::t('app', 'Clinic') . " " . $slotclinicname . ".";
-                        $status = Yii::t('app', 'Waiting for a response from') . " " . $slotclinicname . " " . Yii::t('app', 'since') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . ".";
-                    } elseif ($value['change_request_status'] == 2 && $value['change_request_sender'] == 'Owner') {
-                        $status = $slotclinicname . " " . Yii::t('app', 'requested a modification on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 3 && $value['change_request_sender'] == 'Staff') {
-                        $status = Yii::t('app', 'Approved') . " " . Yii::t('app', 'by') . " " . $slotclinicname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 3 && $value['change_request_sender'] == 'Owner') {
-                        $slotlocumname = $value['staff_first_name'] . " " . $value['staff_last_name'];
-                        $status = Yii::t('app', 'Approved') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 4 && $value['change_request_sender'] == 'Staff') {
-                        $status = Yii::t('app', 'Refused') . " " . Yii::t('app', 'by') . " " . $slotclinicname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 4 && $value['change_request_sender'] == 'Owner') {
-                        $slotlocumname = $value['staff_first_name'] . " " . $value['staff_last_name'];
-                        $status = Yii::t('app', 'Refused') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 5 && $value['change_request_sender'] == 'Staff') {
-                        $slotlocumname = $value['staff_first_name'] . " " . $value['staff_last_name'];
-                        $status = Yii::t('app', 'Removed') . " " . Yii::t('app', 'by') . " " . $slotlocumname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    } elseif ($value['change_request_status'] == 5 && $value['change_request_sender'] == 'Owner') {
-                        $status = Yii::t('app', 'Removed') . " " . Yii::t('app', 'by') . " " . $slotclinicname . " " . Yii::t('app', 'on') . " " . $value['created_at_date'] . " " . Yii::t('app', 'at') . " " . $value['created_at_time'] . " " . Yii::t('app', 'Hour') . ".";
-                    }
-                }
-        }
-        return $status;
-    }
-    public function slotbordercolor($type, $change_request_status){
-        if($change_request_status == 2){
-            $border = 'style="border-bottom: 20px solid #ffc107;"';
-        }else{
-            $border = "";
-        }
-        return $border;
     }
     
     public function ImageSrcHtml($image_url="",$imagearray = array(),$_module=array()){

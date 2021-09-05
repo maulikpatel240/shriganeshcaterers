@@ -62,4 +62,10 @@ return [
         'en'=>'images/pages/united-states.png',
         'fr'=>'images/pages/france.png',
     ],
+    'LANGUAGE' => [
+        'en-IN' => 'english',
+        'gu-IN' => 'gujarati',
+        'hi-IN' => 'hindi',
+    ],
+    'company_ageofyear' => '18',
 ];
