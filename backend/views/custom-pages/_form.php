@@ -8,6 +8,7 @@ use kartik\editors\Summernote;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Custompages */
 /* @var $form yii\widgets\ActiveForm */
+$readonly_page_name = (!$model->isNewRecord) ? true : false;
 ?>
 
 <div class="custompages-form">
@@ -40,26 +41,30 @@ use kartik\editors\Summernote;
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 shadow-none p-3 mb-3 bg-light rounded">
-            <?= $form->field($model, 'page_name_english')->textInput(['maxlength' => true]) ?>
+        <div class="col-sm-12 col-md-12 col-lg-12 bg-light">
+            <?= $form->field($model, 'page_name')->textInput(['maxlength' => true, 'readonly' => $readonly_page_name]) ?>
+            <div class="card border border-secondary bg-light">
+                <div class="card-body">
+                    <?= $form->field($model, 'page_title_english')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'page_title_english')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'page_content_english')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
+                </div>
+            </div>
+            <div class="card border border-secondary bg-light">
+                <div class="card-body">
+                    <?= $form->field($model, 'page_title_gujarati')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'page_content_english')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 shadow-none p-3 mb-3 bg-light rounded">
-            <?= $form->field($model, 'page_name_gujarati')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'page_content_gujarati')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
+                </div>
+            </div>
+            <div class="card border border-secondary bg-light">
+                <div class="card-body">
+                    <?= $form->field($model, 'page_title_hindi')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'page_title_guajrati')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'page_content_hindi')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
+                </div>
+            </div>
 
-            <?= $form->field($model, 'page_content_guajrati')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 shadow-none p-3 mb-3 bg-light rounded">
-            <?= $form->field($model, 'page_name_hindi')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'page_title_hindi')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'page_content_hindi')->widget(Summernote::class, ['styleWithSpan' => true]) ?>
         </div>
     </div>
     <div class="form-group text-center">

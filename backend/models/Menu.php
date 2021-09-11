@@ -35,12 +35,12 @@ class Menu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['menu_category_id', 'name', 'items'], 'required'],
+            [['menu_category_id', 'english', 'items'], 'required'],
             [['menu_category_id'], 'integer'],
             [['status'], 'string'],
             [['status_at', 'created_at', 'updated_at', 'description_english', 'description_gujarati', 'description_hindi'], 'safe'],
-            [['name', 'gujarati', 'hindi'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['english', 'gujarati', 'hindi'], 'string', 'max' => 255],
+            [['english'], 'unique'],
             [['menu_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['menu_category_id' => 'id']],
         ];
     }
@@ -53,7 +53,7 @@ class Menu extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'menu_category_id' => 'Menu Category',
-            'name' => 'Name',
+            'english' => 'Name',
             'image' => 'Image',
             'status' => 'Status',
             'status_at' => 'Status At',

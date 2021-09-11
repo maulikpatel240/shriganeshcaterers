@@ -1,77 +1,69 @@
 <?php
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\Modal;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\Html;
+use common\widgets\AjaxForm;
+use yii\web\JsExpression;
+use kartik\rating\StarRating;
 
 $this->title = 'Project';
-global $sg;
+global $sg, $sconfig;
 $base_url = $sg['base_url'];
+$aboutus = Yii::$app->SqlFunctions->custompages(['page_name' => 'aboutus']);
 ?>
 <!-- ======= About Section ======= -->
-<section id="about" class="about">
-    <div class="container" data-aos="fade-up">
-
-        <div class="row">
-            <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
-                <div class="about-img">
-                    <img src="<?= $base_url; ?>/img/about.jpg" alt="">
+<?php if ($aboutus) { ?>
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="about-img">
+                        <img src="<?= $base_url . '/uploads/custompage/' . $aboutus['image'] ?>" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                    <?= Yii::$app->FrontFunctions->sqlColumnTranslate($aboutus, 'page_content_english', 'page_content_') ?>
                 </div>
             </div>
-            <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
-                <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
-                </p>
-                <ul>
-                    <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                    <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                    <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-                </ul>
-                <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum
-                </p>
-            </div>
         </div>
-
-    </div>
-</section><!-- End About Section -->
+    </section>
+<?php } ?>
+<!-- End About Section -->
 
 <!-- ======= Why Us Section ======= -->
 <section id="why-us" class="why-us">
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Why Us</h2>
-            <p>Why Choose Our Restaurant</p>
+            <h2><?= Yii::t('app', 'Why Us') ?></h2>
+            <p><?= Yii::t('app', 'Why Choose Our Cateres') ?></p>
         </div>
 
         <div class="row">
 
             <div class="col-lg-4">
-                <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                <div class="box h-100" data-aos="zoom-in" data-aos-delay="100">
                     <span>01</span>
-                    <h4>Lorem Ipsum</h4>
-                    <p>Ulamco laboris nisi ut aliquip ex ea commodo consequat. Et consectetur ducimus vero placeat</p>
+                    <h4><?= Yii::t('app', 'Quality') ?></h4>
+                    <p><?= Yii::t('app', 'Food quality is an important factor in the success of a food product.') ?></p>
                 </div>
             </div>
 
             <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="box" data-aos="zoom-in" data-aos-delay="200">
+                <div class="box h-100" data-aos="zoom-in" data-aos-delay="200">
                     <span>02</span>
-                    <h4>Repellat Nihil</h4>
-                    <p>Dolorem est fugiat occaecati voluptate velit esse. Dicta veritatis dolor quod et vel dire leno para dest</p>
+                    <h4><?= Yii::t('app', 'Service') ?></h4>
+                    <p><?= Yii::t('app', 'Food service or catering industry defines those businesses, institutions, and companies.') ?></p>
                 </div>
             </div>
 
             <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="box" data-aos="zoom-in" data-aos-delay="300">
+                <div class="box h-100" data-aos="zoom-in" data-aos-delay="300">
                     <span>03</span>
-                    <h4> Ad ad velit qui</h4>
-                    <p>Molestiae officiis omnis illo asperiores. Aut doloribus vitae sunt debitis quo vel nam quis</p>
+                    <h4><?= Yii::t('app', 'Safety') ?></h4>
+                    <p><?= Yii::t('app', 'Food safety refers to routines in the preparation, handling and storage of food meant to prevent foodborne illness and injury.') ?></p>
                 </div>
             </div>
 
@@ -85,114 +77,39 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Menu</h2>
-            <p>Check Our Tasty Menu</p>
+            <h2><?= Yii::t('app', 'Menu') ?></h2>
+            <p><?= Yii::t('app', 'Check Our Tasty Menu') ?></p>
         </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <ul id="menu-flters">
-                    <li data-filter="*" class="filter-active">All</li>
-                    <li data-filter=".filter-starters">Starters</li>
-                    <li data-filter=".filter-salads">Salads</li>
-                    <li data-filter=".filter-specialty">Specialty</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-6 menu-item filter-starters">
-                <img src="<?= $base_url; ?>/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Lobster Bisque</a><span>$5.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Lorem, deren, trataro, filede, nerada
+        <?php if ($categories) { ?>
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active"><?= Yii::t('app', 'All') ?></li>
+                        <?php foreach ($categories as $cat) { ?>
+                            <li data-filter=".filter-<?= $cat['id'] ?>"><?= $cat[$sg['language']]; ?></li>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
+            <?php if ($menus) { ?>
+                <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                    <?php foreach ($menus as $menu) { ?>
+                        <div class="col-lg-6 menu-item filter-<?= $menu['menu_category_id'] ?>">
+                            <img src="<?= $base_url . '/uploads/menu/' . $menu['image'] ?>" class="menu-img" alt="">
+                            <div class="menu-content">
+                                <a><?= $menu[$sg['language']] ?></a><span></span>
+                            </div>
+                            <div class="menu-ingredients">
+                                <?= Yii::$app->FrontFunctions->truncate($menu['description_' . $sg['language']], 100); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+        <?php } ?>
 
-            <div class="col-lg-6 menu-item filter-specialty">
-                <img src="<?= $base_url; ?>/img/menu/bread-barrel.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Bread Barrel</a><span>$6.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Lorem, deren, trataro, filede, nerada
-                </div>
-            </div>
 
-            <div class="col-lg-6 menu-item filter-starters">
-                <img src="<?= $base_url; ?>/img/menu/cake.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Crab Cake</a><span>$7.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    A delicate crab cake served on a toasted roll with lettuce and tartar sauce
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-salads">
-                <img src="<?= $base_url; ?>/img/menu/caesar.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Caesar Selections</a><span>$8.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Lorem, deren, trataro, filede, nerada
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-specialty">
-                <img src="<?= $base_url; ?>/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Tuscan Grilled</a><span>$9.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Grilled chicken with provolone, artichoke hearts, and roasted red pesto
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-starters">
-                <img src="<?= $base_url; ?>/img/menu/mozzarella.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Mozzarella Stick</a><span>$4.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Lorem, deren, trataro, filede, nerada
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-salads">
-                <img src="<?= $base_url; ?>/img/menu/greek-salad.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Greek Salad</a><span>$9.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Fresh spinach, crisp romaine, tomatoes, and Greek olives
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-salads">
-                <img src="<?= $base_url; ?>/img/menu/spinach-salad.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Spinach Salad</a><span>$9.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Fresh spinach with mushrooms, hard boiled egg, and warm bacon vinaigrette
-                </div>
-            </div>
-
-            <div class="col-lg-6 menu-item filter-specialty">
-                <img src="<?= $base_url; ?>/img/menu/lobster-roll.jpg" class="menu-img" alt="">
-                <div class="menu-content">
-                    <a href="#">Lobster Roll</a><span>$12.95</span>
-                </div>
-                <div class="menu-ingredients">
-                    Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll
-                </div>
-            </div>
-
-        </div>
 
     </div>
 </section><!-- End Menu Section -->
@@ -202,8 +119,8 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Specials</h2>
-            <p>Check Our Specials</p>
+            <h2><?= Yii::t('app', 'Specials') ?></h2>
+            <p><?= Yii::t('app', 'Check Our Specials') ?></p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
@@ -300,93 +217,33 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Events</h2>
-            <p>Organize Your Events in our Restaurant</p>
+            <h2><?= Yii::t('app', 'Events') ?></h2>
+            <p><?= Yii::t('app', 'The True Role of Food & Beverage in Meetings and Events') ?></p>
         </div>
 
         <div class="events-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
             <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                    <div class="row event-item">
-                        <div class="col-lg-6">
-                            <img src="<?= $base_url; ?>/img/event-birthday.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="col-lg-6 pt-4 pt-lg-0 content">
-                            <h3>Birthday Parties</h3>
-                            <div class="price">
-                                <p><span>$189</span></p>
+                <?php
+                if ($eventCategories) {
+                    foreach ($eventCategories as $ecat) {
+                        ?>
+                        <div class="swiper-slide">
+                            <div class="row event-item">
+                                <div class="col-lg-6">
+                                    <img src="<?= $base_url . '/uploads/event-category/' . $ecat['image'] ?>" class="img-fluid" alt="">
+                                </div>
+                                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                                    <h3><?= $ecat[$sg['language']] ?></h3>
+                                    <p>
+                                        <?= Yii::$app->FrontFunctions->truncate(nl2br($ecat['description_' . $sg['language']]), 2000); ?>
+                                    </p>
+                                </div>
                             </div>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                                <li><i class="bi bi-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur
-                            </p>
                         </div>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="row event-item">
-                        <div class="col-lg-6">
-                            <img src="<?= $base_url; ?>/img/event-private.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="col-lg-6 pt-4 pt-lg-0 content">
-                            <h3>Private Parties</h3>
-                            <div class="price">
-                                <p><span>$290</span></p>
-                            </div>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                                <li><i class="bi bi-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur
-                            </p>
-                        </div>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="row event-item">
-                        <div class="col-lg-6">
-                            <img src="<?= $base_url; ?>/img/event-custom.jpg" class="img-fluid" alt="">
-                        </div>
-                        <div class="col-lg-6 pt-4 pt-lg-0 content">
-                            <h3>Custom Parties</h3>
-                            <div class="price">
-                                <p><span>$99</span></p>
-                            </div>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                                <li><i class="bi bi-check-circled"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                                <li><i class="bi bi-check-circled"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur
-                            </p>
-                        </div>
-                    </div>
-                </div><!-- End testimonial item -->
+                        <?php
+                    }
+                }
+                ?>
 
             </div>
             <div class="swiper-pagination"></div>
@@ -400,217 +257,71 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Reservation</h2>
-            <p>Book a Table</p>
+            <h2><?= Yii::t('app', 'Reservation') ?></h2>
+            <p><?= Yii::t('app', 'Booking order') ?></p>
         </div>
-
-        <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 form-group">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                    <div class="validate"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-                    <div class="validate"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                    <div class="validate"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 form-group mt-3">
-                    <input type="text" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                    <div class="validate"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 form-group mt-3">
-                    <input type="text" class="form-control" name="time" id="time" placeholder="Time" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                    <div class="validate"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 form-group mt-3">
-                    <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-                    <div class="validate"></div>
-                </div>
+        <?php $form = ActiveForm::begin(['action' => Url::to($base_url . '/site/booking'), 'id' => 'mybookingform', 'options' => ['role' => "form", 'class' => "php-email-form", 'data-aos' => "fade-up", 'data-aos-delay' => "100"]]); ?>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 ">
+                <?= $form->field($BookingModel, 'name')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Name')])->label(false); ?>
             </div>
-            <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                <div class="validate"></div>
+            <div class="col-lg-4 col-md-6 mt-3 mt-md-0">
+                <?= $form->field($BookingModel, 'email')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Email')])->label(false); ?>
             </div>
-            <div class="mb-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+            <div class="col-lg-4 col-md-6 mt-3 mt-md-0">
+                <?= $form->field($BookingModel, 'phone')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Phone')])->label(false); ?>
             </div>
-            <div class="text-center"><button type="submit">Book a Table</button></div>
-        </form>
+            <div class="col-lg-4 col-md-6 mt-3">
+                <?= $form->field($BookingModel, 'date')->textInput(['type' => "date", 'maxlength' => true, 'placeholder' => Yii::t('app', 'Date')])->label(false); ?>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-3">
+                <?= $form->field($BookingModel, 'time')->textInput(['type' => "time", 'maxlength' => true, 'placeholder' => Yii::t('app', 'Time')])->label(false); ?>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-3">
+                <?= $form->field($BookingModel, 'people')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', '# of people')])->label(false); ?>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <?= $form->field($BookingModel, 'message')->textArea(['rows' => 5, 'placeholder' => Yii::t('app', 'Message')])->label(false); ?>
+        </div>
+        <div class="mb-3">
+            <div class="loading"><?= Yii::t('app', 'Loading') ?></div>
+            <div class="error-message"></div>
+            <div class="sent-message"><?= Yii::t('app', 'Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!') ?></div>
+        </div>
+        <div class="text-center"><?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => '']) ?></div>
+        <?php ActiveForm::end(); ?>
 
     </div>
 </section><!-- End Book A Table Section -->
 
-<!-- ======= Testimonials Section ======= -->
-<section id="testimonials" class="testimonials section-bg">
-    <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-            <h2>Testimonials</h2>
-            <p>What they're saying about us</p>
-        </div>
-
-        <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <p>
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                        </p>
-                        <img src="<?= $base_url; ?>/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                        <h3>Saul Goodman</h3>
-                        <h4>Ceo &amp; Founder</h4>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <p>
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                        </p>
-                        <img src="<?= $base_url; ?>/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                        <h3>Sara Wilsson</h3>
-                        <h4>Designer</h4>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <p>
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                        </p>
-                        <img src="<?= $base_url; ?>/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                        <h3>Jena Karlis</h3>
-                        <h4>Store Owner</h4>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <p>
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                        </p>
-                        <img src="<?= $base_url; ?>/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                        <h3>Matt Brandon</h3>
-                        <h4>Freelancer</h4>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <p>
-                            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                            Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                        </p>
-                        <img src="<?= $base_url; ?>/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                        <h3>John Larson</h3>
-                        <h4>Entrepreneur</h4>
-                    </div>
-                </div><!-- End testimonial item -->
-
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-
-    </div>
-</section><!-- End Testimonials Section -->
-
 <!-- ======= Gallery Section ======= -->
 <section id="gallery" class="gallery">
-
-    <div class="container" data-aos="fade-up">
-        <div class="section-title">
-            <h2>Gallery</h2>
-            <p>Some photos from Our Restaurant</p>
-        </div>
-    </div>
-
-    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-0">
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-1.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
+    <?php if ($gallery) { ?>
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2><?= Yii::t('app', 'Gallery') ?></h2>
+                <p><?= Yii::t('app', 'Some photos from Our Cateres') ?></p>
             </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-2.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-3.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-3.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-4.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-4.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-5.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-6.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-6.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-7.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
-                <div class="gallery-item">
-                    <a href="<?= $base_url ?>/img/gallery/gallery-8.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                        <img src="<?= $base_url; ?>/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
         </div>
 
-    </div>
+        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+            <div class="row g-0">
+                <?php foreach ($gallery as $gal) { ?>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="gallery-item">
+                            <a href="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" class="gallery-lightbox" data-gall="gallery-item">
+                                <img src="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" alt="" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <a href="<?= $base_url . '/gallery' ?>" class="book-a-table-btn scrollto"><?= Yii::t('app', 'View more Photos') ?></a>
+        </div>
+    <?php } ?>
 </section><!-- End Gallery Section -->
 
 <!-- ======= Chefs Section ======= -->
@@ -618,66 +329,28 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Chefs</h2>
-            <p>Our Proffesional Chefs</p>
+            <h2><?= Yii::t('app', 'Owner') ?></h2>
+            <p><?= Yii::t('app', 'Our Proffesional Owner') ?></p>
         </div>
 
         <div class="row">
-
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6 m-auto">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="<?= $base_url; ?>/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
+                    <img src="<?= $base_url . '/uploads/settings/' . $sconfig['owner_photo']['value']; ?>" class="img-fluid" alt="">
                     <div class="member-info">
                         <div class="member-info-content">
-                            <h4>Walter White</h4>
-                            <span>Master Chef</span>
+                            <h4><?= $sconfig['owner_name']['value']; ?></h4>
+                            <span><?= Yii::t('app', 'Owner') ?></span>
                         </div>
-                        <div class="social">
+                        <!--<div class="social">
                             <a href=""><i class="bi bi-twitter"></i></a>
                             <a href=""><i class="bi bi-facebook"></i></a>
                             <a href=""><i class="bi bi-instagram"></i></a>
                             <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="<?= $base_url; ?>/img/chefs/chefs-2.jpg" class="img-fluid" alt="">
-                    <div class="member-info">
-                        <div class="member-info-content">
-                            <h4>Sarah Jhonson</h4>
-                            <span>Patissier</span>
-                        </div>
-                        <div class="social">
-                            <a href=""><i class="bi bi-twitter"></i></a>
-                            <a href=""><i class="bi bi-facebook"></i></a>
-                            <a href=""><i class="bi bi-instagram"></i></a>
-                            <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="<?= $base_url; ?>/img/chefs/chefs-3.jpg" class="img-fluid" alt="">
-                    <div class="member-info">
-                        <div class="member-info-content">
-                            <h4>William Anderson</h4>
-                            <span>Cook</span>
-                        </div>
-                        <div class="social">
-                            <a href=""><i class="bi bi-twitter"></i></a>
-                            <a href=""><i class="bi bi-facebook"></i></a>
-                            <a href=""><i class="bi bi-instagram"></i></a>
-                            <a href=""><i class="bi bi-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>
@@ -688,8 +361,8 @@ $base_url = $sg['base_url'];
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Contact</h2>
-            <p>Contact Us</p>
+            <h2><?= Yii::t('app', 'Contact') ?></h2>
+            <p><?= Yii::t('app', 'Contact Us') ?></p>
         </div>
     </div>
 
@@ -705,29 +378,29 @@ $base_url = $sg['base_url'];
                 <div class="info">
                     <div class="address">
                         <i class="bi bi-geo-alt"></i>
-                        <h4>Location:</h4>
-                        <p>A108 Adam Street, New York, NY 535022</p>
+                        <h4><?= Yii::t('app', 'Location') ?>:</h4>
+                        <p><?= $sconfig['location']['value']; ?></p>
                     </div>
 
                     <div class="open-hours">
                         <i class="bi bi-clock"></i>
-                        <h4>Open Hours:</h4>
+                        <h4><?= Yii::t('app', 'Open Hours') ?>:</h4>
                         <p>
-                            Monday-Saturday:<br>
-                            11:00 AM - 2300 PM
+                            <?= Yii::t('app', 'Monday-Sunday') ?>:<br>
+                            24 <?= Yii::t('app', 'Hours') ?>
                         </p>
                     </div>
 
                     <div class="email">
                         <i class="bi bi-envelope"></i>
-                        <h4>Email:</h4>
-                        <p>info@example.com</p>
+                        <h4><?= Yii::t('app', 'Email') ?>:</h4>
+                        <p><?= $sconfig['email']['value']; ?></p>
                     </div>
 
                     <div class="phone">
                         <i class="bi bi-phone"></i>
-                        <h4>Call:</h4>
-                        <p>+1 5589 55488 55s</p>
+                        <h4><?= Yii::t('app', 'Call') ?>:</h4>
+                        <p><?= $sconfig['phone']['value']; ?></p>
                     </div>
 
                 </div>
@@ -735,29 +408,42 @@ $base_url = $sg['base_url'];
             </div>
 
             <div class="col-lg-8 mt-5 mt-lg-0">
-
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                        </div>
+                <?php $form = ActiveForm::begin(['action' => Url::to($base_url . '/site/review'), 'id' => 'mycontactform', 'options' => ['role' => "form", 'class' => "php-email-form"]]); ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?= $form->field($ReviewModel, 'name')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Name')])->label(false); ?>
                     </div>
-                    <div class="form-group mt-3">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                    <div class="col-md-6 form-group mt-3 mt-md-0">
+                        <?= $form->field($ReviewModel, 'email')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Email')])->label(false); ?>
                     </div>
-                    <div class="form-group mt-3">
-                        <textarea class="form-control" name="message" rows="8" placeholder="Message" required></textarea>
-                    </div>
-                    <div class="my-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-                    </div>
-                    <div class="text-center"><button type="submit">Send Message</button></div>
-                </form>
+                </div>
+                <div class="form-group mt-3">
+                    <?= $form->field($ReviewModel, 'subject')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Subject')])->label(false); ?>
+                </div>
+                <div class="form-group mt-3">
+                    <?= $form->field($ReviewModel, 'message')->textArea(['maxlength' => true, 'rows' => "3", 'placeholder' => Yii::t('app', 'Message')])->label(false); ?>
+                </div>
+                <div class="form-group text-center">
+                    <?=
+                    $form->field($ReviewModel, 'rating')->widget(StarRating::classname(), [
+                        'options' => ['class' => 'd-none'],
+                        'pluginOptions' => [
+                            'size' => 'sm',
+                            'stars' => 5,
+                            'step' => 1,
+                            'showCaption' => false,
+                            'showClear' => false,
+                        ]
+                    ])->label(false);
+                    ?>
+                </div>
+                <div class="my-3">
+                    <div class="loading"><?= Yii::t('app', 'Loading') ?></div>
+                    <div class="error-message"></div>
+                    <div class="sent-message"><?= Yii::t('app', 'Your message has been sent. Thank you!') ?></div>
+                </div>
+                <div class="text-center"><?= Html::submitButton(Yii::t('app', 'Send Message'), ['class' => '']) ?></div>
+                <?php ActiveForm::end(); ?>
 
             </div>
 
@@ -765,3 +451,40 @@ $base_url = $sg['base_url'];
 
     </div>
 </section><!-- End Contact Section -->
+<?php
+AjaxForm::widget([
+    'id' => 'mybookingform',
+    'enableAjaxSubmit' => true,
+    'ajaxSubmitOptions' => [
+        'beforeSend' => new JsExpression('function() {
+                $(\'#mybookingform .loading\').show();
+            }'),
+        'success' => new JsExpression('function(response) {
+                $(\'#mybookingform .sent-message\').show();
+                setTimeout(function() { $("#mybookingform .sent-message").hide(); }, 5000);
+            }'),
+        'complete' => new JsExpression('function() {
+                $(\'#mybookingform .loading\').hide();
+                $(\'#mybookingform\')[0].reset();
+            }')
+    ],
+]);
+
+AjaxForm::widget([
+    'id' => 'mycontactform',
+    'enableAjaxSubmit' => true,
+    'ajaxSubmitOptions' => [
+        'beforeSend' => new JsExpression('function() {
+                $(\'#mycontactform .loading\').show();
+            }'),
+        'success' => new JsExpression('function(response) {
+                $(\'#mycontactform .sent-message\').show();
+                setTimeout(function() { $("#mycontactform .sent-message").hide(); }, 5000);
+            }'),
+        'complete' => new JsExpression('function() {
+                $(\'#mycontactform .loading\').hide();
+                $(\'#mycontactform\')[0].reset();
+            }')
+    ],
+]);
+?>

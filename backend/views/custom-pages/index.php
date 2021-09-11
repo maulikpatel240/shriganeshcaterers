@@ -136,7 +136,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             },
                         ],
                         [
-                            'attribute' => 'page_name_english',
+                            'attribute' => 'page_name',
                             'vAlign' => 'middle',
                             'hAlign' => 'left'
                         ],

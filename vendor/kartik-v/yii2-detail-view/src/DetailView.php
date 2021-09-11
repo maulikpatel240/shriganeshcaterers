@@ -3,19 +3,21 @@
 /**
  * @package   yii2-detail-view
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2020
- * @version   1.8.3
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2021
+ * @version   1.8.5
  */
 
 namespace kartik\detail;
 
 use Closure;
+use Exception;
 use kartik\base\BootstrapInterface;
 use kartik\base\Config;
 use kartik\base\TranslationTrait;
 use kartik\base\WidgetTrait;
 use kartik\base\PluginAssetBundle;
 use kartik\dialog\Dialog;
+use ReflectionException;
 use Yii;
 use yii\base\Arrayable;
 use yii\base\InvalidConfigException;
@@ -79,9 +81,24 @@ class DetailView extends YiiDetailView implements BootstrapInterface
     const TYPE_DEFAULT = 'default';
 
     /**
+     * @var string the **light** bootstrap contextual color type (applicable only for panel contextual style)
+     */
+    const TYPE_LIGHT = 'light';
+
+    /**
+     * @var string the **dark** bootstrap contextual color type (applicable only for panel contextual style)
+     */
+    const TYPE_DARK = 'dark';
+
+    /**
      * @var string the **primary** bootstrap contextual color type
      */
     const TYPE_PRIMARY = 'primary';
+
+    /**
+     * @var string the **secondary** bootstrap contextual color type
+     */
+    const TYPE_SECONDARY = 'secondary';
 
     /**
      * @var string the **information** bootstrap contextual color type
@@ -601,22 +618,19 @@ HTML;
      * - `heading`: `string`|`boolean`, the panel heading. If set to `false`, will not be displayed.
      * - `headingOptions`: _array_, HTML attributes for the panel heading container. Defaults to:
      *   - `['class'=>'panel-heading']` when [[bsVersion]] = `3.x`, and
-     *   - `['class'=>'card-heading <COLOR>']` when [[bsVersion]] = `4.x` - the color will be auto calculated based on
+     *   - `['class'=>'card-heading <COLOR>']` when [[bsVersion]] = `4.x` or `5.x` - the color will be auto calculated based on
      *      the `type` setting
      * - `titleOptions`: _array_, HTML attributes for the panel title container. The following tags are specially
      *   parsed:
      *   - `tag`: _string_, the HTML tag to render the title. Defaults to `h3` when [[bsVersion]] = `3.x` and `span`
-     *     when [[bsVersion]] = `4.x`
+     *     when [[bsVersion]] = `4.x` or `5.x`
      *   The `titleOptions` defaults to:
      *   - `['class'=>'panel-title']` when [[bsVersion]] = `3.x`, and
-     *   - `[]` when [[bsVersion]] = `4.x`
-     * - `summaryOptions`: _array_, HTML attributes for the panel summary section container. Defaults to:
-     *   - `['class'=>'pull-right']` when [[bsVersion]] = `3.x`, and
-     *   - `['class'=>'float-right']` when [[bsVersion]] = `4.x`, and
+     *   - `[]` when [[bsVersion]] = `4.x` or `5.x`
      * - `footer`: `string`|`boolean`, the panel footer. If set to `false` will not be displayed.
      * - `footerOptions`: _array_, HTML attributes for the panel footer container. Defaults to:
      *   - `['class'=>'panel-footer']` when [[bsVersion]] = `3.x`, and
-     *   - `['class'=>'card-footer']` when [[bsVersion]] = `4.x`
+     *   - `['class'=>'card-footer']` when [[bsVersion]] = `4.x` or `5.x`
      * - 'before': `string`|`boolean`, content to be placed before/above the grid (after the header). To not display
      *   this section, set this to `false`.
      * - `beforeOptions`: _array_, HTML attributes for the `before` text. If the `class` is not set, it will default to
@@ -650,7 +664,7 @@ HTML;
     /**
      * @var array the options for the button toolbar container
      */
-    public $buttonContainer = ['class' => 'float-right pull-right'];
+    public $buttonContainer = ['class' => 'float-right float-end pull-right'];
 
     /**
      * @var string the buttons to show when in view mode. The following tags will be replaced:
@@ -778,7 +792,7 @@ HTML;
 
     /**
      * @inheritdoc
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function run()
     {
@@ -795,17 +809,17 @@ HTML;
         $this->_msgCat = 'kvdetail';
         $this->pluginName = 'kvDetailView';
         $this->initBsVersion();
-        $isBs4 = $this->isBs4();
-        if ($isBs4) {
+        $notBs3 = !$this->isBs(3);
+        if ($notBs3) {
             Html::addCssClass($this->container, 'kv-container-bs4');
         }
         if ($this->enableEditMode) {
             /**
-             * @var ActiveForm $formClass
+             * @var string|ActiveForm $formClass
              */
             $formClass = $this->formClass;
             $activeForm = ActiveForm::class;
-            if (!is_subclass_of($formClass, $activeForm) && $formClass !== $activeForm) {
+            if (!is_subclass_of($formClass, $activeForm) && $formClass != $activeForm) {
                 throw new InvalidConfigException("Form class '{$formClass}' must exist and extend from '{$activeForm}'.");
             }
             $this->validateDisplay();
@@ -837,8 +851,8 @@ HTML;
 
     /**
      * Prepares and runs the detail view widget
-     * @throws \ReflectionException
-     * @throws \Exception
+     * @throws ReflectionException
+     * @throws Exception
      */
     protected function runWidget()
     {
@@ -860,12 +874,12 @@ HTML;
 
         $this->registerAssets();
         $output = $this->renderDetailView();
-        if (is_array($this->panel) && !empty($this->panel) && $this->panel !== false) {
+        if (is_array($this->panel) && !empty($this->panel)) {
             $output = $this->renderPanel($output);
         }
         $output = strtr(Html::tag('div', $this->mainTemplate, $this->container), ['{detail}' => $output]);
         Html::addCssClass($this->viewButtonsContainer, 'kv-buttons-1');
-        $buttons = Html::tag('span', $this->renderButtons(1), $this->viewButtonsContainer);
+        $buttons = Html::tag('span', $this->renderButtons(), $this->viewButtonsContainer);
         if ($this->enableEditMode) {
             Html::addCssClass($this->editButtonsContainer, 'kv-buttons-2');
             $buttons .= Html::tag('span', $this->renderButtons(2), $this->editButtonsContainer);
@@ -883,7 +897,7 @@ HTML;
 
     /**
      * Initializes and renders alert container block
-     * @throws \Exception
+     * @throws Exception
      */
     protected function renderAlertBlock()
     {
@@ -901,7 +915,7 @@ HTML;
             Html::addCssStyle($this->alertContainerOptions, 'display:none;');
         }
         $out = Html::beginTag('div', $this->alertContainerOptions);
-        $alertWidgetClass = $this->isBs4() ? 'yii\bootstrap4\Alert' : 'yii\bootstrap\Alert';
+        $alertWidgetClass = !$this->isBs(3) ? 'yii\bootstrap4\Alert' : 'yii\bootstrap\Alert';
         foreach ($flashes as $type => $message) {
             if (!isset($this->alertMessageSettings[$type])) {
                 continue;
@@ -1059,9 +1073,10 @@ HTML;
     /**
      * Checks if a bootstrap grid column class has been added to the container
      *
-     * @param array $container
+     * @param  array  $container
      *
      * @return boolean
+     * @throws Exception
      */
     protected static function hasGridCol($container = [])
     {
@@ -1088,7 +1103,7 @@ HTML;
      * @param array $config the attribute config
      *
      * @return mixed
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     protected function renderFormAttribute($config)
     {
@@ -1117,6 +1132,11 @@ HTML;
             $row = '<div class="row">' . $row . '</div>';
         }
         $fieldConfig['template'] = $row;
+        if (!isset($fieldConfig['options'])) {
+            $fieldConfig['options'] = ['class' => ''];
+        } else {
+            Html::removeCssClass($fieldConfig['options'], 'mb-3');
+        }
         if (substr($input, 0, 8) == "\\kartik\\") {
             Config::validateInputWidget($input, 'as an input widget for DetailView edit mode');
         } elseif ($input !== self::INPUT_WIDGET && !in_array($input, self::$_inputsList)) {
@@ -1173,7 +1193,7 @@ HTML;
      * Sets the grid panel layout based on the [[template]] and [[panel]] settings.
      * @param string $items
      * @return string
-     * @throws InvalidConfigException
+     * @throws InvalidConfigException|Exception
      */
     protected function renderPanel($items)
     {
@@ -1195,20 +1215,20 @@ HTML;
         $panelBefore = '';
         $panelAfter = '';
         $panelFooter = '';
-        $isBs4 = $this->isBs4();
+        $notBs3 = !$this->isBs(3);
         if (isset($this->panelCssPrefix)) {
             static::initCss($options, $this->panelCssPrefix . $type);
         } else {
             $this->addCssClass($options, self::BS_PANEL);
-            Html::addCssClass($options, $isBs4 ? "border-{$type}" : "panel-{$type}");
+            Html::addCssClass($options, $notBs3 ? "border-{$type}" : "panel-{$type}");
         }
         if ($after === false && $footer === false) {
             Html::addCssClass($this->container, 'kv-flat-b');
         }
-        $titleTag = ArrayHelper::remove($titleOptions, 'tag', ($isBs4 ? 'h5' : 'h3'));
-        static::initCss($titleOptions, $isBs4 ? 'm-0' : $this->getCssClass(self::BS_PANEL_TITLE));
+        $titleTag = ArrayHelper::remove($titleOptions, 'tag', ($notBs3 ? 'h5' : 'h3'));
+        static::initCss($titleOptions, $notBs3 ? 'm-0' : $this->getCssClass(self::BS_PANEL_TITLE));
         if ($heading !== false) {
-            $color = $isBs4 ? ($type === 'default' ? ' bg-light' : " text-white bg-{$type}") : '';
+            $color = ' ' . $this->getCssClass("panel-{$type}");
             static::initCss($headingOptions, $this->getCssClass(self::BS_PANEL_HEADING) . $color);
             $panelHeading = Html::tag('div', $this->panelHeadingTemplate, $headingOptions);
         }
@@ -1296,17 +1316,17 @@ HTML;
      *
      * @param string $type the button type
      * @param string $iconBs3 the bootstrap 3 icon suffix name
-     * @param string $iconBs4 the bootstrap 4 icon suffix name
+     * @param string $iconNotBs3 the non bootstrap 3 icon suffix name
      * @param string $title the title to display on hover
      *
      * @return string
-     * @throws InvalidConfigException
+     * @throws InvalidConfigException|Exception
      */
-    protected function getDefaultButton($type, $iconBs3, $iconBs4, $title)
+    protected function getDefaultButton($type, $iconBs3, $iconNotBs3, $title)
     {
         $buttonOptions = $type . 'Options';
         $options = $this->$buttonOptions;
-        $css = $this->getDefaultIconPrefix() . ($this->isBs4() ? $iconBs4 : $iconBs3);
+        $css = $this->getDefaultIconPrefix() . (!$this->isBs(3) ? $iconNotBs3 : $iconBs3);
         $label = ArrayHelper::remove($options, 'label', '<i class="' . $css . '"></i>');
         if (empty($options['class'])) {
             $options['class'] = 'kv-action-btn';
@@ -1332,7 +1352,7 @@ HTML;
 
     /**
      * Register assets
-     * @throws \Exception
+     * @throws Exception
      */
     protected function registerAssets()
     {
@@ -1369,9 +1389,6 @@ HTML;
             'dialogLib' => ArrayHelper::getValue($this->krajeeDialogSettings, 'libName', 'krajeeDialog'),
         ];
         $id = 'jQuery("#' . $this->container['id'] . '")';
-        if ($this->enableEditMode) {
-            $options['mode'] = $this->mode;
-        }
         $this->registerPlugin($this->pluginName, $id);
         if ($this->tooltips) {
             PluginAssetBundle::registerBundle($view, $this->bsVersion);
@@ -1426,8 +1443,8 @@ HTML;
             }
             $attribute = [
                 'attribute' => $matches[1],
-                'format' => isset($matches[3]) ? $matches[3] : 'text',
-                'label' => isset($matches[5]) ? $matches[5] : null,
+                'format' => $matches[3] ?? 'text',
+                'label' => $matches[5] ?? null,
             ];
         }
         if (!is_array($attribute)) {

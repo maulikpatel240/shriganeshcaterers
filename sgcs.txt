@@ -1,0 +1,17 @@
+Page:
+
+1 Home slider
+2 About Content
+3 Gallery (Video/photo)
+4 Category (ex. guajrati, punjabi, chinese, italian, maxicon)
+5 Menu 
+ Category name
+ name
+ status Active/Inactive
+ Recipiese description
+ 	
+ 		
+
+	
+	
+ 

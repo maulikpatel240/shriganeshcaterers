@@ -17,14 +17,7 @@ $params = [
     'video_extention' => array('mp4', '3gp', 'mov', 'm4v', 'mpg', 'flv', 'avi', 'mkv', 'wmv', 'webm'),
     'document_extention' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'),
     'default_user_img' => '/img/default_user.jpg',
-    'default_error_img' => '/img/default_user.jpg',
-    'site_name' => 'VandeMission',
-    'site_url' => 'https://localhost/vandemission',
-    'site_address' => 'India',
-    'support_email' => 'maulikpatel240@gmail.com',
-    'copyright_text' => '© {year} VandeMission. All rights reserved.',
-    'logo_img' => '/img/default_user.jpg',
-    'logo_icon' => '/img/default_user.jpg',
+    'default_error_img' => '/img/default_user.jpg'
 ];
 
 return $params;

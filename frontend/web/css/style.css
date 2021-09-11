@@ -921,9 +921,11 @@ section {
 
 .menu .menu-img {
   width: 70px;
+  height: 70px;
   border-radius: 50%;
   float: left;
   border: 5px solid rgba(255, 255, 255, 0.2);
+  object-fit: cover;
 }
 
 .menu .menu-content {
@@ -1726,4 +1728,13 @@ section {
   text-align: center;
   font-size: 13px;
   color: #fff;
+}
+
+#book-a-table .form-group{margin: 0px;}
+#book-a-table .form-group .invalid-feedback{font-size: 12px;}
+#mycontactform .form-group{margin: 0px;}
+#mycontactform .form-group .invalid-feedback{font-size: 12px;}
+
+.rating-container .rating-stars:focus {
+    outline: 0px !important;
 }

@@ -128,8 +128,8 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'attribute' => 'image',
                             'format' => 'raw',
                             'value' => function ($model) {
-                                $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/event-categories/' . $model->image, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror'=>"this.onerror=null;this.src='".Yii::$app->params['default_error_img']."';"]);
-                                $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/event-categories/' . $model->image, ['data-fancybox' => true]);
+                                $imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/event-category/' . $model->image, ['width' => '70', 'height' => '70', 'class' => 'img-circle', 'onerror'=>"this.onerror=null;this.src='".Yii::$app->params['default_error_img']."';"]);
+                                $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/event-category/' . $model->image, ['data-fancybox' => true]);
 
                                 return $imagehtml;
                             },

@@ -28,12 +28,12 @@ return [
                 'yii\web\JqueryAsset' => [
                     'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
                 ],
-//                'yii\bootstrap4\BootstrapPluginAsset' => [
-//                    'js'=>[]
-//                ],
-//                'yii\bootstrap4\BootstrapAsset' => [
-//                    'css' => [],
-//                ],
+                'yii\bootstrap4\BootstrapPluginAsset' => [
+                    'js'=>[]
+                ],
+                'yii\bootstrap4\BootstrapAsset' => [
+                    'css' => [],
+                ],
                 // 'kartik\form\ActiveFormAsset' => [
                 //     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 // ],
@@ -69,6 +69,7 @@ return [
             'showScriptName' => false,
             'baseUrl' => '/',
             'rules' => [
+                'gallery' => 'site/gallery'
             ],
         ],
 

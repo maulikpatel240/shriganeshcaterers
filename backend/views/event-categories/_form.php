@@ -44,7 +44,7 @@ use yii\web\JsExpression;
                 <?php
                 $image_upload_wrap_div = ($model->image) ? 'display: none;' : 'display: block;';
                 $file_upload_content_div = ($model->image) ? 'display: block;' : 'display: none;';
-                $image_url = ($model->image) ? Yii::$app->urlManager->baseUrl . '/uploads/category/' . $model->image : '#';
+                $image_url = ($model->image) ? Yii::$app->urlManager->baseUrl . '/uploads/event-category/' . $model->image : '#';
                 $image_name = ($model->image) ? $model->image : 'Uploaded Image';
                 ?>
                 <button class="file-upload-btn btn btn-outline-secondary" type="button" onclick="$('.file-upload-input').trigger('click')">Add Image</button>

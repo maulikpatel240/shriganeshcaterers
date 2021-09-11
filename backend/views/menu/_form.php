@@ -30,7 +30,7 @@ $js = '
 
 jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
-        
+        jQuery(this).html("No: " + (index + 1));
     });
     
 });
@@ -66,18 +66,34 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'gujarati')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'hindi')->textInput(['maxlength' => true]) ?>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?= $form->field($model, "english")->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <div class="col-md-8">
+                                <?= $form->field($model, "description_english")->textArea(['maxlength' => true]) ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?= $form->field($model, "gujarati")->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <div class="col-md-8">
+                                <?= $form->field($model, "description_gujarati")->textArea(['maxlength' => true]) ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?= $form->field($model, "hindi")->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <div class="col-md-8">
+                                <?= $form->field($model, "description_hindi")->textArea(['maxlength' => true]) ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <?= $form->field($model, 'description_english')->textArea(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'description_gujarati')->textArea(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'description_hindi')->textArea(['maxlength' => true]) ?>
-                    </div>
-                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
                 <?=
                 $form->field($model, "items")->widget(Select2::classname(), [
                     'data' => $items,
@@ -88,7 +104,7 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                 ]);
                 ?>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-6 col-lg-6 m-auto">
                 <div class="file-upload">
                     <?php
                     $image_upload_wrap_div = ($model->image) ? 'display: none;' : 'display: block;';
@@ -173,9 +189,12 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
             'countmodel' => count($modelMenu),
             'formId' => 'myform',
             'formFields' => [
-                'name',
+                'english',
                 'gujarati',
                 'hindi',
+                'description_english',
+                'description_gujarati',
+                'description_hindi',
                 'items',
                 'image',
             ],
@@ -197,85 +216,104 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
 //                            echo Html::activeHiddenInput($value, "[{$i}]id");
 //                        }
                             ?>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]name")->textInput(['maxlength' => true]) ?>
+                            <div class="card border border-secondary">
+                                <div class="card-header bg-secondary">
+                                    <div class="float-right">
+                                        <button type="button" class="remove-item btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <span class="panel-title-address">No: <?= ($key + 1) ?></span>
                                 </div>
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]gujarati")->textInput(['maxlength' => true]) ?>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]english")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <?= $form->field($value, "[$key]description_english")->textArea(['maxlength' => true]) ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]gujarati")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <?= $form->field($value, "[$key]description_gujarati")->textArea(['maxlength' => true]) ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <?= $form->field($value, "[$key]description_hindi")->textArea(['maxlength' => true]) ?>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?=
-                                    $form->field($value, "[$key]items")->widget(Select2::classname(), [
-                                        'data' => $items,
-                                        'options' => ['placeholder' => '--Select--', 'multiple' => true],
-                                        'pluginOptions' => [
-                                            'allowClear' => true
-                                        ],
-                                    ]);
-                                    ?>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <?php
-                                    $value_image = $value->image;
-                                    $image_upload_wrap_div = ($value_image) ? 'display: none;' : 'display: block;';
-                                    $file_upload_content_div = ($value_image) ? 'display: block;' : 'display: none;';
-                                    $image_url = ($value_image) ? Yii::$app->urlManager->baseUrl . '/uploads/menu/' . $value_image : '#';
-                                    $image_name = ($value_image) ? $value_image : 'Uploaded Image';
-                                    ?>
-                                    <?php
-                                    //$modelImage = Image::findOne(['id' => $modelOptionValue->image_id]);
-                                    $initialPreview = [];
-                                    if ($value_image) {
-                                        $pathImg = $image_url;
-                                        $initialPreview[] = Html::img($pathImg, ['class' => 'file-preview-image']);
-                                    }
-                                    ?>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <?=
+                                            $form->field($value, "[$key]items")->widget(Select2::classname(), [
+                                                'data' => $items,
+                                                'options' => ['placeholder' => '--Select--', 'multiple' => true],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true
+                                                ],
+                                            ]);
+                                            ?>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-4 m-auto">
+                                            <?php
+                                            $value_image = $value->image;
+                                            $image_upload_wrap_div = ($value_image) ? 'display: none;' : 'display: block;';
+                                            $file_upload_content_div = ($value_image) ? 'display: block;' : 'display: none;';
+                                            $image_url = ($value_image) ? Yii::$app->urlManager->baseUrl . '/uploads/menu/' . $value_image : '#';
+                                            $image_name = ($value_image) ? $value_image : 'Uploaded Image';
+                                            ?>
+                                            <?php
+                                            //$modelImage = Image::findOne(['id' => $modelOptionValue->image_id]);
+                                            $initialPreview = [];
+                                            if ($value_image) {
+                                                $pathImg = $image_url;
+                                                $initialPreview[] = Html::img($pathImg, ['class' => 'file-preview-image']);
+                                            }
+                                            ?>
 
-                                    <?=
-                                    $form->field($value, "[$key]image")->label(false)->widget(FileInput::classname(), [
-                                        'options' => [
-                                            'multiple' => false,
-                                            'accept' => 'image/*',
-                                            'class' => 'optionvalue-img'
-                                        ],
-                                        'pluginOptions' => [
-                                            'previewFileType' => 'image',
-                                            'showCaption' => false,
-                                            'showUpload' => false,
-                                            'browseClass' => 'btn btn-default btn-sm',
-                                            'browseLabel' => ' Pick image',
-                                            'browseIcon' => '<i class="glyphicon glyphicon-picture"></i>',
-                                            'removeClass' => 'btn btn-danger btn-sm',
-                                            'removeLabel' => ' Delete',
-                                            'removeIcon' => '<i class="fa fa-trash"></i>',
-                                            'previewSettings' => [
-                                                'image' => ['width' => '138px', 'height' => 'auto']
-                                            ],
-                                            'initialPreview' => $initialPreview,
-                                            'layoutTemplates' => ['footer' => '']
-                                        ]
-                                    ])
-                                    ?>
+                                            <?=
+                                            $form->field($value, "[$key]image")->label(false)->widget(FileInput::classname(), [
+                                                'options' => [
+                                                    'multiple' => false,
+                                                    'accept' => 'image/*',
+                                                    'class' => 'optionvalue-img'
+                                                ],
+                                                'pluginOptions' => [
+                                                    'previewFileType' => 'image',
+                                                    'showCaption' => false,
+                                                    'showUpload' => false,
+                                                    'browseClass' => 'btn btn-default btn-sm',
+                                                    'browseLabel' => ' Pick image',
+                                                    'browseIcon' => '<i class="glyphicon glyphicon-picture"></i>',
+                                                    'removeClass' => 'btn btn-danger btn-sm',
+                                                    'removeLabel' => ' Delete',
+                                                    'removeIcon' => '<i class="fa fa-trash"></i>',
+                                                    'previewSettings' => [
+                                                        'image' => ['width' => '138px', 'height' => 'auto']
+                                                    ],
+                                                    'initialPreview' => $initialPreview,
+                                                    'layoutTemplates' => ['footer' => '']
+                                                ]
+                                            ])
+                                            ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="">
-                            <div class="float-right">
-                                <button type="button" class="remove-item btn btn-danger btn-xs"><i class="fas fa-times"></i></button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
             <div class="panel-footer mb-2">
-                <button type="button" class="float-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" class="float-right add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
                 <div class="clearfix"></div>
             </div>
         </div>

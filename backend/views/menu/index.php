@@ -147,12 +147,12 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             },
                         ],  
                         [
-                            'attribute' => 'name',
+                            'attribute' => 'english',
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return $model->name;
+                                return $model->english;
                             },
                         ],
                         [

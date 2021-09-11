@@ -13,8 +13,8 @@ use Yii;
  * @property string $page_title_english
  * @property string $page_content_english
  * @property string $page_name_gujarati
- * @property string $page_title_guajrati
- * @property string $page_content_guajrati
+ * @property string $page_title_gujarati
+ * @property string $page_content_gujarati
  * @property string $page_name_hindi
  * @property string $page_title_hindi
  * @property string $page_content_hindi
@@ -39,11 +39,12 @@ class Custompages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['page_name_english', 'page_title_english', 'page_content_english'], 'required'],
-            [['page_content_english', 'page_content_guajrati', 'page_content_hindi', 'status'], 'string'],
+            [['page_name', 'page_title_english', 'page_content_english'], 'required'],
+            [['page_content_english', 'page_content_gujarati', 'page_content_hindi', 'status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
-            [['image', 'page_title_english', 'page_title_guajrati', 'page_title_hindi'], 'string', 'max' => 200],
-            [['page_name_english', 'page_name_gujarati', 'page_name_hindi'], 'string', 'max' => 100],
+            [['image', 'page_title_english', 'page_title_gujarati', 'page_title_hindi'], 'string', 'max' => 200],
+            [['page_name'], 'string', 'max' => 100],
+            [['page_name'], 'unique'],
         ];
     }
 
@@ -55,13 +56,11 @@ class Custompages extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'image' => 'Image',
-            'page_name_english' => 'Page Name English',
+            'page_name' => 'Page Name',
             'page_title_english' => 'Page Title English',
             'page_content_english' => 'Page Content English',
-            'page_name_gujarati' => 'Page Name Gujarati',
-            'page_title_guajrati' => 'Page Title Guajrati',
-            'page_content_guajrati' => 'Page Content Guajrati',
-            'page_name_hindi' => 'Page Name Hindi',
+            'page_title_gujarati' => 'Page Title Guajrati',
+            'page_content_gujarati' => 'Page Content Guajrati',
             'page_title_hindi' => 'Page Title Hindi',
             'page_content_hindi' => 'Page Content Hindi',
             'status' => 'Status',

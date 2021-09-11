@@ -17,12 +17,13 @@ RewriteCond %{REQUEST_URI} ^/git/shriganeshcaterers/(adminpanel)
 RewriteRule ^.*$ backend/web/index.php [L]
 
 
-RewriteCond %{REQUEST_URI} ^/git/shriganeshcaterers/(assets|css|js|img|plugins)
+RewriteCond %{REQUEST_URI} ^/git/shriganeshcaterers/(assets|css|js|img|plugins|uploads)
 RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
 RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
 RewriteRule ^js/(.*)$ frontend/web/js/$1 [L] 
 RewriteRule ^img/(.*)$ frontend/web/img/$1 [L]
 RewriteRule ^plugins/(.*)$ frontend/web/plugins/$1 [L]
+RewriteRule ^uploads/(.*)$ backend/web/uploads/$1 [L]
 
 RewriteCond %{REQUEST_URI} ^/assets/*
 RewriteRule ^assets/(.*)$ assets/$1 [L]

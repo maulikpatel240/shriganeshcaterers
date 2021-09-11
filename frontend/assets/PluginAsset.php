@@ -30,6 +30,7 @@ class PluginAsset extends AssetBundle {
                 'plugins/boxicons/css/boxicons.min.css',
                 'plugins/glightbox/css/glightbox.min.css',
                 'plugins/swiper/swiper-bundle.min.css',
+                'plugins/fontawesome-free/css/all.min.css',
                 'css/style.css',
                 ],
             'js' => [

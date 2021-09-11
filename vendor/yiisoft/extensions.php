@@ -21,24 +21,6 @@ return array (
       '@newerton/fancybox3' => $vendorDir . '/newerton/yii2-fancybox-3',
     ),
   ),
-  'kartik-v/yii2-krajee-base' => 
-  array (
-    'name' => 'kartik-v/yii2-krajee-base',
-    'version' => '2.0.6.0',
-    'alias' => 
-    array (
-      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base/src',
-    ),
-  ),
-  'kartik-v/yii2-widget-activeform' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-activeform',
-    'version' => '1.5.8.0',
-    'alias' => 
-    array (
-      '@kartik/form' => $vendorDir . '/kartik-v/yii2-widget-activeform/src',
-    ),
-  ),
   'kartik-v/yii2-helpers' => 
   array (
     'name' => 'kartik-v/yii2-helpers',
@@ -48,42 +30,6 @@ return array (
       '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers/src',
     ),
   ),
-  'kartik-v/yii2-dialog' => 
-  array (
-    'name' => 'kartik-v/yii2-dialog',
-    'version' => '1.0.5.0',
-    'alias' => 
-    array (
-      '@kartik/dialog' => $vendorDir . '/kartik-v/yii2-dialog/src',
-    ),
-  ),
-  'kartik-v/yii2-bootstrap4-dropdown' => 
-  array (
-    'name' => 'kartik-v/yii2-bootstrap4-dropdown',
-    'version' => '1.0.1.0',
-    'alias' => 
-    array (
-      '@kartik/bs4dropdown' => $vendorDir . '/kartik-v/yii2-bootstrap4-dropdown/src',
-    ),
-  ),
-  'kartik-v/yii2-grid' => 
-  array (
-    'name' => 'kartik-v/yii2-grid',
-    'version' => '3.3.5.0',
-    'alias' => 
-    array (
-      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
-    ),
-  ),
-  'kartik-v/yii2-builder' => 
-  array (
-    'name' => 'kartik-v/yii2-builder',
-    'version' => '1.6.7.0',
-    'alias' => 
-    array (
-      '@kartik/builder' => $vendorDir . '/kartik-v/yii2-builder/src',
-    ),
-  ),
   'kartik-v/yii2-datecontrol' => 
   array (
     'name' => 'kartik-v/yii2-datecontrol',
@@ -91,15 +37,6 @@ return array (
     'alias' => 
     array (
       '@kartik/datecontrol' => $vendorDir . '/kartik-v/yii2-datecontrol/src',
-    ),
-  ),
-  'kartik-v/yii2-detail-view' => 
-  array (
-    'name' => 'kartik-v/yii2-detail-view',
-    'version' => '1.8.3.0',
-    'alias' => 
-    array (
-      '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view/src',
     ),
   ),
   'kartik-v/yii2-dropdown-x' => 
@@ -127,15 +64,6 @@ return array (
     'alias' => 
     array (
       '@kartik/editable' => $vendorDir . '/kartik-v/yii2-editable/src',
-    ),
-  ),
-  'kartik-v/yii2-editors' => 
-  array (
-    'name' => 'kartik-v/yii2-editors',
-    'version' => '1.0.0.0',
-    'alias' => 
-    array (
-      '@kartik/editors' => $vendorDir . '/kartik-v/yii2-editors/src',
     ),
   ),
   'kartik-v/yii2-field-range' => 
@@ -228,15 +156,6 @@ return array (
       '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput/src',
     ),
   ),
-  'kartik-v/yii2-widget-select2' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-select2',
-    'version' => '2.2.1.0',
-    'alias' => 
-    array (
-      '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2/src',
-    ),
-  ),
   'kartik-v/yii2-widget-switchinput' => 
   array (
     'name' => 'kartik-v/yii2-widget-switchinput',
@@ -307,6 +226,105 @@ return array (
     'alias' => 
     array (
       '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug/src',
+    ),
+  ),
+  'kartik-v/yii2-bootstrap5-dropdown' => 
+  array (
+    'name' => 'kartik-v/yii2-bootstrap5-dropdown',
+    'version' => '1.0.0.0',
+    'alias' => 
+    array (
+      '@kartik/bs5dropdown' => $vendorDir . '/kartik-v/yii2-bootstrap5-dropdown/src',
+    ),
+  ),
+  'kartik-v/yii2-krajee-base' => 
+  array (
+    'name' => 'kartik-v/yii2-krajee-base',
+    'version' => '3.0.1.0',
+    'alias' => 
+    array (
+      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-activeform' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-activeform',
+    'version' => '1.6.0.0',
+    'alias' => 
+    array (
+      '@kartik/form' => $vendorDir . '/kartik-v/yii2-widget-activeform/src',
+    ),
+  ),
+  'kartik-v/yii2-dialog' => 
+  array (
+    'name' => 'kartik-v/yii2-dialog',
+    'version' => '1.0.6.0',
+    'alias' => 
+    array (
+      '@kartik/dialog' => $vendorDir . '/kartik-v/yii2-dialog/src',
+    ),
+  ),
+  'kartik-v/yii2-bootstrap4-dropdown' => 
+  array (
+    'name' => 'kartik-v/yii2-bootstrap4-dropdown',
+    'version' => '1.0.2.0',
+    'alias' => 
+    array (
+      '@kartik/bs4dropdown' => $vendorDir . '/kartik-v/yii2-bootstrap4-dropdown/src',
+    ),
+  ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => '3.3.6.0',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
+    ),
+  ),
+  'kartik-v/yii2-builder' => 
+  array (
+    'name' => 'kartik-v/yii2-builder',
+    'version' => '1.6.8.0',
+    'alias' => 
+    array (
+      '@kartik/builder' => $vendorDir . '/kartik-v/yii2-builder/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-rating' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-rating',
+    'version' => '1.0.4.0',
+    'alias' => 
+    array (
+      '@kartik/rating' => $vendorDir . '/kartik-v/yii2-widget-rating/src',
+    ),
+  ),
+  'kartik-v/yii2-detail-view' => 
+  array (
+    'name' => 'kartik-v/yii2-detail-view',
+    'version' => '1.8.5.0',
+    'alias' => 
+    array (
+      '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view/src',
+    ),
+  ),
+  'kartik-v/yii2-editors' => 
+  array (
+    'name' => 'kartik-v/yii2-editors',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@kartik/editors' => $vendorDir . '/kartik-v/yii2-editors/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-select2' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-select2',
+    'version' => '2.2.2.0',
+    'alias' => 
+    array (
+      '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2/src',
     ),
   ),
 );

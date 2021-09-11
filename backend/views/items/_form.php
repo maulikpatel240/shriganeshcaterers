@@ -15,7 +15,7 @@ use backend\models\ItemsCategories;
 $js = '
 jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
-        
+        jQuery(this).html("No: " + (index + 1));
     });
     
 });
@@ -87,29 +87,33 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
 //                            echo Html::activeHiddenInput($value, "[{$i}]id");
 //                        }
                             ?>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]english")->textInput(['maxlength' => true]) ?>
+                            <div class="card border border-secondary">
+                                <div class="card-header bg-secondary">
+                                    <div class="float-right">
+                                        <button type="button" class="remove-item btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <span class="panel-title-address">No: <?= ($key + 1) ?></span>
                                 </div>
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]gujarati")->textInput(['maxlength' => true]) ?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]english")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]gujarati")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="">
-                            <div class="float-right">
-                                <button type="button" class="remove-item btn btn-danger btn-xs"><i class="fas fa-times"></i></button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
             <div class="panel-footer mb-2">
-                <button type="button" class="float-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" class="float-right add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
                 <div class="clearfix"></div>
             </div>
         </div>

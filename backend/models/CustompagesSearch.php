@@ -18,7 +18,7 @@ class CustompagesSearch extends Custompages
     {
         return [
             [['id'], 'integer'],
-            [['page_name_english', 'page_title_english', 'page_content_english', 'page_name_gujarati', 'page_title_guajrati', 'page_content_guajrati', 'page_name_hindi', 'page_title_hindi', 'page_content_hindi', 'status', 'status_at', 'created_at', 'updated_at'], 'safe'],
+            [['page_name', 'page_title_english', 'page_content_english', 'page_title_gujarati', 'page_content_gujarati', 'page_title_hindi', 'page_content_hindi', 'status', 'status_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -67,13 +67,11 @@ class CustompagesSearch extends Custompages
         ]);
 
         $query->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'page_name_english', $this->page_name_english])
+            ->andFilterWhere(['like', 'page_name', $this->page_name])
             ->andFilterWhere(['like', 'page_title_english', $this->page_title_english])
             ->andFilterWhere(['like', 'page_content_english', $this->page_content_english])
-            ->andFilterWhere(['like', 'page_name_gujarati', $this->page_name_gujarati])
-            ->andFilterWhere(['like', 'page_title_guajrati', $this->page_title_guajrati])
-            ->andFilterWhere(['like', 'page_content_guajrati', $this->page_content_guajrati])
-            ->andFilterWhere(['like', 'page_name_hindi', $this->page_name_hindi])
+            ->andFilterWhere(['like', 'page_title_gujarati', $this->page_title_gujarati])
+            ->andFilterWhere(['like', 'page_content_gujarati', $this->page_content_gujarati])
             ->andFilterWhere(['like', 'page_title_hindi', $this->page_title_hindi])
             ->andFilterWhere(['like', 'page_content_hindi', $this->page_content_hindi])
             ->andFilterWhere(['like', 'status', $this->status]);

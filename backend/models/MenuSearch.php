@@ -18,7 +18,7 @@ class MenuSearch extends Menu
     {
         return [
             [['id', 'menu_category_id'], 'integer'],
-            [['name', 'status', 'status_at', 'created_at', 'updated_at', 'gujarati', 'hindi', 'items'], 'safe'],
+            [['english', 'status', 'status_at', 'created_at', 'updated_at', 'gujarati', 'hindi', 'items'], 'safe'],
         ];
     }
 
@@ -65,7 +65,7 @@ class MenuSearch extends Menu
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'english', $this->english])
             ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'gujarati', $this->gujarati])

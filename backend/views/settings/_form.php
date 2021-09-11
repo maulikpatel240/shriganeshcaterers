@@ -122,7 +122,8 @@ $description_placeholder = '';
             }
             echo $value;
             ?>
-            
+            <?= $form->field($model, 'gujarati')->textInput(['placeholder' => ''])->label() ?>
+            <?= $form->field($model, 'hindi')->textInput(['placeholder' => ''])->label() ?>
             <?= $form->field($model, 'description')->textArea(['placeholder' => ''])->label('Description <span class="mr-2">'.$description_placeholder.'</span>') ?>
         </div>
     </div>

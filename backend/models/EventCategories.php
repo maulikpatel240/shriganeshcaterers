@@ -58,4 +58,32 @@ class EventCategories extends \yii\db\ActiveRecord {
         ];
     }
 
+    public function upload() {
+        if ($this->image) {
+            //$this->map->baseName = $this->id.'_state';
+            $filename = 'page_' . $this->id . '_'.time().'.' . $this->image->extension;
+            $this->image->saveAs(Yii::getAlias('@webroot') . '/uploads/event-category/' . $filename, false);
+            $this->image = $filename;
+            $this->save();
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public function deleteImage($oldimg = "") {
+        if ($oldimg) {
+            $image = Yii::getAlias('@webroot') . '/uploads/event-category/' . $oldimg;
+            if (file_exists($image) && unlink($image)) {
+                return true;
+            }
+        } else {
+            $image = Yii::getAlias('@webroot') . '/uploads/event-category/' . $this->image;
+            if (file_exists($image) && unlink($image)) {
+                $this->image = '';
+                $this->save();
+                return true;
+            }
+        }
+        return false;
+    }
 }

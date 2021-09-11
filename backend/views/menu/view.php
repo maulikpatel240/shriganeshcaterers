@@ -26,7 +26,7 @@ if($items){
                 'value' => $imagehtml,
                 'format' => 'raw',
             ],
-            'name',
+            'english',
             'gujarati',
             'hindi',
             [

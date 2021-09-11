@@ -161,12 +161,12 @@ class MenuController extends BaseController {
             Model::loadMultiple($modelMenu, Yii::$app->request->post());
             if ($modelMenu) {
                 foreach ($modelMenu as $key => $value) {
-                    $modelNew = Menu::find()->where(['name' => $value->name])->one();
+                    $modelNew = Menu::find()->where(['english' => $value->english])->one();
                     if (empty($modelNew)) {
                         $modelNew = new Menu();
                     }
                     $modelNew->menu_category_id = $model->menu_category_id;
-                    $modelNew->name = $value->name;
+                    $modelNew->english = $value->english;
                     $modelNew->gujarati = $value->gujarati;
                     $modelNew->hindi = $value->hindi;
                     $modelNew->items = ($value->items) ? implode(",", $value->items) : '';

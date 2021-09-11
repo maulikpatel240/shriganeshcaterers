@@ -3,13 +3,13 @@
 /**
  * @package   yii2-builder
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
- * @version   1.6.7
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2021
+ * @version   1.6.8
  */
 namespace kartik\builder;
 
 use yii\base\InvalidConfigException;
-use yii\bootstrap\Widget;
+use kartik\base\Widget;
 
 /**
  * FormGrid allows you to build and generate multi columnar bootstrap form layouts using a single simple array

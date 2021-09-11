@@ -15,6 +15,9 @@ $pagebundle = \frontend\assets\PluginAsset::register($this)->add(['main']);
 global $sg, $sconfig;
 $base_url = $sg['base_url'];
 $langs = json_decode($sconfig['language']['description'], true);
+
+$controller = Yii::$app->controller->id;
+$action = Yii::$app->controller->action->id;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -61,7 +64,7 @@ $langs = json_decode($sconfig['language']['description'], true);
         </div>
 
         <!-- ======= Header ======= -->
-        <header id="header" class="fixed-top d-flex align-items-cente">
+        <header id="header" class="fixed-top d-flex align-items-center">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
                 <h1 class="logo me-auto me-lg-0"><a href="<?=$base_url?>"><?=Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value');?></a></h1>
@@ -70,59 +73,55 @@ $langs = json_decode($sconfig['language']['description'], true);
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                        <li><a class="nav-link scrollto" href="#about">About</a></li>
-                        <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
-                        <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
-                        <li><a class="nav-link scrollto" href="#events">Events</a></li>
-                        <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
-                        <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-                        <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                            <ul>
-                                <li><a href="#">Drop Down 1</a></li>
-                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                    <ul>
-                                        <li><a href="#">Deep Drop Down 1</a></li>
-                                        <li><a href="#">Deep Drop Down 2</a></li>
-                                        <li><a href="#">Deep Drop Down 3</a></li>
-                                        <li><a href="#">Deep Drop Down 4</a></li>
-                                        <li><a href="#">Deep Drop Down 5</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Drop Down 2</a></li>
-                                <li><a href="#">Drop Down 3</a></li>
-                                <li><a href="#">Drop Down 4</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                        <?php if($controller == 'site' && $action == 'index'){ ?>
+                        <li><a class="nav-link scrollto active" href="#hero"><?=Yii::t('app', 'Home')?></a></li>
+                        <li><a class="nav-link scrollto" href="#about"><?=Yii::t('app', 'About')?></a></li>
+                        <li><a class="nav-link scrollto" href="#menu"><?=Yii::t('app', 'Menu')?></a></li>
+                        <li><a class="nav-link scrollto" href="#specials"><?=Yii::t('app', 'Specials')?></a></li>
+                        <li><a class="nav-link scrollto" href="#events"><?=Yii::t('app', 'Events')?></a></li>
+                        <li><a class="nav-link scrollto" href="#gallery"><?=Yii::t('app', 'Gallery')?></a></li>
+                        <li><a class="nav-link scrollto" href="#chefs"><?=Yii::t('app', 'Owner')?></a></li>
+                        <li><a class="nav-link scrollto" href="#contact"><?=Yii::t('app', 'Contact')?></a></li>
+                        <?php }else{ ?>
+                        <li><a class="nav-link scrollto active" href="<?=$base_url?>#hero"><?=Yii::t('app', 'Home')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#about"><?=Yii::t('app', 'About')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#menu"><?=Yii::t('app', 'Menu')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#specials"><?=Yii::t('app', 'Specials')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#events"><?=Yii::t('app', 'Events')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#gallery"><?=Yii::t('app', 'Gallery')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#chefs"><?=Yii::t('app', 'Owner')?></a></li>
+                        <li><a class="nav-link scrollto" href="<?=$base_url?>#contact"><?=Yii::t('app', 'Contact')?></a></li>
+                        <?php } ?>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
-                <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>
+                <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex"><?=Yii::t('app', 'Booking order')?></a>
 
             </div>
         </header><!-- End Header -->
 
         <!-- ======= Hero Section ======= -->
+        <?php if($controller == 'site' && $action == 'index'){ ?>
         <section id="hero" class="d-flex align-items-center">
             <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
                 <div class="row">
                     <div class="col-lg-8">
-                        <h1><?=Yii::t('app', 'Welcome to {site_name}', ['site_name' => '<span>'.Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value').'</span>'])?> </h1>
+                        <h1><?=Yii::t('app', 'Welcome to {site_name}', ['site_name' => '<span>'.Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value').'</span>'])?></h1>
                         <h2><?=Yii::t('app', 'Has provided excellent service for {age} years!', ['age' => Yii::$app->params['company_ageofyear']]) ?></h2>
 
                         <div class="btns">
                             <a href="#menu" class="btn-menu animated fadeInUp scrollto"><?=Yii::t('app', 'Our Menu')?></a>
-                            <a href="#book-a-table" class="btn-book animated fadeInUp scrollto"><?=Yii::t('app', 'Inquiry')?></a>
+                            <a href="#book-a-table" class="btn-book animated fadeInUp scrollto"><?=Yii::t('app', 'Booking order')?></a>
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in" data-aos-delay="200">
-                        <a href="https://www.youtube.com/watch?v=GlrxcuEDyF8" class="glightbox play-btn"></a>
+                        <a href="<?=$sconfig['welcome_video_url']['value'];?>" class="glightbox play-btn"></a>
                     </div>
 
                 </div>
             </div>
         </section><!-- End Hero -->
+        <?php } ?>
 
         <main id="main">
             <?= Alert::widget() ?>
@@ -135,54 +134,48 @@ $langs = json_decode($sconfig['language']['description'], true);
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <div class="footer-info">
-                                <h3>Restaurantly</h3>
+                                <h3><?=Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value');?></h3>
                                 <p>
-                                    A108 Adam Street <br>
-                                    NY 535022, USA<br><br>
-                                    <strong>Phone:</strong> +1 5589 55488 55<br>
-                                    <strong>Email:</strong> info@example.com<br>
+                                    <?=$sconfig['location']['value']?><br><br>
+                                    <strong><?=Yii::t('app', 'Phone')?> : </strong> <?=$sconfig['phone']['value']?><br>
+                                    <strong><?=Yii::t('app', 'Email')?> : </strong> <?=$sconfig['email']['value']?><br>
                                 </p>
                                 <div class="social-links mt-3">
-                                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                    <?=($sconfig['facebook_url']['value'])?'<a href="'.$sconfig['facebook_url']['value'].'" class="facebook"><i class="bx bxl-facebook"></i></a>':'';?>
+                                    <?=($sconfig['instagram_url']['value'])?'<a href="'.$sconfig['instagram_url']['value'].'" class="instagram"><i class="bx bxl-instagram"></i></a>':'';?>
+                                    <?=($sconfig['twitter_url']['value'])?'<a href="'.$sconfig['twitter_url']['value'].'" class="twitter"><i class="bx bxl-twitter"></i></a>':'';?>
+                                    <?=($sconfig['linkin_url']['value'])?'<a href="'.$sconfig['linkin_url']['value'].'" class="linkedin"><i class="bx bxl-linkedin"></i></a>':'';?>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-6 footer-links">
-                            <h4>Useful Links</h4>
+                        <div class="col-lg-3 col-md-6 footer-links">
+                            <h4><?=Yii::t('app', 'Useful Links')?></h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                                <?php if($controller == 'site' && $action == 'index'){ ?>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="#hero"><?=Yii::t('app', 'Home')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="#about"><?=Yii::t('app', 'About')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="#menu"><?=Yii::t('app', 'Menu')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="#gallery"><?=Yii::t('app', 'Gallery')?></a></li>
+                                <?php }else{ ?>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="<?=$base_url?>#hero"><?=Yii::t('app', 'Home')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="<?=$base_url?>#about"><?=Yii::t('app', 'About')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="<?=$base_url?>#menu"><?=Yii::t('app', 'Menu')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a class="" href="<?=$base_url?>#gallery"><?=Yii::t('app', 'Gallery')?></a></li>
+                                <?php } ?>
                             </ul>
                         </div>
 
                         <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Our Services</h4>
+                            <h4><?=Yii::t('app', 'Our Services')?></h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a ><?=Yii::t('app', 'Birthday parties')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a ><?=Yii::t('app', 'Custom parties')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a ><?=Yii::t('app', 'Private parties')?></a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a ><?=Yii::t('app', 'Wedding parties')?></a></li>
                             </ul>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 footer-newsletter">
-                            <h4>Our Newsletter</h4>
-                            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                            <form action="" method="post">
-                                <input type="email" name="email"><input type="submit" value="Subscribe">
-                            </form>
-
                         </div>
 
                     </div>
@@ -191,15 +184,11 @@ $langs = json_decode($sconfig['language']['description'], true);
 
             <div class="container">
                 <div class="copyright">
-                    &copy; Copyright <strong><span>Restaurantly</span></strong>. All Rights Reserved
+                    <?=Yii::t('app', '&copy; Copyright {site_name}. All Rights Reserved', ['site_name' => '<strong><span>'.Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value').'</span></strong>'])?>
                 </div>
-                <div class="credits">
-                    <!-- All the links in the footer should remain intact. -->
-                    <!-- You can delete the links only if you purchased the pro version. -->
-                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
+                <!--<div class="credits">
+                    Designed by <a href="https://bootstrapmade.com/">Vandemission</a>
+                </div>-->
             </div>
         </footer><!-- End Footer -->
 

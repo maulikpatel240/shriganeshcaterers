@@ -5,7 +5,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Custompages */
 
-$this->title = 'Update Custom page : '.$model->page_name_english;
+$this->title = 'Update Custom page : '.$model->page_name;
 ?>
 <section class="content-header">
     <div class="container-fluid">

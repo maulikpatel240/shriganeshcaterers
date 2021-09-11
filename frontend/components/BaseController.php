@@ -23,7 +23,8 @@ class BaseController extends Controller {
         $sg['user'] = $user;
         $configdata = Config::find()->where(['status' => 'Active'])->asArray()->all();
         $sconfig = ArrayHelper::index($configdata, 'name');
-        $sg['lang'] = (isset($_REQUEST['lang']) && $_REQUEST['lang']) ? Yii::$app->FrontFunctions->changeLanguage($_REQUEST['lang']) : Yii::$app->session->get('language');
+        $lang = (Yii::$app->session->get('language'))?Yii::$app->session->get('language'):'en-IN';
+        $sg['lang'] = (isset($_REQUEST['lang']) && $_REQUEST['lang']) ? Yii::$app->FrontFunctions->changeLanguage($_REQUEST['lang']) : $lang;
         $sg['language'] = (isset(Yii::$app->params['LANGUAGE'][$sg['lang']]) && Yii::$app->params['LANGUAGE'][$sg['lang']]) ? Yii::$app->params['LANGUAGE'][$sg['lang']] : '';
     }
 
