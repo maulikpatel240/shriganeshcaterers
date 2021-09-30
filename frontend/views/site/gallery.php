@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use common\widgets\AjaxForm;
@@ -22,20 +22,26 @@ $base_url = $sg['base_url'];
         </div>
     </div>
 </section>
-
-
 <section class="inner-page gallery p-0" id="gallery">
     <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
         <div class="row g-0">
-            <?php foreach ($gallery as $gal) { ?>
-                <div class="col-lg-3 col-md-4">
-                    <div class="gallery-item">
-                        <a href="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" class="gallery-lightbox" data-gall="gallery-item">
-                            <img src="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" alt="" class="img-fluid">
-                        </a>
+            <?php
+            if ($gallery) {
+                foreach ($gallery as $gal) {
+                    ?>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="gallery-item">
+                            <a href="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" class="gallery-lightbox" data-gall="gallery-item">
+                                <img src="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" alt="" class="img-fluid">
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php } ?>
+                    <?php
+                }
+            } else {
+                echo '<div class="col-12">' . Yii::t('app', 'No records found') . '</div>';
+            }
+            ?>
         </div>
     </div>
 </section>

@@ -1,9 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\editors\Summernote;
-use yii\bootstrap4\Modal;
+use yii\bootstrap5\Modal;
 use yii\helpers\Url;
 
 $id = (!$model->isNewRecord)?$model->id:"";

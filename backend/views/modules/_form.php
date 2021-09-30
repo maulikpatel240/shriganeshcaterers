@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\depdrop\DepDrop;
 use backend\models\Modules;
 use kartik\select2\Select2;
@@ -78,7 +78,7 @@ use yii\web\JsExpression;
     ?>
     <div class="form-group text-center">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

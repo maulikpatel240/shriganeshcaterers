@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\dynamicform\DynamicFormWidget;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
@@ -27,7 +27,7 @@ jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
 ';
 $this->registerJs($js);
 
-$ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), 'id', 'english');
+$ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), 'id', 'gujarati');
 ?>
 
 <div class="pages-categories-form">
@@ -38,6 +38,7 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
     $form->field($model, "item_category_id")->widget(Select2::classname(), [
         'data' => $ItemsCategories,
         'options' => ['placeholder' => '--Select--'],
+        'hideSearch' => true,
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -45,10 +46,11 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
     ?>
     <?php if (!$model->isNewRecord) { ?>
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <?= $form->field($model, 'english')->textInput(['maxlength' => true]) ?>
+            <div class="col-sm-12 col-md-6 col-lg-6">
                 <?= $form->field($model, 'gujarati')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'hindi')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <?= $form->field($model, 'english')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
     <?php } else { ?>
@@ -89,21 +91,18 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
                             ?>
                             <div class="card border border-secondary">
                                 <div class="card-header bg-secondary">
-                                    <div class="float-right">
+                                    <div class="float-end">
                                         <button type="button" class="remove-item btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
                                     </div>
                                     <span class="panel-title-address">No: <?= ($key + 1) ?></span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <?= $form->field($value, "[$key]english")->textInput(['maxlength' => true]) ?>
-                                        </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <?= $form->field($value, "[$key]gujarati")->textInput(['maxlength' => true]) ?>
                                         </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
+                                        <div class="col-md-6">
+                                            <?= $form->field($value, "[$key]english")->textInput(['maxlength' => true]) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +112,7 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
                 <?php endforeach; ?>
             </div>
             <div class="panel-footer mb-2">
-                <button type="button" class="float-right add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" class="float-end add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -121,7 +120,7 @@ $ItemsCategories = ArrayHelper::map(ItemsCategories::find()->asArray()->all(), '
     <?php } ?>
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

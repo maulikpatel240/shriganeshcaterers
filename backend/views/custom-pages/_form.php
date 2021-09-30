@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\editors\Summernote;
 
 /* @var $this yii\web\View */

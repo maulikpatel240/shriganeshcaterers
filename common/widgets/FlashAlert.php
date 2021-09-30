@@ -1,7 +1,7 @@
 <?php
 namespace hail812\adminlte3\widgets;
 
-use yii\bootstrap4\Widget;
+use yii\bootstrap5\Widget;
 
 /**
  * Class FlashAlert
@@ -55,7 +55,7 @@ class FlashAlert extends Widget
             }
 
             foreach ((array) $flash as $i => $message) {
-                echo \yii\bootstrap4\Alert::widget([
+                echo \yii\bootstrap5\Alert::widget([
                     'body' => $message,
                     'closeButton' => $this->closeButton,
                     'options' => array_merge($this->options, [

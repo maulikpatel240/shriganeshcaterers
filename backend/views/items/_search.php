@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'item_category_id') ?>
     
-    <?= $form->field($model, 'english') ?>
+    <?= $form->field($model, 'gujarati') ?>
 
     <?= $form->field($model, 'status') ?>
 

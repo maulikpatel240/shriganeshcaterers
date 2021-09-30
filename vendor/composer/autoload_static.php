@@ -90,7 +90,7 @@ class ComposerStaticInit69b60712faf2ae0684a4d060fabf3840
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
-            'yii\\bootstrap4\\' => 15,
+            'yii\\bootstrap5\\' => 15,
             'yii\\' => 4,
         ),
         'p' => 
@@ -143,6 +143,10 @@ class ComposerStaticInit69b60712faf2ae0684a4d060fabf3840
             'kartik\\bs5dropdown\\' => 19,
             'kartik\\bs4dropdown\\' => 19,
             'kartik\\base\\' => 12,
+        ),
+        'd' => 
+        array (
+            'dosamigos\\multiselect\\' => 22,
         ),
         'c' => 
         array (
@@ -247,9 +251,9 @@ class ComposerStaticInit69b60712faf2ae0684a4d060fabf3840
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-composer',
         ),
-        'yii\\bootstrap4\\' => 
+        'yii\\bootstrap5\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap4/src',
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap5/src',
         ),
         'yii\\' => 
         array (
@@ -400,6 +404,10 @@ class ComposerStaticInit69b60712faf2ae0684a4d060fabf3840
         'kartik\\base\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
+        ),
+        'dosamigos\\multiselect\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-multi-select-widget',
         ),
         'cebe\\markdown\\' => 
         array (

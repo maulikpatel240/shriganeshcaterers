@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\dynamicform\DynamicFormWidget;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
@@ -22,7 +22,6 @@ $js = '
     if (matches && matches.length === 4) {
         var identifiers = matches[2].split("-");
         $("#optionvalue-" + identifiers[1] + "-deleteimg").val("1");
-
     }
 
 });
@@ -42,10 +41,24 @@ jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
 ';
 $this->registerJs($js);
 
-$Categories = ArrayHelper::map(Categories::find()->asArray()->all(), 'id', 'english');
-$items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
-?>
+$url = \Yii::$app->urlManager->baseUrl . '/images/flags/';
 
+$Categories = ArrayHelper::map(Categories::find()->asArray()->all(), 'id', 'english');
+$itemsData = Items::find()->all();
+$items = ArrayHelper::map($itemsData, 'id', function($element) {
+            $category = ''.$element->itemCategory->id . '-' . $element->itemCategory->gujarati . ' (' . $element->itemCategory->english . ')';
+            $item_list = '' .$element->id . '-' . $element->gujarati.' ('.$element->english.')';
+            return $item_list.' : '.$category;
+        }, function($element) {
+            return $element->itemCategory->id . '-' . $element->itemCategory->gujarati . ' (' . $element->itemCategory->english . ')';
+        });
+
+?>
+<style>
+    .ms-container .ms-list{
+        height: 300px !important;
+    }
+</style>
 <div class="pages-menu-form">
 
     <?php $form = ActiveForm::begin(['id' => 'myform']); ?>
@@ -93,13 +106,14 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="col-md-12">
                 <?=
                 $form->field($model, "items")->widget(Select2::classname(), [
                     'data' => $items,
                     'options' => ['placeholder' => '--Select--', 'multiple' => true],
+                    'showToggleAll' => false,
                     'pluginOptions' => [
-                        'allowClear' => true
+                        'allowClear' => false,
                     ],
                 ]);
                 ?>
@@ -127,6 +141,7 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                     </div>
                 </div>
             </div>
+            
             <script>
                 function readURL(input) {
                     var extension = input.files[0].name.substr((input.files[0].name.lastIndexOf('.') + 1));
@@ -218,7 +233,7 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                             ?>
                             <div class="card border border-secondary">
                                 <div class="card-header bg-secondary">
-                                    <div class="float-right">
+                                    <div class="float-end">
                                         <button type="button" class="remove-item btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
                                     </div>
                                     <span class="panel-title-address">No: <?= ($key + 1) ?></span>
@@ -256,8 +271,9 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                                             $form->field($value, "[$key]items")->widget(Select2::classname(), [
                                                 'data' => $items,
                                                 'options' => ['placeholder' => '--Select--', 'multiple' => true],
+                                                'showToggleAll' => false,
                                                 'pluginOptions' => [
-                                                    'allowClear' => true
+                                                    'allowClear' => false,
                                                 ],
                                             ]);
                                             ?>
@@ -313,7 +329,7 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
                 <?php endforeach; ?>
             </div>
             <div class="panel-footer mb-2">
-                <button type="button" class="float-right add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" class="float-end add-item btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -321,7 +337,7 @@ $items = ArrayHelper::map(Items::find()->asArray()->all(), 'id', 'english');
     <?php } ?>
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -347,3 +363,29 @@ if (!$model->isNewRecord) {
     ]);
 }
 ?>
+<script>
+    function multisearchbox(ms,e) {
+        var that = e,
+            $selectableSearch = that.$selectableUl.prev(),
+            $selectionSearch = that.$selectionUl.prev(),
+            selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+            selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+        .on('keydown', function(e){
+          if (e.which === 40){
+            that.$selectableUl.focus();
+            return false;
+          }
+        });
+
+        that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+        .on('keydown', function(e){
+          if (e.which == 40){
+            that.$selectionUl.focus();
+            return false;
+          }
+        });
+    }
+
+</script>

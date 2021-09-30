@@ -4,9 +4,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
-use yii\bootstrap4\Modal;
+use yii\bootstrap5\Nav;
+use yii\bootstrap5\NavBar;
+use yii\bootstrap5\Modal;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 

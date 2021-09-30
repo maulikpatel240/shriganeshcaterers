@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use common\widgets\AjaxForm;
@@ -75,42 +75,22 @@ $aboutus = Yii::$app->SqlFunctions->custompages(['page_name' => 'aboutus']);
 <!-- ======= Menu Section ======= -->
 <section id="menu" class="menu section-bg">
     <div class="container" data-aos="fade-up">
-
         <div class="section-title">
             <h2><?= Yii::t('app', 'Menu') ?></h2>
             <p><?= Yii::t('app', 'Check Our Tasty Menu') ?></p>
         </div>
-
         <?php if ($categories) { ?>
             <div class="row" data-aos="fade-up" data-aos-delay="100">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="menu-flters">
-                        <li data-filter="*" class="filter-active"><?= Yii::t('app', 'All') ?></li>
+                        <li class=""><a class="btn-menu animated fadeInUp" href="<?=$base_url.'/menu?tab=all'?>"><?= Yii::t('app', 'All') ?></a></li>
                         <?php foreach ($categories as $cat) { ?>
-                            <li data-filter=".filter-<?= $cat['id'] ?>"><?= $cat[$sg['language']]; ?></li>
+                        <li class=""><a class="btn-menu animated fadeInUp"  href="<?=$base_url.'/menu?tab='.$cat[$sg['language']]?>"><?= $cat[$sg['language']]; ?></a></li>
                         <?php } ?>
                     </ul>
                 </div>
             </div>
-            <?php if ($menus) { ?>
-                <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                    <?php foreach ($menus as $menu) { ?>
-                        <div class="col-lg-6 menu-item filter-<?= $menu['menu_category_id'] ?>">
-                            <img src="<?= $base_url . '/uploads/menu/' . $menu['image'] ?>" class="menu-img" alt="">
-                            <div class="menu-content">
-                                <a><?= $menu[$sg['language']] ?></a><span></span>
-                            </div>
-                            <div class="menu-ingredients">
-                                <?= Yii::$app->FrontFunctions->truncate($menu['description_' . $sg['language']], 100); ?>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-            <?php } ?>
         <?php } ?>
-
-
-
     </div>
 </section><!-- End Menu Section -->
 
@@ -251,78 +231,6 @@ $aboutus = Yii::$app->SqlFunctions->custompages(['page_name' => 'aboutus']);
 
     </div>
 </section><!-- End Events Section -->
-
-<!-- ======= Book A Table Section ======= -->
-<section id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-            <h2><?= Yii::t('app', 'Reservation') ?></h2>
-            <p><?= Yii::t('app', 'Booking order') ?></p>
-        </div>
-        <?php $form = ActiveForm::begin(['action' => Url::to($base_url . '/site/booking'), 'id' => 'mybookingform', 'options' => ['role' => "form", 'class' => "php-email-form", 'data-aos' => "fade-up", 'data-aos-delay' => "100"]]); ?>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 ">
-                <?= $form->field($BookingModel, 'name')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Name')])->label(false); ?>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-3 mt-md-0">
-                <?= $form->field($BookingModel, 'email')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Email')])->label(false); ?>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-3 mt-md-0">
-                <?= $form->field($BookingModel, 'phone')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Your Phone')])->label(false); ?>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-3">
-                <?= $form->field($BookingModel, 'date')->textInput(['type' => "date", 'maxlength' => true, 'placeholder' => Yii::t('app', 'Date')])->label(false); ?>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-3">
-                <?= $form->field($BookingModel, 'time')->textInput(['type' => "time", 'maxlength' => true, 'placeholder' => Yii::t('app', 'Time')])->label(false); ?>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-3">
-                <?= $form->field($BookingModel, 'people')->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', '# of people')])->label(false); ?>
-            </div>
-        </div>
-        <div class="form-group mt-3">
-            <?= $form->field($BookingModel, 'message')->textArea(['rows' => 5, 'placeholder' => Yii::t('app', 'Message')])->label(false); ?>
-        </div>
-        <div class="mb-3">
-            <div class="loading"><?= Yii::t('app', 'Loading') ?></div>
-            <div class="error-message"></div>
-            <div class="sent-message"><?= Yii::t('app', 'Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!') ?></div>
-        </div>
-        <div class="text-center"><?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => '']) ?></div>
-        <?php ActiveForm::end(); ?>
-
-    </div>
-</section><!-- End Book A Table Section -->
-
-<!-- ======= Gallery Section ======= -->
-<section id="gallery" class="gallery">
-    <?php if ($gallery) { ?>
-        <div class="container" data-aos="fade-up">
-            <div class="section-title">
-                <h2><?= Yii::t('app', 'Gallery') ?></h2>
-                <p><?= Yii::t('app', 'Some photos from Our Cateres') ?></p>
-            </div>
-        </div>
-
-        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-            <div class="row g-0">
-                <?php foreach ($gallery as $gal) { ?>
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item">
-                            <a href="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" class="gallery-lightbox" data-gall="gallery-item">
-                                <img src="<?= $base_url . '/uploads/gallery/' . $gal['value'] ?>" alt="" class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
-        </div>
-        <div class="text-center mt-5">
-            <a href="<?= $base_url . '/gallery' ?>" class="book-a-table-btn scrollto"><?= Yii::t('app', 'View more Photos') ?></a>
-        </div>
-    <?php } ?>
-</section><!-- End Gallery Section -->
 
 <!-- ======= Chefs Section ======= -->
 <section id="chefs" class="chefs">

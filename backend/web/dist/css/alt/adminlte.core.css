@@ -7943,7 +7943,7 @@ button.bg-dark:focus {
   .float-sm-left {
     float: left !important;
   }
-  .float-sm-right {
+  .float-sm-end {
     float: right !important;
   }
   .float-sm-none {

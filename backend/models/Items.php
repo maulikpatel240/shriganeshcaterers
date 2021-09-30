@@ -33,11 +33,11 @@ class Items extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['item_category_id', 'english'], 'required'],
+            [['item_category_id', 'gujarati'], 'required'],
             [['status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
             [['english', 'gujarati', 'hindi'], 'string', 'max' => 255],
-            [['english'], 'unique'],
+            [['gujarati'], 'unique'],
         ];
     }
 

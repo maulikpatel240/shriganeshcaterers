@@ -2,11 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use newerton\fancybox3\FancyBox;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Custompages */
 
-$this->title = $model->page_name_english;
+$this->title = $model->page_name;
+
+echo FancyBox::widget();
+$imagesrc = Html::img(Yii::$app->urlManager->baseUrl . '/uploads/custompage/' . $model->image, ['width' => '100', 'height' => '100']);
+$imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/custompage/' . $model->image, ['data-fancybox' => true]);
 ?>
 <div class="custompages-view">
 
@@ -14,8 +18,12 @@ $this->title = $model->page_name_english;
         'model' => $model,
         'attributes' => [
             'id',
-            'image',
-            'page_name_english',
+            [
+                'attribute' => 'image',
+                'value' => $imagehtml,
+                'format' => 'raw',
+            ],
+            'page_name',
             'page_title_english',
             'page_content_english:html',
             'page_name_gujarati',

@@ -54,10 +54,10 @@ return [
                 'yii\web\JqueryAsset' => [
                     'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
                 ],
-//                'yii\bootstrap4\BootstrapPluginAsset' => [
+//                'yii\bootstrap5\BootstrapPluginAsset' => [
 //                    'js'=>[]
 //                ],
-//                'yii\bootstrap4\BootstrapAsset' => [
+//                'yii\bootstrap5\BootstrapAsset' => [
 //                    'css' => [],
 //                ],
                  'kartik\form\ActiveFormAsset' => [

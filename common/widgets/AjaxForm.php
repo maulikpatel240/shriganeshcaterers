@@ -24,7 +24,7 @@ use yii\helpers\Json;
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
  */
-class Ajaxform extends \yii\bootstrap4\Widget
+class Ajaxform extends \yii\bootstrap5\Widget
 {
     /**
      * @var bool If enable the ajax submit Multiple form ajax submit call

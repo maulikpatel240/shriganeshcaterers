@@ -22,7 +22,7 @@ class Role extends \yii\db\ActiveRecord {
      * {@inheritdoc}
      */
     public static function tableName() {
-        return 'Role';
+        return 'role';
     }
 
     /**

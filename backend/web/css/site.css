@@ -5,3 +5,14 @@
 .cursor-pointer{
   cursor: pointer;
 }
+input.search-input {
+    -moz-box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 5px;
+    height: auto;
+}
+
+.select2-container--krajee-bs4 .select2-selection--multiple .select2-selection__choice__remove{
+    font-size: 2.2rem;
+    cursor: pointer;
+}

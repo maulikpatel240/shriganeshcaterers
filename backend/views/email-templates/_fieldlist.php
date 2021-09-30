@@ -19,7 +19,7 @@ use yii\helpers\Url;
                     <span class=""><?= $value->description ?></span>
                     <div class="tools d-block">
                         <?php if ($value->is_default == 0) { ?>
-                            <a class="float-right" onclick="deleteTodoAction('<?= $deleteAction_url; ?>')"><i class="fas fa-trash" ></i></a>
+                            <a class="float-end" onclick="deleteTodoAction('<?= $deleteAction_url; ?>')"><i class="fas fa-trash" ></i></a>
                         <?php } ?>
                     </div>
                 </li>

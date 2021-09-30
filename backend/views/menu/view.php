@@ -13,7 +13,9 @@ $items = $model->items ? explode(',', $model->items) : '';
 $itemname = '';
 if($items){
     $itemdata = Items::find()->where(['in', 'id', $items])->asArray()->all();
-    $itemname = ArrayHelper::getColumn($itemdata, 'english');
+    $itemname = ArrayHelper::getColumn($itemdata, function ($element){
+        return '<a class="btn btn-outline-success mb-2">'.$element['gujarati'].' ('.$element['english'].')</a>';
+    });
 }
 ?>
 <div class="menu-view">
@@ -37,7 +39,7 @@ if($items){
             ],
             [
                 'attribute' => 'items',
-                'value' => $itemname ? implode(', ', $itemname) : '',
+                'value' => $itemname ? implode(' ', $itemname) : '',
                 'format' => 'raw',
             ],
             'status',

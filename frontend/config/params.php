@@ -1,6 +1,6 @@
 <?php
 return [
-    'bsVersion' => '4.x',
+    'bsVersion' => '5.x',
     //'bsDependencyEnabled' => false,
     'adminEmail' => 'admin@example.com',
     'REST_API_URL'=>'http://localhost/advanced/restapi/v1/',

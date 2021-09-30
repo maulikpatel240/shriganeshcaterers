@@ -174,11 +174,12 @@ class MenuController extends BaseController {
                     $modelNew->created_at = Yii::$app->BackFunctions->currentDateTime();
                     $modelNew->updated_at = Yii::$app->BackFunctions->currentDateTime();
                     //$modelNew->image = \yii\web\UploadedFile::getInstance($value, "[{$key}]image");
+                    //if(!$modelNew->save()){echo '<pre>'; print_r($modelNew->getErrors());echo '</pre>';exit;} 
+                    $modelNew->save();
                     $modelNew->image = UploadedFile::getInstance($value, "[{$key}]image");
                     if ($modelNew->image) {
                         $modelNew->upload();
                     }
-                    //if(!$modelNew->save()){echo '<pre>'; print_r($modelNew->getErrors());echo '</pre>';exit;} 
                     $modelNew->save();
                 }
             }
@@ -208,15 +209,16 @@ class MenuController extends BaseController {
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
-                $model->image = UploadedFile::getInstance($model, 'image');
-                if ($model->image) {
-                    $model->deleteImage($model->getOldAttribute('image'));
-                    $model->upload();
-                } else {
-                    $model->image = $model->getOldAttribute('image');
-                }
                 $model->items = ($model->items) ? implode(",", $model->items) : '';
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
+                $model->save();
+                $model->image = UploadedFile::getInstance($model, 'image');
+                if($model->image){
+                    $model->deleteImage($model->getOldAttribute('image'));
+                    $model->upload();
+                }else{
+                    $model->image = $model->getOldAttribute('image');
+                }
                 $model->save();
                 return $model->id;
             }

@@ -21,7 +21,7 @@ $this->title = 'Update Email Template: ' . $model->title;
                 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => false];
                 echo Breadcrumbs::widget([
                     'tag' => 'ol',
-                    'options' => ['class' => 'breadcrumb float-sm-right'],
+                    'options' => ['class' => 'breadcrumb float-sm-end'],
                     'homeLink' => [
                         'label' => Yii::t('yii', 'Home'),
                         'url' => Yii::$app->homeUrl,

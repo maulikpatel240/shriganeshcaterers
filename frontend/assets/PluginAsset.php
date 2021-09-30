@@ -25,7 +25,7 @@ class PluginAsset extends AssetBundle {
             'css' => [
                 'plugins/animate.css/animate.min.css',
                 'plugins/aos/aos.css',
-                'plugins/bootstrap/css/bootstrap.min.css',
+                //'plugins/bootstrap/css/bootstrap.min.css',
                 'plugins/bootstrap-icons/bootstrap-icons.css',
                 'plugins/boxicons/css/boxicons.min.css',
                 'plugins/glightbox/css/glightbox.min.css',
@@ -35,7 +35,7 @@ class PluginAsset extends AssetBundle {
                 ],
             'js' => [
                 'plugins/aos/aos.js',
-                'plugins/bootstrap/js/bootstrap.bundle.min.js',
+                //'plugins/bootstrap/js/bootstrap.bundle.min.js',
                 'plugins/glightbox/js/glightbox.min.js',
                 'plugins/isotope-layout/isotope.pkgd.min.js',
                 'plugins/swiper/swiper-bundle.min.js',

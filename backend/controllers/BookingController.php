@@ -9,7 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\components\BaseController;
-
+use backend\models\BookingItems;
+use backend\models\BookingItemsSearch;
+use backend\models\Menu;
+use backend\models\Items;
 /**
  * BookingController implements the CRUD actions for Booking model.
  */
@@ -70,17 +73,23 @@ class BookingController extends BaseController {
             $model->scenario = 'payment';
             $partial_price = $model->partial_price;
             if ($model->load(Yii::$app->request->post())) {
+                $postdata = Yii::$app->request->post();
                 $output = [];
                 if($model->partial_price > $model->total_price){
                     $output['result'] = 0;
                     $output['message'] = 'Partial Price must be no greater than total price.';
                 }else{
                     if ($model->status != 'Pending') {
-                        $model->partial_price = number_format($model->partial_price, 2, '.', '');
+                        $model->partial_price = $partial_price + number_format($postdata['Booking']['partial_price'], 2, '.', '');
                         $model->total_price = number_format($model->total_price, 2, '.', '');
                         if ($model->payment_type == 'Partial') {
                             $model->total_pay_price = $model->total_price - $model->partial_price;
                             $model->status = 'Partial';
+                            if($model->partial_price == $model->total_price){
+                                $model->partial_price = '0.00';
+                                $model->status = 'Paid';
+                                $model->total_pay_price = $model->total_price;
+                            }
                         } else {
                             $model->partial_price = '0.00';
                             $model->total_pay_price = $model->total_price;
@@ -90,6 +99,7 @@ class BookingController extends BaseController {
                         $model->paid_at = Yii::$app->BackFunctions->currentDateTime();
                     } elseif ($model->status == 'Pending') {
                         $model->status = "Approved";
+                        $model->menu = ($postdata['Booking']['menu']) ? implode(",", $postdata['Booking']['menu']) : '';
                     }
                     if(!$model->save()){echo '<pre>'; print_r($model->getErrors());echo '</pre>';exit;}
                     $output['result'] = 1;
@@ -175,13 +185,78 @@ class BookingController extends BaseController {
         if (empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->id, Yii::$app->controller->id))) {
             throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
         }
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-            ]);
+        $model = $this->findModel($id);
+        $booking_menu = explode(",", $model->menu);
+        if ($booking_menu) {
+            foreach ($booking_menu as $value) {
+                $menu_data = Menu::find()->where(['id' => $value])->one();
+                if ($menu_data) {
+                    $menu_items = explode(",", $menu_data->items);
+                    foreach ($menu_items as $items) {
+                        $items_data = Items::find()->where(['id' => $items])->one();
+                        if($items_data){
+                            $BookingItemsModel_update = BookingItems::find()->where(['booking_id'=>$model->id, 'menu_id' => $menu_data->id, 'item_id' => $items_data->id])->count();
+                            if(empty($BookingItemsModel_update)){
+                                $BookingItemsModel = new BookingItems();
+                                $BookingItemsModel->booking_id = $model->id;
+                                $BookingItemsModel->menu_id = $menu_data->id;
+                                $BookingItemsModel->item_id = $items_data->id;
+                                $BookingItemsModel->weight = "";
+                                $BookingItemsModel->unit = "";
+                                $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
+                                $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
+                                if(!$BookingItemsModel->save()){
+                                    echo '<pre>'; print_r($BookingItemsModel->getErrors());echo '</pre>';exit;
+                                }
+                            }
+                        }
+//                        $data = [];
+//                        $data['booking_id'] = $model->booking_id;
+//                        $data['menu_id'] = $menu_data->id;
+//                        $data['menu_english'] = $menu_data->english;
+//                        $data['menu_category'] = $menu_data->menuCategory->english;
+//                        $data['item_id'] = $items_data->id;
+//                        $data['item_gujarati'] = $items_data->gujarati;
+//                        $data['item_category'] = $items_data->itemCategory->gujarati . ' (' . $items_data->itemCategory->english . ')';
+//                        $data['weight'] = "";
+//                        $data['unit'] = "";
+//                        $data['updated_at'] = "";
+                    }
+                }
+            }
         }
+        $searchModel = new BookingItemsSearch();
+        $pageSize = Yii::$app->params['PAGE_SIZE'];
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $pageSize);
+        return $this->render('view', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'model' => $model,
+        ]);
     }
 
+    public function actionItemweight(){
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            $BookingItems = $request->post('BookingItems', '');
+            if($BookingItems){
+                $booking_id = $BookingItems['booking_id'];
+                $menu_id = $BookingItems['menu_id'];
+                $item_id = $BookingItems['item_id'];
+                $weight = $BookingItems['weight'];
+                $unit = $BookingItems['unit'];
+                $model = BookingItems::find()->where(['booking_id'=>$booking_id, 'menu_id' => $menu_id, 'item_id' => $item_id])->one();
+                if ($model && $model->load(Yii::$app->request->post())) {
+                    $model->save();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     /**
      * Creates a new Role model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -199,6 +274,7 @@ class BookingController extends BaseController {
             $model->scenario = 'backend';
             if ($model->load(Yii::$app->request->post())) {
                 $model->datetime = $model->date . ' ' . $model->time;
+                $model->menu = ($model->menu) ? implode(",", $model->menu) : '';
                 $model->status_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->created_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
@@ -213,6 +289,7 @@ class BookingController extends BaseController {
                     $bookingid = 'GC' . $model->id;
                 }
                 $model->booking_id = $bookingid;
+                $model->save();
                 return $model->id;
             }
             return $this->renderAjax('create', [
@@ -240,7 +317,9 @@ class BookingController extends BaseController {
             $model->date = date('Y-m-d', strtotime($model->datetime));
             $model->time = date('H:i', strtotime($model->datetime));
             if ($model->load(Yii::$app->request->post())) {
+                $postdata = Yii::$app->request->post();
                 $model->datetime = $model->date . ' ' . $model->time;
+                $model->menu = ($postdata['Booking']['menu']) ? implode(",", $postdata['Booking']['menu']) : '';
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->save();
                 return $model->id;

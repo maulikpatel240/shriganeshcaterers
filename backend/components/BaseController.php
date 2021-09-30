@@ -15,7 +15,7 @@ class BaseController extends Controller {
 
     public function init() {
         parent::init();
-        global $vm;
+        global $vm, $adminuser;
         $vm = array();
         $vm['base_url'] = $vm['site_url'] = Url::base(true);
         $vm['base_path'] = $vm['site_path'] = Url::base();

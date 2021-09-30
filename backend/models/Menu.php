@@ -21,6 +21,7 @@ use Yii;
  */
 class Menu extends \yii\db\ActiveRecord
 {
+    public $items_category = '';
     /**
      * {@inheritdoc}
      */
@@ -38,9 +39,11 @@ class Menu extends \yii\db\ActiveRecord
             [['menu_category_id', 'english', 'items'], 'required'],
             [['menu_category_id'], 'integer'],
             [['status'], 'string'],
-            [['status_at', 'created_at', 'updated_at', 'description_english', 'description_gujarati', 'description_hindi'], 'safe'],
+            [['status_at', 'created_at', 'updated_at', 'description_english', 'description_gujarati', 'description_hindi', 'items_category'], 'safe'],
             [['english', 'gujarati', 'hindi'], 'string', 'max' => 255],
             [['english'], 'unique'],
+            [['image'], 'string', 'max' => 200],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => Yii::$app->params['image_extention']],
             [['menu_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['menu_category_id' => 'id']],
         ];
     }

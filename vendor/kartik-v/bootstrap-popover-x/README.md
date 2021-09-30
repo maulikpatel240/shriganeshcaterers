@@ -6,14 +6,25 @@
     bootstrap-popover-x
     <hr>
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DTP3NZQ6G2AYU"
-       title="Donate via Paypal" target="_blank">
-        <img src="http://kartik-v.github.io/bootstrap-fileinput-samples/samples/donate.png" alt="Donate"/>
-    </a>
+       title="Donate via Paypal" target="_blank"><img src="https://kartik-v.github.io/bootstrap-fileinput-samples/samples/donate.png" height="60" alt="Donate"/></a>
+    &nbsp; &nbsp; &nbsp;
+    <a href="https://www.buymeacoffee.com/kartikv" title="Buy me a coffee" ><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" alt="kartikv" /></a>
 </h1>
+
+<div align="center">
+
+[![Financial Contributors on Open Collective](https://opencollective.com/bootstrap-popover-x/all/badge.svg?label=financial+contributors)](https://opencollective.com/bootstrap-popover-x)
+[![Bower version](https://badge.fury.io/bo/bootstrap-popover-x.svg)](http://badge.fury.io/bo/bootstrap-popover-x)
+[![Latest Stable Version](https://poser.pugx.org/kartik-v/bootstrap-popover-x/v/stable)](https://packagist.org/packages/kartik-v/bootstrap-popover-x)
+[![License](https://poser.pugx.org/kartik-v/bootstrap-popover-x/license)](https://packagist.org/packages/kartik-v/bootstrap-popover-x)
+[![Packagist Downloads](https://poser.pugx.org/kartik-v/bootstrap-popover-x/downloads)](https://packagist.org/packages/kartik-v/bootstrap-popover-x)
+[![Monthly Downloads](https://poser.pugx.org/kartik-v/bootstrap-popover-x/d/monthly)](https://packagist.org/packages/kartik-v/bootstrap-popover-x)
+
+</div>
 
 Bootstrap Popover Extended - Popover with modal behavior, multiple placements, automatic placements, ability to load content dynamically, and more other styling enhancements. The plugin uses enhanced styling specific for Bootstrap versions 5.x, 4.x or 3.x, and incorporates various additional styling options. This plugin was originally inspired by [BootstrapModalPopover](http://scruffles.github.io/BootstrapModalPopover/) for Bootstrap 2.x, and has been significantly enhanced for Bootstrap 3.x and includes various new features.
 
-> NOTE: Refer the [CHANGE LOG](https://github.com/kartik-v/bootstrap-popover-x/blob/master/CHANGE.md) for details of changes to various releases. From release v1.4.8, all bootstrap libraries from bootstrap 3.x to bootstrap 4.x and 5.x is supported. 
+> NOTE: Refer the [CHANGE LOG](https://github.com/kartik-v/bootstrap-popover-x/blob/master/CHANGE.md) for details of changes to various releases. From release v1.4.8, all bootstrap libraries till bootstrap 5.x (including bootstrap 4.x and 3.x) is supported. 
 
 ## Features  
 
@@ -93,12 +104,12 @@ You must first load the following assets in your header.
 
 ```html
 <!-- bootstrap 5.x, 4.x or 3.x is supported -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
-<link href="path/to/css/bootstrap-popover-x.min.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-popover-x@1.5.1/css/bootstrap-popover-x.min.css" media="all" rel="stylesheet" type="text/css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- bootstrap.min.js below is needed for modal dialog dependency. -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<script src="path/to/js/bootstrap-popover-x.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-popover-x@1.5.1/js/bootstrap-popover-x.min.js" type="text/javascript"></script>
 ```
 
 If you noticed, you need to load the `bootstrap.min.css`, `jquery.min.js`, and `bootstrap.min.js` in addition to the `bootstrap-popover-x.min.css` and `bootstrap-popover-x.min.js` for

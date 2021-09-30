@@ -19,7 +19,7 @@ $this->title = 'Dashboard';
                 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => false];
                 echo Breadcrumbs::widget([
                     'tag' => 'ol',
-                    'options' => ['class' => 'breadcrumb float-sm-right'],
+                    'options' => ['class' => 'breadcrumb float-sm-end'],
                     'homeLink' => false,
                     'itemTemplate' => '<li class="breadcrumb-item">{link}</li>', // template for all links
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

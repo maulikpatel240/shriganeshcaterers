@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'bsVersion' => 4,
+    'bsVersion' => '5.x',
     'PAGE_SIZE' => 25,
     'MIN_DYNAMIC_FORM' => 1,
     'MIN_DYNAMIC_FORM0' => 0,

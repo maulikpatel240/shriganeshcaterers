@@ -22,7 +22,7 @@ $this->title = 'Create Email Templates';
                 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => false];
                 echo Breadcrumbs::widget([
                     'tag' => 'ol',
-                    'options' => ['class' => 'breadcrumb float-sm-right'],
+                    'options' => ['class' => 'breadcrumb float-sm-end'],
                     'homeLink' => [
                         'label' => Yii::t('yii', 'Home'),
                         'url' => Yii::$app->homeUrl,

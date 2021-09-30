@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
 
@@ -53,7 +53,7 @@ use yii\web\JsExpression;
     </div>
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

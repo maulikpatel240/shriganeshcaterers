@@ -492,7 +492,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 30px;
 }
 
-#hero .btn-menu, #hero .btn-book {
+#hero .btn-menu, #hero .btn-book, #menu .btn-menu {
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.5px;
@@ -506,7 +506,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid #cda45e;
 }
 
-#hero .btn-menu:hover, #hero .btn-book:hover {
+#hero .btn-menu:hover, #hero .btn-book:hover, #menu .btn-menu:hover {
   background: #cda45e;
   color: #fff;
 }

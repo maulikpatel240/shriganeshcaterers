@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\switchinput\SwitchInput;
 use yii\widgets\Breadcrumbs;
 use backend\models\RoleAccess;
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => false];
                 echo Breadcrumbs::widget([
                     'tag' => 'ol',
-                    'options' => ['class' => 'breadcrumb float-sm-right'],
+                    'options' => ['class' => 'breadcrumb float-sm-end'],
                     'homeLink' => [
                         'label' => Yii::t('yii', 'Home'),
                         'url' => Yii::$app->homeUrl,
@@ -50,14 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="float-right">
+                                <div class="float-end">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" id="permissionid" class="custom-control-input "  value="1" aria-invalid="false">
                                         <label class="custom-control-label" for="permissionid">Select all</label>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
-                                <div class="float-left">
+                                <div class="float-start">
                                     <h4 class="title"><?= Yii::t('yii', 'Role') . ' : ' . $rolemodel->name ?></h4>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($value['module_name_unique']) {
                                         ?>
                                         <div class="col-sm-12 col-md-12 col-lg-12 bg-light p-2 mb-3">
-                                            <div class="float-left"><h5 class="font-weight-bold"><?= Yii::t('yii', 'Access Control') . ' : ' . $value['module_name_unique'] ?></h5></div>
+                                            <div class="float-start"><h5 class="font-weight-bold"><?= Yii::t('yii', 'Access Control') . ' : ' . $value['module_name_unique'] ?></h5></div>
                                         </div>
                                         <?php
                                     }

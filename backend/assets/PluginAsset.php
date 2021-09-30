@@ -76,6 +76,7 @@ class PluginAsset extends AssetBundle {
                 //font
                 'plugins/fontawesome-free/css/all.min.css',
                 'plugins/tempusdominus-bootstrap-4/css/bootstrap-datetimepicker.css',
+                'plugins/toastr/toastr.min.css',
                 //animate
                 //'css/other/animate.modal.css',
                 //other
@@ -93,7 +94,8 @@ class PluginAsset extends AssetBundle {
                 //datetimepicker
                 'plugins/moment/moment.min.js',
                 'plugins/tempusdominus-bootstrap-4/js/bootstrap-datetimepicker.js',
-                
+                'js/jquery.quicksearch.js',
+                'plugins/toastr/toastr.min.js',
                 //other
                 'js/sweetalert2.js',
                 'js/bs4datetimepicker.js',

@@ -38,14 +38,17 @@ class MenuSearch extends Menu
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pageSize)
     {
-        $query = Menu::find();
+        $query = (isset($params['sort']) && $params['sort']) ? Menu::find() : Menu::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ],
         ]);
 
         $this->load($params);

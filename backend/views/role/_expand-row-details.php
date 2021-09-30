@@ -13,19 +13,19 @@
                 <tr class="active">
                     <th class="text-center">#</th>
                     <th>Breakup</th>
-                    <th class="text-right">Price</th>
+                    <th class="text-end">Price</th>
                 </tr>
                 <tr>
-                    <td class="text-center">1</td><td>Base Price</td><td class="text-right">188.10 </td>
+                    <td class="text-center">1</td><td>Base Price</td><td class="text-end">188.10 </td>
                 </tr>
                 <tr>
-                    <td class="text-center">2</td><td>Tax @ 6%</td><td class="text-right">12.54</td>
+                    <td class="text-center">2</td><td>Tax @ 6%</td><td class="text-end">12.54</td>
                 </tr>
                 <tr>
-                    <td class="text-center">3</td><td>Shipping @ 4%</td><td class="text-right">8.36</td>
+                    <td class="text-center">3</td><td>Shipping @ 4%</td><td class="text-end">8.36</td>
                 </tr>
                 <tr class="warning">
-                    <th></th><th>Total</th><th class="text-right">209.00</th>
+                    <th></th><th>Total</th><th class="text-end">209.00</th>
                 </tr>
             </tbody></table>
         </div>
@@ -37,19 +37,19 @@
                 <tr class="active">
                     <th class="text-center">#</th>
                     <th>Breakup</th>
-                    <th class="text-right">Price</th>
+                    <th class="text-end">Price</th>
                 </tr>
                 <tr>
-                    <td class="text-center">1</td><td>Base Price</td><td class="text-right">3600.00 </td>
+                    <td class="text-center">1</td><td>Base Price</td><td class="text-end">3600.00 </td>
                 </tr>
                 <tr>
-                    <td class="text-center">2</td><td>Tax @ 6%</td><td class="text-right">240.00</td>
+                    <td class="text-center">2</td><td>Tax @ 6%</td><td class="text-end">240.00</td>
                 </tr>
                 <tr>
-                    <td class="text-center">3</td><td>Shipping @ 4%</td><td class="text-right">160.00</td>
+                    <td class="text-center">3</td><td>Shipping @ 4%</td><td class="text-end">160.00</td>
                 </tr>
                 <tr class="warning">
-                    <th></th><th>Total</th><th class="text-right">4000.00</th>
+                    <th></th><th>Total</th><th class="text-end">4000.00</th>
                 </tr>
             </tbody></table>
         </div>

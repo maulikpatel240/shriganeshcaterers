@@ -162,7 +162,7 @@ class ItemsController extends BaseController {
                 Model::loadMultiple($modelItems, Yii::$app->request->post());
                 if($modelItems){
                     foreach ($modelItems as $key => $value){
-                        $modelNew = Items::find()->where(['english'=>$value->english])->one();
+                        $modelNew = Items::find()->where(['gujarati'=>$value->gujarati])->one();
                         if(empty($modelNew)){
                             $modelNew = new Items();
                         }

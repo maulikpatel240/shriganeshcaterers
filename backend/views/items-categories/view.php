@@ -15,7 +15,6 @@ $this->title = $model->english;
         'attributes' => [
             'english',
             'gujarati',
-            'hindi',
             'status',
             [                      // the owner name of the model
                 'attribute' => 'status_at',

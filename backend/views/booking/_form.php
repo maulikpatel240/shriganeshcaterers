@@ -1,13 +1,28 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
+use backend\models\Menu;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Booking */
 /* @var $form yii\widgets\ActiveForm */
+
+$menuData = Menu::find()->all();
+$menu = ArrayHelper::map($menuData, 'id', function($element) {
+            $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
+            $item_list = $element->english . ' ';
+            return $item_list . ' : ' . $category;
+        }, function($element) {
+            return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
+        });
+if ($model->menu) {
+    $model->menu = explode(",", $model->menu);
+}
 ?>
 
 <div class="booking-form">
@@ -27,19 +42,29 @@ use yii\web\JsExpression;
             <?= $form->field($model, 'people')->textInput() ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'date')->textInput(['type'=>'date']) ?>
+            <?= $form->field($model, 'date')->textInput(['type' => 'date']) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'time')->textInput(['type'=>'time']) ?>
+            <?= $form->field($model, 'time')->textInput(['type' => 'time']) ?>
         </div>
+        <?=
+        $form->field($model, "menu")->widget(Select2::classname(), [
+            'data' => $menu,
+            'options' => ['placeholder' => '--Select--', 'multiple' => true],
+            'showToggleAll' => false,
+            'pluginOptions' => [
+                'allowClear' => false,
+            ],
+        ]);
+        ?>
         <div class="col-md-12">
             <?= $form->field($model, 'message')->textarea(['rows' => 2]) ?>
         </div>
     </div>
-    
+
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

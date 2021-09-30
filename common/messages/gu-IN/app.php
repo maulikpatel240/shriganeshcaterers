@@ -57,4 +57,5 @@ return [
     "Message" => "સંદેશ",
     "Send Message" => "સંદેશ મોકલો",
     "Your message has been sent. Thank you!" => "તમારો સંદેશ મોકલવામાં આવ્યો છે. આભાર!",
+    "No records found" => "કોઈ રેકોર્ડ મળ્યો નથી",
 ];

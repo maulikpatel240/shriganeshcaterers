@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
 
@@ -18,7 +18,6 @@ use yii\web\JsExpression;
         <div class="col-sm-12 col-md-6 col-lg-6">
             <?= $form->field($model, 'english')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'gujarati')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'hindi')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="file-upload">
@@ -46,7 +45,7 @@ use yii\web\JsExpression;
     </div>
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

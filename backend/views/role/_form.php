@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
 use common\widgets\AjaxForm;
@@ -40,7 +40,7 @@ use yii\web\JsExpression;
     </div>   
     <div class="card-footer text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 </div>
 <?php ActiveForm::end(); ?>

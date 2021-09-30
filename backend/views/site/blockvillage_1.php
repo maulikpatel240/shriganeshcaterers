@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-use yii\bootstrap4\LinkPager;
+use yii\bootstrap5\LinkPager;
 use backend\models\States;
 use backend\models\Districts;
 use backend\models\Subdistricts;

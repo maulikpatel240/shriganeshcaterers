@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\dynamicform\DynamicFormWidget;
 use kartik\select2\Select2;
 use backend\models\Modules;
@@ -101,7 +101,7 @@ $form->field($model, 'module_id')->widget(Select2::classname(), [
                         </div>
                     </div>
                     <div class="">
-                        <div class="float-right">
+                        <div class="float-end">
                             <button type="button" class="remove-item btn btn-danger btn-xs"><i class="fas fa-times"></i></button>
                         </div>
                         <div class="clearfix"></div>
@@ -110,7 +110,7 @@ $form->field($model, 'module_id')->widget(Select2::classname(), [
             <?php endforeach; ?>
         </div>
         <div class="panel-footer mb-2">
-            <button type="button" class="float-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button>
+            <button type="button" class="float-end add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button>
 
             <div class="clearfix"></div>
 
@@ -120,7 +120,7 @@ $form->field($model, 'module_id')->widget(Select2::classname(), [
 <?php } ?>
 <div class="text-center">
     <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+    <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
 </div>
 <?php ActiveForm::end(); ?>
 <?php

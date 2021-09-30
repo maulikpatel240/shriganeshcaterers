@@ -5,8 +5,8 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\widgets\Breadcrumbs;
-use yii\bootstrap4\Modal;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\Modal;
+use yii\bootstrap5\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RoleSearch */
@@ -59,7 +59,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => false];
                 echo Breadcrumbs::widget([
                     'tag' => 'ol',
-                    'options' => ['class' => 'breadcrumb float-sm-right'],
+                    'options' => ['class' => 'breadcrumb float-sm-end'],
                     'homeLink' => [
                         'label' => Yii::t('yii', 'Home'),
                         'url' => Yii::$app->homeUrl,
@@ -76,8 +76,6 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-
-
             </div>
         </div>
         <div class="row">
@@ -171,7 +169,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return $model->total_price.'(₹)';
+                                return $model->total_price . '(₹)';
                             },
                         ],
                         [
@@ -180,7 +178,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return ($model->partial_price > 0) ? $model->partial_price.'(₹)' : $model->total_pay_price.'(₹)';
+                                return ($model->partial_price > 0) ? $model->partial_price . '(₹)' : $model->total_pay_price . '(₹)';
                             },
                         ],
                         [
@@ -215,14 +213,20 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         'class' => 'btn btn-' . $btnbg . ' btn-sm cursor-pointer',
                                                         'id' => 'status_' . $model->id,
                                                         'title' => $model->status,
-                                                        'data-toggle' => "modal",
-                                                        'data-target' => "#formmodal",
+                                                        'data-bs-toggle' => "modal",
+                                                        'data-bs-target' => "#formmodal",
                                                         'onclick' => '$.post({
                                                             url: "' . Yii::$app->homeUrl . 'booking/statusupdate?id=' . $model->id . '",
+                                                            beforeSend:function() {
+                                                                $(\'.loader_div\').show();
+                                                                $(\'#formmodal\').find(\'#modalContent\').html("");
+                                                            },
                                                             success: function (response) {
                                                                 $(\'#formmodal\').find(\'#modalContent\').html(response);
-                                                                //$.pjax.reload({container: "#gridtable-pjax"});
                                                             },
+                                                            complete:function() {
+                                                                $(\'.loader_div\').hide();
+                                                            }
                                                         });'
                                                     ]
                                     );
@@ -249,11 +253,11 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                     if (!empty(Yii::$app->BackFunctions->checkaccess('view', Yii::$app->controller->id))) {
                                         return Html::a(
                                                         '<span class="fas fa-eye"></span>',
-                                                        FALSE,
+                                                        Url::to(['booking/view', 'id' => $model->id]),
                                                         [
-                                                            'value' => Url::to(['booking/view', 'id' => $model->id]),
+                                                            //'value' => Url::to(['booking/view', 'id' => $model->id]),
                                                             'title' => 'View booking',
-                                                            'class' => 'showModalButton ml-1 mr-1 text-warning',
+                                                            'class' => 'ms-1 me-1 text-warning',
                                                             'data-pjax' => '0',
                                                         ]
                                         );
@@ -268,7 +272,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         [
                                                             'value' => Url::to(['booking/update', 'id' => $model->id]),
                                                             'title' => 'Edit booking',
-                                                            'class' => 'showModalButton ml-1 mr-1 text-primary',
+                                                            'class' => 'showModalButton ms-1 me-1 text-primary',
                                                             'data-pjax' => '0',
                                                         ]
                                         );
@@ -282,7 +286,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         $url,
                                                         [
                                                             'title' => 'Delete booking',
-                                                            'class' => 'ml-1 mr-1 text-danger',
+                                                            'class' => 'ms-1 me-1 text-danger',
                                                             'data-method' => "post",
                                                             'data-confirm' => "Are you sure to delete?",
                                                             'data-toggle' => "tooltip",
@@ -305,12 +309,12 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                 'title' => 'Reset',
                                 'data-pjax' => 1,
                             ]),
-                            'options' => ['class' => 'btn-group mr-2']
+                            'options' => ['class' => 'btn-group me-2']
                         ],
                         '{export}',
                         '{toggleData}',
                     ],
-                    'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+                    'toggleDataContainer' => ['class' => 'btn-group me-2'],
                     // set export properties
                     'export' => [
                         'fontAwesome' => true,
@@ -362,7 +366,6 @@ Modal::end();
     function applyjs(e) {
         var confirmalert = confirmationAlert(e, 'Are you sure want to apply?', 'text');
         if (confirmalert == true) {
-            ;
             var keys = $('#gridtable').yiiGridView('getSelectedRows');
             var applyoption = $('#applyoption').val();
             $.post({
@@ -382,26 +385,20 @@ Modal::end();
 //the same link.
 //we use on so the dom element can be called again if they are nested, otherwise when we load the content once it kills the dom element and wont let you load anther modal on click without a page refresh
     $(document).on('click', '.showModalButton', function () {
-        //check if the modal is open. if it's open just reload content not whole modal
-        //also this allows you to nest buttons inside of modals to reload the content it is in
-        //the if else are intentionally separated instead of put into a function to get the 
-        //button since it is using a class not an #id so there are many of them and we need
-        //to ensure we get the right button and content. 
-        $('#formmodal').find('#modalContent').html('');
-        $('.loader_div').show();
-        if ($('#formmodal').data('bs.modal').isShown) {
-            $('#formmodal').find('#modalContent').load($(this).attr('value'), function () {
+        document.getElementById('formmodal-label').innerHTML = $(this).attr('title');
+        $.ajax({
+            url: $(this).attr('value'),
+            beforeSend: function () {
+                $('#formmodal').find('#modalContent').html('');
+                $('.loader_div').show();
+            },
+            success: function (response) {
+                $('#formmodal').modal('show').find('#modalContent').html(response);
+            },
+            complete: function () {
                 $('.loader_div').hide();
-            });
-            //dynamiclly set the header for the modal via title tag
-            document.getElementById('formmodal-label').innerHTML = $(this).attr('title');
-        } else {
-            //if modal isn't open; open it and load content
-            $('#formmodal').modal('show').find('#modalContent').load($(this).attr('value'), function () {
-                $('.loader_div').hide();
-            });
-            //dynamiclly set the header for the modal via title tag
-            document.getElementById('formmodal-label').innerHTML = $(this).attr('title');
-        }
+                $('#formmodal').modal('hide');
+            }
+        });
     });
 </script>

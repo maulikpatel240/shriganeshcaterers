@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use kartik\select2\Select2;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
@@ -124,12 +124,12 @@ $description_placeholder = '';
             ?>
             <?= $form->field($model, 'gujarati')->textInput(['placeholder' => ''])->label() ?>
             <?= $form->field($model, 'hindi')->textInput(['placeholder' => ''])->label() ?>
-            <?= $form->field($model, 'description')->textArea(['placeholder' => ''])->label('Description <span class="mr-2">'.$description_placeholder.'</span>') ?>
+            <?= $form->field($model, 'description')->textArea(['placeholder' => ''])->label('Description <span class="me-2">'.$description_placeholder.'</span>') ?>
         </div>
     </div>
     <div class="form-group text-center">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+        <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -31,7 +31,7 @@ class ItemsCategories extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['item_category_id', 'english'], 'required'],
+            [['english'], 'required'],
             [['status'], 'string'],
             [['status_at', 'created_at', 'updated_at'], 'safe'],
             [['english', 'gujarati', 'hindi'], 'string', 'max' => 255],

@@ -1,15 +1,28 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap5\ActiveForm;
 use common\widgets\AjaxForm;
 use yii\web\JsExpression;
+use backend\models\Menu;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Booking */
 /* @var $form yii\widgets\ActiveForm */
 $model->payment_type = (empty($model->payment_type)) ? 'Full' : $model->payment_type;
 $dnone = ($model->payment_type == 'Partial') ? 'block' : 'none';
+
+$menuData = Menu::find()->all();
+$model->menu = explode(",", $model->menu);
+$menu = ArrayHelper::map($menuData, 'id', function($element) {
+            $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
+            $item_list = $element->english . ' ';
+            return $item_list . ' : ' . $category;
+        }, function($element) {
+            return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
+        });
 ?>
 
 <div class="booking-form">
@@ -44,11 +57,39 @@ $dnone = ($model->payment_type == 'Partial') ? 'block' : 'none';
 
         <?php $form = ActiveForm::begin(['id' => 'myform']); ?>
         <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'total_price')->textInput(['type' => 'number']) ?>
-            </div>
+            <?php if ($model->status == 'Pending') { ?>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'total_price')->textInput(['type' => 'number']) ?>
+                </div>
+                <div class="col-md-12">
+                    <?=
+                    $form->field($model, "menu")->widget(Select2::classname(), [
+                        'data' => $menu,
+                        'options' => ['placeholder' => '--Select--', 'multiple' => true],
+                        'showToggleAll' => false,
+                        'pluginOptions' => [
+                            'allowClear' => false,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <?php
+            } else {
+                if ($model->menu) {
+                    echo '<div class="col-md-12">';
+                    $itemname = ArrayHelper::getColumn($model->menu, function ($element) {
+                                $menu_items = Menu::find()->where(['id' => $element])->one();
+                                return '<a class="btn btn-outline-primary text-bold mb-2">' . $menu_items['english'] . '</a>';
+                            });
+                    $in = $itemname ? implode(' ', $itemname) : '';
+                    echo $in;
+                    echo '</div>';
+                }
+            }
+            ?>
+
         </div>
-        <?php if ($model->status == 'Approved') { ?>
+        <?php if ($model->status == 'Approved' || $model->status == 'Partial') { ?>
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'payment_type')->inline()->radioList(['Full' => 'Full', 'Partial' => 'Partial',], ['separator' => ' ', 'tabindex' => 3]) ?>
@@ -61,13 +102,13 @@ $dnone = ($model->payment_type == 'Partial') ? 'block' : 'none';
 
         <div class="form-group text-center">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-            <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+            <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
         </div>
         <?php ActiveForm::end(); ?>
 
-    <?php }else{ ?>
-        <div class="form-group text-right mt-4">
-            <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-dismiss' => 'modal']) ?>
+    <?php } else { ?>
+        <div class="form-group text-end mt-4">
+            <?= Html::button('Close', ['class' => 'btn btn-danger', 'data-bs-dismiss' => 'modal']) ?>
         </div>
     <?php } ?>
 </div>

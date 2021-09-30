@@ -20,7 +20,6 @@ $imagehtml = Html::a($imagesrc, Yii::$app->urlManager->baseUrl . '/uploads/event
         'attributes' => [
             'english',
             'gujarati',
-            'hindi',
             [
                 'attribute' => 'image',
                 'value' => $imagehtml,

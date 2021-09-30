@@ -27,7 +27,7 @@ class UploadExcel extends ActiveRecord {
 
         if ($this->rules()) {
             $tmp_file = $file->baseName . '.' . $file->extension;
-            $path = 'upload/' . 'Files/';
+            $path = 'uploads/' . 'files/';
             if (is_dir($path)) {
                 $file->saveAs($path . $tmp_file);
             } else {

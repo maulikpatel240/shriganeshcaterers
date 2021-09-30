@@ -34,12 +34,12 @@ class SiteController extends BaseController {
                 'rules' => [
                     [
                         //'actions' => ['login', 'error','index'],
-                        'actions' => ['error', 'index', 'booking', 'gallery', 'review'],
+                        'actions' => ['error', 'index', 'booking', 'gallery', 'review','menu'],
                         'allow' => true,
                     ],
                     [
                         //'actions' => ['logout', 'index'],
-                        'actions' => ['index', 'booking', 'gallery', 'review'],
+                        'actions' => ['index', 'booking', 'gallery', 'review', 'menu'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -89,9 +89,8 @@ class SiteController extends BaseController {
         global $sg;
         $renderdata = array();
         $renderdata['categories'] = Yii::$app->SqlFunctions->categories();
-        $renderdata['menus'] = Yii::$app->SqlFunctions->menu();
         $renderdata['eventCategories'] = Yii::$app->SqlFunctions->eventCategories();
-        $renderdata['gallery'] = Yii::$app->SqlFunctions->gallery('', 8);
+        //$renderdata['gallery'] = Yii::$app->SqlFunctions->gallery('', 8);
         $BookingModel = new Booking();
         $ReviewModel = new Review();
         $BookingModel->scenario = 'frontend';
@@ -130,6 +129,7 @@ class SiteController extends BaseController {
             $model->save();
             return $model->id;
         }
+        return $this->render('booking', ['BookingModel' => $model]);
     }
 
     public function actionReview() {
@@ -158,6 +158,15 @@ class SiteController extends BaseController {
 
         $gallery = Yii::$app->SqlFunctions->gallery(['type' => 'Image'], 'all');
         return $this->render('gallery', ['gallery' => $gallery]);
+    }
+    
+    public function actionMenu() {
+        global $sg;
+        $request = Yii::$app->request;
+        $renderdata = [];
+        $renderdata['categories'] = Yii::$app->SqlFunctions->categories();
+        $renderdata['menus'] = Yii::$app->SqlFunctions->menu();
+        return $this->render('menu', $renderdata);
     }
 
     public function actionError() {
