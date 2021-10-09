@@ -133,41 +133,29 @@ class SiteController extends BaseController {
                EOT;
             }
         }
-
         $ok = 0;
         if ($model->load(Yii::$app->request->post())) {
             $data = [];
-            Yii::$app->cacheBackend->delete('pincode');
-            if(Yii::$app->cacheBackend->get('pincode')){
-                $data = Yii::$app->cacheBackend->get('pincode');
-            }else{
-                $file = UploadedFile::getInstance($model, 'file');
+            $file = UploadedFile::getInstance($model, 'file');
+            if ($file) {
+                $filename = 'uploads/files/' . $file->name;
+                $file->saveAs($filename);
 
-                if ($file) {
-                    $filename = 'uploads/files/' . $file->name;
-                    $file->saveAs($filename);
-
-                    if (in_array($file->extension, array('xls', 'xlsx'))) {
-                        $data = \moonland\phpexcel\Excel::widget([
-                                'mode' => 'import', 
-                                'fileName' => $filename, 
-                                'setFirstRecordAsKeys' => true, // if you want to set the keys of record column with first record, if it not set, the header with use the alphabet column on excel. 
-                                'setIndexSheetByName' => true, // set this if your excel data with multiple worksheet, the index of array will be set with the sheet name. If this not set, the index will use numeric. 
-                                'getOnlySheet' => 'menu', // you can set this property if you want to get the specified sheet from the excel data with multiple worksheet.
-                        ]);
-                        //echo '<pre>'; print_r($data);echo '</pre>';exit;
-                        //prev(array)
-                        //Yii::$app->cacheBackend->set('pincode', $data);
-                        //Yii::$app->cacheBackend->set('villages', $data);
-                        //$data = $data['Report'];
-                        //echo '<pre>'; print_r($data);echo '</pre>';exit;
-                        return $this->render('import_exel', ['data' => $data]);
-                    }
-                }
-            }
-            if($data){
-                for($i=0; $i<count($data); $i++){  
-                    
+                if (in_array($file->extension, array('xls', 'xlsx'))) {
+                    $data = \moonland\phpexcel\Excel::widget([
+                            'mode' => 'import', 
+                            'fileName' => $filename, 
+                            'setFirstRecordAsKeys' => true, // if you want to set the keys of record column with first record, if it not set, the header with use the alphabet column on excel. 
+                            'setIndexSheetByName' => true, // set this if your excel data with multiple worksheet, the index of array will be set with the sheet name. If this not set, the index will use numeric. 
+                            'getOnlySheet' => 'menu', // you can set this property if you want to get the specified sheet from the excel data with multiple worksheet.
+                    ]);
+                    //echo '<pre>'; print_r($data);echo '</pre>';exit;
+                    //prev(array)
+                    //Yii::$app->cacheBackend->set('pincode', $data);
+                    //Yii::$app->cacheBackend->set('villages', $data);
+                    //$data = $data['Report'];
+                    //echo '<pre>'; print_r($data);echo '</pre>';exit;
+                    return $this->render('import_exel', ['data' => $data]);
                 }
             }
         } else {

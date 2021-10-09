@@ -199,8 +199,10 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'value' => function ($model, $key, $index, $widget) {
                                 if ($model->status == 'Pending') {
                                     $btnbg = 'danger';
-                                } elseif ($model->status == 'Approved') {
+                                }else if ($model->status == 'Booked') {
                                     $btnbg = 'secondary';
+                                } elseif ($model->status == 'Approved') {
+                                    $btnbg = 'primary';
                                 } elseif ($model->status == 'Partial') {
                                     $btnbg = 'warning';
                                 } else {
@@ -265,7 +267,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                     return;
                                 },
                                 'update' => function ($url, $model) {
-                                    if (!empty(Yii::$app->BackFunctions->checkaccess('update', Yii::$app->controller->id))) {
+                                    if (!empty(Yii::$app->BackFunctions->checkaccess('update', Yii::$app->controller->id)) && $model->status != 'Paid') {
                                         return Html::a(
                                                         '<span class="fas fa-pencil-alt"></span>',
                                                         FALSE,
@@ -389,15 +391,15 @@ Modal::end();
         $.ajax({
             url: $(this).attr('value'),
             beforeSend: function () {
+                $('#formmodal').modal('show')
                 $('#formmodal').find('#modalContent').html('');
                 $('.loader_div').show();
             },
             success: function (response) {
-                $('#formmodal').modal('show').find('#modalContent').html(response);
+                $('#formmodal').find('#modalContent').html(response);
             },
             complete: function () {
                 $('.loader_div').hide();
-                $('#formmodal').modal('hide');
             }
         });
     });

@@ -9,15 +9,21 @@ use backend\models\BookingItems;
 /**
  * BookingItemsSearch represents the model behind the search form of `backend\models\BookingItems`.
  */
-class BookingItemsSearch extends BookingItems
-{
+class BookingItemsSearch extends BookingItems {
+
+    public $item_category = '';
+    public $booking;
+    
+    public function __construct($booking) {
+        $this->booking = $booking;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'booking_id', 'menu_id', 'item_id'], 'integer'],
+            [['id', 'booking_id', 'menu_id', 'item_id', 'item_category_id', 'category_id'], 'integer'],
             [['weight', 'unit', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -25,8 +31,7 @@ class BookingItemsSearch extends BookingItems
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,9 +43,8 @@ class BookingItemsSearch extends BookingItems
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $pageSize)
-    {
-        $query = BookingItems::find();
+    public function search($params, $pageSize) {
+        $query = (isset($params['sort']) && $params['sort']) ? BookingItems::find()->where(['booking_id' => $this->booking->id]) : BookingItems::find()->where(['booking_id' => $this->booking->id])->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -64,14 +68,17 @@ class BookingItemsSearch extends BookingItems
             'id' => $this->id,
             'booking_id' => $this->booking_id,
             'menu_id' => $this->menu_id,
+            'category_id' => $this->category_id,
             'item_id' => $this->item_id,
+            'item_category_id' => $this->item_category_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'weight', $this->weight])
-            ->andFilterWhere(['like', 'unit', $this->unit]);
+                ->andFilterWhere(['like', 'unit', $this->unit]);
 
         return $dataProvider;
     }
+
 }

@@ -95,14 +95,6 @@ $items = ArrayHelper::map($itemsData, 'id', function($element) {
                                 <?= $form->field($model, "description_gujarati")->textArea(['maxlength' => true]) ?>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <?= $form->field($model, "hindi")->textInput(['maxlength' => true]) ?>
-                            </div>
-                            <div class="col-md-8">
-                                <?= $form->field($model, "description_hindi")->textArea(['maxlength' => true]) ?>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -253,14 +245,6 @@ $items = ArrayHelper::map($itemsData, 'id', function($element) {
                                         </div>
                                         <div class="col-md-8">
                                             <?= $form->field($value, "[$key]description_gujarati")->textArea(['maxlength' => true]) ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <?= $form->field($value, "[$key]hindi")->textInput(['maxlength' => true]) ?>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <?= $form->field($value, "[$key]description_hindi")->textArea(['maxlength' => true]) ?>
                                         </div>
                                     </div>
                                 </div>

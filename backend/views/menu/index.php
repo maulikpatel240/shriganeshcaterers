@@ -143,6 +143,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'filter' => ArrayHelper::map(Categories::find()->where(['status' => 'Active'])->asArray()->all(), 'id', 'english'),
+                            'filterInputOptions' => ['class' => 'form-select'],
                             'value' => function ($model, $key, $index, $widget) {
                                 return $model->menuCategory->english;
                             },
@@ -350,15 +351,15 @@ Modal::end();
         $.ajax({
             url: $(this).attr('value'),
             beforeSend: function () {
+                $('#formmodal').modal('show')
                 $('#formmodal').find('#modalContent').html('');
                 $('.loader_div').show();
             },
             success: function (response) {
-                $('#formmodal').modal('show').find('#modalContent').html(response);
+                $('#formmodal').find('#modalContent').html(response);
             },
             complete: function () {
                 $('.loader_div').hide();
-                $('#formmodal').modal('hide');
             }
         });
     });

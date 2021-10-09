@@ -10,7 +10,9 @@ use Yii;
  * @property int $id
  * @property int $booking_id
  * @property int $menu_id
+ * @property int $category_id
  * @property int $item_id
+ * @property int $item_category_id
  * @property string $weight
  * @property string $unit
  * @property string|null $created_at
@@ -19,45 +21,52 @@ use Yii;
  * @property Booking $booking
  * @property Menu $menu
  * @property Items $item
+ * @property ItemsCategories $itemCategory
+ * @property Categories $category
  */
-class BookingItems extends \yii\db\ActiveRecord
-{
+class BookingItems extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'booking_items';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['booking_id', 'menu_id', 'item_id', 'weight', 'unit'], 'required'],
-            [['booking_id', 'menu_id', 'item_id'], 'integer'],
+            
+            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id'], 'required', 'on' => ['viewdata']],
+            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id', 'weight', 'unit'], 'required', 'on' => ['updateweight']],
+            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id'], 'integer'],
+            [['unit', 'INR'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['weight', 'unit'], 'string', 'max' => 100],
+            [['weight'], 'string', 'max' => 100],
             [['booking_id'], 'exist', 'skipOnError' => true, 'targetClass' => Booking::className(), 'targetAttribute' => ['booking_id' => 'id']],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Items::className(), 'targetAttribute' => ['item_id' => 'id']],
+            [['item_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemsCategories::className(), 'targetAttribute' => ['item_category_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'booking_id' => 'Booking ID',
             'menu_id' => 'Menu ID',
+            'category_id' => 'Category ID',
             'item_id' => 'Item ID',
+            'item_category_id' => 'Item Category ID',
             'weight' => 'Weight',
             'unit' => 'Unit',
+            'INR' => '₹ INR (Rupee)',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -68,8 +77,7 @@ class BookingItems extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getBooking()
-    {
+    public function getBooking() {
         return $this->hasOne(Booking::className(), ['id' => 'booking_id']);
     }
 
@@ -78,8 +86,7 @@ class BookingItems extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMenu()
-    {
+    public function getMenu() {
         return $this->hasOne(Menu::className(), ['id' => 'menu_id']);
     }
 
@@ -88,8 +95,26 @@ class BookingItems extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getItem()
-    {
+    public function getItem() {
         return $this->hasOne(Items::className(), ['id' => 'item_id']);
     }
+
+    /**
+     * Gets query for [[ItemCategory]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemCategory() {
+        return $this->hasOne(ItemsCategories::className(), ['id' => 'item_category_id']);
+    }
+
+    /**
+     * Gets query for [[Category]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory() {
+        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+    }
+
 }

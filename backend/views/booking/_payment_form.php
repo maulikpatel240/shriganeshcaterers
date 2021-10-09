@@ -34,7 +34,7 @@ $menu = ArrayHelper::map($menuData, 'id', function($element) {
             <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Email</span>: <?= $model->email ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Phone</span>: <?= $model->phone ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Phone</span>: <?= $model->phone ?> <?=($model->mobile)?', '.$model->mobile:''?></p>
         </div>
         <div class="col-md-6">
             <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">People</span>: <?= $model->people ?></p>
@@ -62,15 +62,15 @@ $menu = ArrayHelper::map($menuData, 'id', function($element) {
                     <?= $form->field($model, 'total_price')->textInput(['type' => 'number']) ?>
                 </div>
                 <div class="col-md-12">
-                    <?=
-                    $form->field($model, "menu")->widget(Select2::classname(), [
+                    <?php
+                    /*$form->field($model, "menu")->widget(Select2::classname(), [
                         'data' => $menu,
                         'options' => ['placeholder' => '--Select--', 'multiple' => true],
                         'showToggleAll' => false,
                         'pluginOptions' => [
                             'allowClear' => false,
                         ],
-                    ]);
+                    ]);*/
                     ?>
                 </div>
                 <?php
@@ -89,7 +89,7 @@ $menu = ArrayHelper::map($menuData, 'id', function($element) {
             ?>
 
         </div>
-        <?php if ($model->status == 'Approved' || $model->status == 'Partial') { ?>
+        <?php if ($model->status == 'Booked' || $model->status == 'Partial') { ?>
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'payment_type')->inline()->radioList(['Full' => 'Full', 'Partial' => 'Partial',], ['separator' => ' ', 'tabindex' => 3]) ?>

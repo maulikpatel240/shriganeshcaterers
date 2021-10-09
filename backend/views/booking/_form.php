@@ -36,7 +36,22 @@ if ($model->menu) {
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?=
+                    $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::class, [
+                        'mask' => '999-999-9999',
+                    ])
+                    ?>
+                </div>
+                <div class="col-md-6">
+                    <?=
+                    $form->field($model, 'mobile')->widget(\yii\widgets\MaskedInput::class, [
+                        'mask' => '999-999-9999',
+                    ])
+                    ?>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'people')->textInput() ?>
@@ -46,6 +61,9 @@ if ($model->menu) {
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'time')->textInput(['type' => 'time']) ?>
+        </div>
+        <div class="col-md-12">
+            <?= $form->field($model, 'total_price')->textInput(['type' => 'number']) ?>
         </div>
         <?=
         $form->field($model, "menu")->widget(Select2::classname(), [

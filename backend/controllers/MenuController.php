@@ -211,7 +211,6 @@ class MenuController extends BaseController {
             if ($model->load(Yii::$app->request->post())) {
                 $model->items = ($model->items) ? implode(",", $model->items) : '';
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $model->save();
                 $model->image = UploadedFile::getInstance($model, 'image');
                 if($model->image){
                     $model->deleteImage($model->getOldAttribute('image'));

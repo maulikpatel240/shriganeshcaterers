@@ -44,7 +44,8 @@ class Booking extends \yii\db\ActiveRecord {
             [['message', 'status', 'payment_type'], 'string'],
             [['total_price', 'partial_price', 'total_pay_price'], 'number'],
             [['name', 'email'], 'string', 'max' => 100],
-            [['phone'], 'string', 'max' => 16],
+            [['phone', 'mobile'], 'string', 'max' => 16],
+            [['phone', 'mobile'], 'match', 'pattern'=>'/^(\D*)?(\d{3})(\D*)?(\d{3})(\D*)?(\d{4})$/'],
             [['total_price'], 'number', 'min' => 1],
             ['partial_price', 'required', 'when' => function ($model) {
                 return $model->payment_type == 'Partial' ? true : false;
@@ -63,6 +64,7 @@ class Booking extends \yii\db\ActiveRecord {
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
+            'mobile' => 'Mobile',
             'datetime' => 'Booking Datetime',
             'people' => 'People',
             'message' => 'Message',

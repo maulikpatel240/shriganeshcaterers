@@ -34,6 +34,7 @@ if (isset($data) && $data) {
         <tbody>
             <?php
             foreach ($data as $key => $row) {
+               
                 $i_join = []; 
                 for($i=0; $i<50; $i++){
                     $i_join_t = (isset($row[$i]) && $row[$i])?trim($row[$i]):"";
@@ -49,24 +50,31 @@ if (isset($data) && $data) {
                 if (empty($modelNew)) {
                     $modelNew = new Menu();
                 }
-                $modelNew->menu_category_id = $row['menu_category_id'];
-                $modelNew->english = $row['english'];
-                $modelNew->gujarati = '';
-                $modelNew->hindi = '';
-                $modelNew->items = $row['i_join'];
-                $modelNew->status_at = Yii::$app->BackFunctions->currentDateTime();
-                $modelNew->created_at = Yii::$app->BackFunctions->currentDateTime();
-                $modelNew->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                if(!$modelNew->save()){
-                    echo '<pre>'; print_r($modelNew->getErrors());echo '</pre>';exit;
+                $category = '';
+                if($row['category'] == "sweet"){
+                    $category = 9;
                 }
+                if($category){
+                    $modelNew->menu_category_id = $category;
+                    $modelNew->english = $row['english'];
+                    $modelNew->gujarati = '';
+                    $modelNew->hindi = '';
+                    $modelNew->items = $row['i_join'];
+                    $modelNew->status_at = Yii::$app->BackFunctions->currentDateTime();
+                    $modelNew->created_at = Yii::$app->BackFunctions->currentDateTime();
+                    $modelNew->updated_at = Yii::$app->BackFunctions->currentDateTime();
+                    if(!$modelNew->save()){
+                        echo '<pre>'; print_r($modelNew->getErrors());echo '</pre>';exit;
+                    }
+                }
+ 
                // echo '<pre>'; print_r($modelNew);echo '</pre>';
 //                echo "INSERT INTO `items`(`item_category_id`,`gujarati`) VALUES ('".$row['id']."','".$row['item_category_id']."','".'<p class="gujarati">' . $row['gujarati'] . '</p>'."')<br>";
-                /* Items add
-                $icat = '';
+                // Items add
+               /* $icat = '';
                 if($row['category'] == 'grocery'){
                     $icat = 1;
-                }elseif($row['category'] == 'papernepkin'){
+                }elseif($row['category'] == 'papernapkin'){
                     $icat = 4;
                 }elseif($row['category'] == 'dairy'){
                     $icat = 3;
@@ -74,7 +82,7 @@ if (isset($data) && $data) {
                     $icat = 5;
                 }elseif($row['category'] == 'vegetable'){
                     $icat = 2;
-                }elseif($row['category'] == 'kitchenware'){
+                }elseif($row['category'] == 'Kitchenware'){
                     $icat = 6;
                 }  
                 $modelNew = Items::find()->where(['gujarati'=>$row['gujarati']])->one();
@@ -88,8 +96,11 @@ if (isset($data) && $data) {
                 $modelNew->status_at = Yii::$app->BackFunctions->currentDateTime();
                 $modelNew->created_at = Yii::$app->BackFunctions->currentDateTime();
                 $modelNew->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                $modelNew->save();
-                */
+                if(!$modelNew->save()) { echo '<pre>'; print_r($modelNew->getErrors());echo '</pre>';exit; };
+                echo $modelNew->id.'<br>';
+                 echo '<pre>'; print_r($row);echo '</pre>';
+                 
+                 */
                 //echo "INSERT INTO `items`(`item_category_id`,`gujarati`) VALUES ('".$row['gujarati']."','".$icat ."')<br>";
                //echo '<pre>'; print_r($row);echo '</pre>';exit;
             }

@@ -30,7 +30,6 @@ if($items){
             ],
             'english',
             'gujarati',
-            'hindi',
             [
                 'attribute' => 'menu_category_id',
                 'label' => 'Category',
