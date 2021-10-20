@@ -23,41 +23,40 @@ $base_url = $sg['base_url'];
     </div>
 </section>
 <section class="inner-page menu section-bg" id="menu">
-    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-        <div class="row g-0">
-            <?php if ($categories) { ?>
-                <div class="row" data-aos="fade-up" data-aos-delay="100">
-                    <div class="col-lg-12 d-flex justify-content-center">
-                        <ul id="menu-flters">
-                            <li data-filter="*" class="filter-active"><?= Yii::t('app', 'All') ?></li>
-                            <?php foreach ($categories as $cat) { ?>
-                                <li data-filter=".filter-<?= $cat['id'] ?>"><?= $cat[$sg['language']]; ?></li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
-                <?php if ($menus) { ?>
-                    <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                        <?php foreach ($menus as $menu) { ?>
-                            <div class="col-lg-6 menu-item filter-<?= $menu['menu_category_id'] ?>">
-                                <img src="<?= $base_url . '/uploads/menu/' . $menu['image'] ?>" class="menu-img" alt="">
-                                <div class="menu-content">
-                                    <a><?= $menu[$sg['language']] ?></a><span></span>
-                                </div>
-                                <div class="menu-ingredients">
-                                    <?= Yii::$app->FrontFunctions->truncate($menu['description_' . $sg['language']], 100); ?>
-                                </div>
-                            </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <?php if ($categories) { ?>
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active"><?= Yii::t('app', 'All') ?></li>
+                        <?php foreach ($categories as $cat) { ?>
+                            <li data-filter=".filter-<?= $cat['id'] ?>"><?= $cat[$sg['language']]; ?></li>
                         <?php } ?>
-                    </div>
-                    <?php
-                } else {
-                    echo '<div class="col-12">' . Yii::t('app', 'No records found') . '</div>';
-                }
+                    </ul>
+                </div>
+            </div>
+            <?php if ($menus) { ?>
+                <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                    <?php foreach ($menus as $menu) { ?>
+                        <div class="col-lg-6 menu-item filter-<?= $menu['menu_category_id'] ?>">
+                            <img src="<?= $base_url . '/uploads/menu/' . $menu['image'] ?>" class="menu-img" alt="">
+                            <div class="menu-content">
+                                <a><?= ucfirst($menu[$sg['language']]); ?></a><span></span>
+                            </div>
+                            <div class="menu-ingredients">
+                                <?= Yii::$app->FrontFunctions->truncate($menu['description_' . $sg['language']], 100); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+                <?php
             } else {
                 echo '<div class="col-12">' . Yii::t('app', 'No records found') . '</div>';
             }
-            ?>
-        </div>
+        } else {
+            echo '<div class="col-12">' . Yii::t('app', 'No records found') . '</div>';
+        }
+        ?>
     </div>
 </section>

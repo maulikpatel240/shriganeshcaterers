@@ -12,13 +12,13 @@ use kartik\select2\Select2;
 /* @var $model backend\models\Booking */
 /* @var $form yii\widgets\ActiveForm */
 
-$menuData = Menu::find()->all();
+$menuData = Menu::find()->joinWith('menuCategory')->orderBy(['categories.position' => SORT_ASC])->all();
 $menu = ArrayHelper::map($menuData, 'id', function($element) {
-            $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
-            $item_list = $element->english . ' ';
+            $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+            $item_list = $element->id.'- '.ucfirst($element->english) . ' ';
             return $item_list . ' : ' . $category;
         }, function($element) {
-            return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . $element->menuCategory->english . ')';
+            return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
         });
 if ($model->menu) {
     $model->menu = explode(",", $model->menu);

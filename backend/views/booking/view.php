@@ -19,20 +19,33 @@ use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Booking */
 
-$this->title = $model->name;
+$this->title = ucwords($model->name);
 $this->params['breadcrumbs'][] = ['label' => 'Bookings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
-if ($searchModel && $searchModel->category_id) {
-    $MenuData = ArrayHelper::map(Menu::find()->where(['status' => 'Active', 'menu_category_id' => $searchModel->category_id])->asArray()->all(), 'id', 'english');
+$CategoryData = ArrayHelper::map(Categories::find()->where(['status' => 'Active'])->orderBy(['position' => SORT_ASC])->all(), 'id', function($element) {
+            return $element->id . '- ' . ucfirst($element->gujarati) . ' (' . $element->english . ')';
+        });
+
+if ($searchModel && $searchModel->menu_category_id) {
+    $MenuData = ArrayHelper::map(Menu::find()->joinWith('menuCategory')->where(['menu.status' => 'Active', 'menu.menu_category_id' => $searchModel->menu_category_id])->orderBy(['categories.position' => SORT_ASC])->all(), 'id', function($element) {
+                return $element->id . '- ' . ucfirst($element->english) . ' (' . $element->menuCategory->gujarati . ')';
+            });
 } else {
-    $MenuData = ArrayHelper::map(Menu::find()->where(['status' => 'Active'])->asArray()->all(), 'id', 'english');
+    $MenuData = ArrayHelper::map(Menu::find()->joinWith('menuCategory')->orderBy(['categories.position' => SORT_ASC])->where(['menu.status' => 'Active'])->all(), 'id', function($element) {
+                return $element->id . '- ' . ucfirst($element->english) . ' (' . $element->menuCategory->gujarati . ')';
+            }
+    );
 }
 if ($searchModel && $searchModel->item_category_id) {
-    $ItemsData = ArrayHelper::map(Items::find()->where(['status' => 'Active', 'item_category_id' => $searchModel->item_category_id])->asArray()->all(), 'id', 'gujarati');
+    $ItemsData = ArrayHelper::map(Items::find()->where(['status' => 'Active', 'item_category_id' => $searchModel->item_category_id])->orderBy(['id' => SORT_ASC])->all(), 'id', function($element) {
+                return $element->id . '- ' . ucfirst($element->gujarati);
+            });
 } else {
-    $ItemsData = ArrayHelper::map(Items::find()->where(['status' => 'Active'])->asArray()->all(), 'id', 'gujarati');
+    $ItemsData = ArrayHelper::map(Items::find()->where(['status' => 'Active'])->orderBy(['id' => SORT_ASC])->all(), 'id', function($element) {
+                return $element->id . '- ' . ucfirst($element->gujarati);
+            });
 }
 $saveallbtn = ($model->status != 'Paid') ? '<div class="text-end me-5">' . Html::Button('Save All', ['class' => 'btn btn-warning', 'id' => 'weightFormSubmit', 'onclick' => 'weightFormSubmit(this);', 'data-url' => Url::to(['booking/itemweight'], true)]) . '</div>' : '';
 $gridColumns = [
@@ -44,15 +57,20 @@ $gridColumns = [
         'headerOptions' => ['class' => 'kartik-sheet-style']
     ],
     [
-        'attribute' => 'category_id',
-        'label' => 'Menu Cateogory',
+        'attribute' => 'menu_category_id',
+        'label' => 'Caterogy',
         'vAlign' => 'middle',
         'hAlign' => 'left',
         'format' => 'raw',
-        'filter' => ArrayHelper::map(Categories::find()->where(['status' => 'Active'])->asArray()->all(), 'id', 'english'),
+        'filter' => $CategoryData,
         'filterInputOptions' => ['class' => 'form-select'],
         'value' => function ($model, $key, $index, $widget) {
-            return $model->category->english;
+            $menuname = $htmlmid = '';
+            if ($model->menuCategory) {
+                $menuname = $model->menuCategory->id . '- ' . $model->menuCategory->gujarati . ' (' . ucfirst($model->menuCategory->english) . ')';
+                $htmlmid = '<button type="button" class="btn btn-outline-success btn-sm mb-2">' . $menuname . '</button>';
+            }
+            return $menuname;
         },
     ],
     [
@@ -64,7 +82,9 @@ $gridColumns = [
         'filter' => $MenuData,
         'filterInputOptions' => ['class' => 'form-select'],
         'value' => function ($model, $key, $index, $widget) {
-            return $model->menu->english;
+            $menuname = $model->menu->id . '- ' . ucfirst($model->menu->english);
+            $htmlmid = '<button type="button" class="btn btn-outline-success btn-sm mb-2">' . $menuname . '</button>';
+            return $htmlmid;
         },
     ],
     [
@@ -76,7 +96,7 @@ $gridColumns = [
         'filter' => $ItemsData,
         'filterInputOptions' => ['class' => 'form-select'],
         'value' => function ($model, $key, $index, $widget) {
-            return '<strong>' . $model->item->gujarati . '</strong>';
+            return $model->item->id . '- <strong>' . $model->item->gujarati . '</strong>';
         },
     ],
     [
@@ -102,7 +122,7 @@ $gridColumns = [
             } else {
                 return '<div class="d-none">' . $model->weight . '</div>' . \Yii::$app->view->renderFile('@app/views/booking/_weight_form.php', ['model' => $model, 'key' => $key, 'index' => $index]);
             }
-        },   
+        },
         'pageSummary' => 'Total',
     ],
     [
@@ -112,23 +132,23 @@ $gridColumns = [
         'hAlign' => 'left',
         'format' => 'raw',
         'filter' => false,
-        'hidden' => true, 
+        'hidden' => true,
         'value' => function ($model, $key, $index, $widget) {
-            return isset($model->unit[$model->id])?$model->unit[$model->id]:'';
+            return isset($model->unit[$model->id]) ? $model->unit[$model->id] : '';
         },
     ],
     [
-        'class' => 'kartik\grid\FormulaColumn', 
+        'class' => 'kartik\grid\FormulaColumn',
         'attribute' => 'INR',
         'label' => 'INR',
         'format' => 'raw',
         'filter' => false,
-        'hidden' => false, 
+        'hidden' => false,
         'value' => function ($model, $key, $index, $widget) {
             return $model->INR;
         },
-        'pageSummary' => true        
-    ],            
+        'pageSummary' => true
+    ],
 ];
 ?>
 <section class="content-header">
@@ -162,27 +182,71 @@ $gridColumns = [
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <?=
-                        DetailView::widget([
-                            'model' => $model,
-                            'attributes' => [
-                                'id',
-                                'booking_id',
-                                'name',
-                                'email:email',
-                                'phone',
-                                'mobile',
-                                [
-                                    'attribute' => 'datetime',
-                                    'format' => 'html',
-                                    'value' => '<span class="text-bold text-warning">' . Yii::$app->BackFunctions->DateTimeToLocal($model->datetime, 'd-M, Y h:i a  (d-m-Y H:i)') . '</span>',
-                                ],
-                                'people',
-                                'message:ntext',
-                                'created_at',
-                            ],
-                        ])
+                        <?php
+                        $html_menu_list = '';
+                        $model->menu = explode(",", $model->menu);
+                        if ($model->menu) {
+                            $menuData = Menu::find()->joinWith('menuCategory')->where(['IN', 'menu.id', $model->menu])->orderBy(['categories.position' => SORT_ASC, 'menu.english' => SORT_ASC])->all();
+                            $menu = ArrayHelper::map($menuData, 'id', function($element) {
+                                        $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+                                        $item_list = ucfirst($element->english) . ' ';
+                                        //            return $item_list . ' : ' . $category;
+                                        return $item_list;
+                                    }, function($element) {
+                                        return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+                                    });
+                            if ($menu) {
+                                $menu_category = array_keys($menu);
+                                $menu_name = array_values($menu);
+                                if ($menu_category) {
+                                    for ($i = 0; $i < count($menu_category); $i++) {
+                                        $menu_name_keys = array_keys($menu_name[$i]);
+                                        $menu_name_values = array_values($menu_name[$i]);
+                                        if ($menu_name_keys) {
+                                            $html_menu_list .= '<div class="card"><div class="card-header">B_Cat_No-' . ($i + 1) . '.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div><div class="card-body"><ul class="list-group list-group-numbered">';
+                                            for ($j = 0; $j < count($menu_name_keys); $j++) {
+                                                $htmlprint = '<div id="printableArea' . $menu_name_keys[$j] . '" class="d-none">' . \Yii::$app->view->renderFile('@app/views/booking/_print_data.php', ['menu_id' => $menu_name_keys[$j], 'booking_id' => $model->id]) . '</div>';
+                                                $html_menu_list .= '<li class="list-group-item ml-4">' . $htmlprint . '<a href="javascript:void(0);" onClick="printDiv(\'' . $menu_name_keys[$j] . '\');" id="' . $menu_name_keys[$j] . '" class="ms-3 text-bold">' . $menu_name_keys[$j] . '- ' . $menu_name_values[$j] . '</a></li>';
+                                            }
+                                            $html_menu_list .= '</ul></div></div></div>';
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         ?>
+                        <div class="table-responsive">
+                            <?=
+                            DetailView::widget([
+                                'model' => $model,
+                                'attributes' => [
+                                    'id',
+                                    'booking_id',
+                                    [
+                                        'attribute' => 'name',
+                                        'format' => 'raw',
+                                        'value' => ucwords($model->name),
+                                    ],
+                                    'email:email',
+                                    'phone',
+                                    'mobile',
+                                    [
+                                        'attribute' => 'datetime',
+                                        'format' => 'html',
+                                        'value' => '<span class="text-bold text-warning">' . Yii::$app->BackFunctions->DateTimeToLocal($model->datetime, 'd-M, Y h:i a  (d-m-Y H:i)') . '</span>',
+                                    ],
+                                    'people',
+                                    'message:ntext',
+                                    'created_at',
+                                    [
+                                        'attribute' => 'menu',
+                                        'format' => 'raw',
+                                        'value' => $html_menu_list,
+                                    ],
+                                ],
+                            ])
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div class="booking-items-index">
@@ -271,7 +335,13 @@ $gridColumns = [
     </div>
 </section>
 <script>
-
+    function printDiv(id) {
+        var divToPrint = document.getElementById("printableArea" + id);
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
     function weightFormSubmit(e) {
         var booking_id_Array = [];
         $('.bookingitems-booking_id').each(function (e) {

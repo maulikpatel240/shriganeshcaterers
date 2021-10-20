@@ -67,7 +67,7 @@ class Booking extends \yii\db\ActiveRecord {
             'mobile' => 'Mobile',
             'datetime' => 'Booking Datetime',
             'people' => 'People',
-            'message' => 'Message',
+            'message' => 'Details',
             'status' => 'Status',
             'status_at' => 'Status At',
             'created_at' => 'Created At',

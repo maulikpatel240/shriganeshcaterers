@@ -13,6 +13,7 @@ use backend\models\BookingItems;
 use backend\models\BookingItemsSearch;
 use backend\models\Menu;
 use backend\models\Items;
+
 /**
  * BookingController implements the CRUD actions for Booking model.
  */
@@ -75,18 +76,18 @@ class BookingController extends BaseController {
             if ($model->load(Yii::$app->request->post())) {
                 $postdata = Yii::$app->request->post();
                 $output = [];
-                if($model->partial_price > $model->total_price){
+                if ($model->partial_price > $model->total_price) {
                     $output['result'] = 0;
                     $output['message'] = 'Partial Price must be no greater than total price.';
-                }else{
+                } else {
                     if ($model->status != 'Pending') {
-                        $booking_partial_price = (isset($postdata['Booking']['partial_price']) && $postdata['Booking']['partial_price']) ? number_format($postdata['Booking']['partial_price'], 2, '.', '') : 0; 
+                        $booking_partial_price = (isset($postdata['Booking']['partial_price']) && $postdata['Booking']['partial_price']) ? number_format($postdata['Booking']['partial_price'], 2, '.', '') : 0;
                         $model->partial_price = $partial_price + $booking_partial_price;
                         $model->total_price = number_format($model->total_price, 2, '.', '');
                         if ($model->payment_type == 'Partial') {
                             $model->total_pay_price = $model->total_price - $model->partial_price;
                             $model->status = 'Partial';
-                            if($model->partial_price == $model->total_price){
+                            if ($model->partial_price == $model->total_price) {
                                 $model->partial_price = '0.00';
                                 $model->status = 'Paid';
                                 $model->total_pay_price = $model->total_price;
@@ -102,7 +103,12 @@ class BookingController extends BaseController {
                         $model->status = "Booked";
                         //$model->menu = ($postdata['Booking']['menu']) ? implode(",", $postdata['Booking']['menu']) : '';
                     }
-                    if(!$model->save()){echo '<pre>'; print_r($model->getErrors());echo '</pre>';exit;}
+                    if (!$model->save()) {
+                        echo '<pre>';
+                        print_r($model->getErrors());
+                        echo '</pre>';
+                        exit;
+                    }
                     $output['result'] = 1;
                     $output['message'] = 'success';
                 }
@@ -197,7 +203,7 @@ class BookingController extends BaseController {
         ]);
     }
 
-    public function actionItemweight(){
+    public function actionItemweight() {
         if (Yii::$app->user->isGuest) {
             return false;
         }
@@ -210,14 +216,14 @@ class BookingController extends BaseController {
             $weight = $request->post('weight', '');
             $unit = $request->post('unit', '');
             $INR = $request->post('INR', '');
-            if($BookingItems){
+            if ($BookingItems) {
                 $booking_id = $BookingItems['booking_id'];
                 $menu_id = $BookingItems['menu_id'];
                 $item_id = $BookingItems['item_id'];
                 $weight = $BookingItems['weight'];
                 $unit = $BookingItems['unit'];
                 $INR = $BookingItems['INR'];
-                $model = BookingItems::find()->where(['booking_id'=>$booking_id, 'menu_id' => $menu_id, 'item_id' => $item_id])->one();
+                $model = BookingItems::find()->where(['booking_id' => $booking_id, 'menu_id' => $menu_id, 'item_id' => $item_id])->one();
                 if ($model && $model->load(Yii::$app->request->post())) {
                     $model->booking_id = $model->booking_id[$model->id];
                     $model->menu_id = $model->menu_id[$model->id];
@@ -225,26 +231,36 @@ class BookingController extends BaseController {
                     $model->weight = $model->weight[$model->id];
                     $model->unit = $model->unit[$model->id];
                     $model->INR = $model->INR[$model->id];
-                    if(!$model->save()){echo '<pre>'; print_r($model->getErrors());echo '</pre>';exit;}
+                    if (!$model->save()) {
+                        echo '<pre>';
+                        print_r($model->getErrors());
+                        echo '</pre>';
+                        exit;
+                    }
                     return true;
                 }
-            }elseif($booking_id){
-                for($i=0; $i<count($booking_id); $i++){
-                    $model = BookingItems::find()->where(['booking_id'=>$booking_id[$i], 'menu_id' => $menu_id[$i], 'item_id' => $item_id[$i]])->one();
+            } elseif ($booking_id) {
+                for ($i = 0; $i < count($booking_id); $i++) {
+                    $model = BookingItems::find()->where(['booking_id' => $booking_id[$i], 'menu_id' => $menu_id[$i], 'item_id' => $item_id[$i]])->one();
                     $model->booking_id = $booking_id[$i];
                     $model->menu_id = $menu_id[$i];
                     $model->item_id = $item_id[$i];
                     $model->weight = $weight[$i];
                     $model->unit = $unit[$i];
                     $model->INR = $INR[$i];
-                    if(!$model->save()){echo '<pre>'; print_r($model->getErrors());echo '</pre>';exit;}
+                    if (!$model->save()) {
+                        echo '<pre>';
+                        print_r($model->getErrors());
+                        echo '</pre>';
+                        exit;
+                    }
                 }
             }
             return true;
-            
         }
         return false;
     }
+
     /**
      * Creates a new Role model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -279,6 +295,7 @@ class BookingController extends BaseController {
                 $model->booking_id = $bookingid;
                 $model->save();
                 $booking_menu = explode(",", $model->menu);
+                $itemsIdArray = [];
                 if ($booking_menu) {
                     foreach ($booking_menu as $value) {
                         $menu_data = Menu::find()->where(['id' => $value])->one();
@@ -287,22 +304,22 @@ class BookingController extends BaseController {
                             foreach ($menu_items as $items) {
                                 $items_data = Items::find()->where(['id' => $items])->one();
                                 if($items_data){
-                                    $BookingItemsModel_update = BookingItems::find()->where(['booking_id'=>$model->id, 'menu_id' => $menu_data->id, 'item_id' => $items_data->id])->count();
-                                    if(empty($BookingItemsModel_update)){
-                                        $BookingItemsModel = new BookingItems();
-                                        $BookingItemsModel->scenario = 'viewdata';
-                                        $BookingItemsModel->booking_id = $model->id;
-                                        $BookingItemsModel->menu_id = $menu_data->id;
-                                        $BookingItemsModel->category_id = $menu_data->menuCategory->id;
-                                        $BookingItemsModel->item_id = $items_data->id;
-                                        $BookingItemsModel->item_category_id = $items_data->itemCategory->id;
-                                        $BookingItemsModel->weight = "";
-                                        $BookingItemsModel->unit = "";
-                                        $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
-                                        $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                                        if(!$BookingItemsModel->save()){
-                                            echo '<pre>'; print_r($BookingItemsModel->getErrors());echo '</pre>';exit;
-                                        }
+                                    $BookingItemsModel = new BookingItems();
+                                    $BookingItemsModel->scenario = 'viewdata';
+                                    $BookingItemsModel->booking_id = $model->id;
+                                    $BookingItemsModel->menu_category_id = $menu_data->menuCategory->id;
+                                    $BookingItemsModel->menu_id = $menu_data->id;
+                                    $BookingItemsModel->item_id = $items_data->id;
+                                    $BookingItemsModel->item_category_id = $items_data->itemCategory->id;
+                                    $BookingItemsModel->weight = "";
+                                    $BookingItemsModel->unit = "";
+                                    $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
+                                    $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
+                                    if (!$BookingItemsModel->save()) {
+                                        echo '<pre>';
+                                        print_r($BookingItemsModel->getErrors());
+                                        echo '</pre>';
+                                        exit;
                                     }
                                 }
                             }
@@ -341,16 +358,22 @@ class BookingController extends BaseController {
                 $model->datetime = $model->date . ' ' . $model->time;
                 if ($beforeMenu) {
                     foreach ($beforeMenu as $bvalue) {
-                        if(!in_array($bvalue, $postdata['Booking']['menu'])){
-                            BookingItems::deleteAll(['booking_id'=>$model->id, 'menu_id' => $bvalue]);
+                        if ($postdata['Booking']['menu'] && !in_array($bvalue, $postdata['Booking']['menu'])) {
+                            BookingItems::deleteAll(['booking_id' => $model->id, 'menu_id' => $bvalue]);
                         }
                     }
                 }
                 $model->menu = ($postdata['Booking']['menu']) ? implode(",", $postdata['Booking']['menu']) : '';
                 $model->updated_at = Yii::$app->BackFunctions->currentDateTime();
                 $model->status = "Booked";
-                if(!$model->save()) {echo '<pre>'; print_r($model->getErrors());echo '</pre>';exit;}
+                if (!$model->save()) {
+                    echo '<pre>';
+                    print_r($model->getErrors());
+                    echo '</pre>';
+                    exit;
+                }
                 $booking_menu = explode(",", $model->menu);
+                $itemsIdArray = [];
                 if ($booking_menu) {
                     foreach ($booking_menu as $value) {
                         $menu_data = Menu::find()->where(['id' => $value])->one();
@@ -358,23 +381,26 @@ class BookingController extends BaseController {
                             $menu_items = explode(",", $menu_data->items);
                             foreach ($menu_items as $items) {
                                 $items_data = Items::find()->where(['id' => $items])->one();
-                                if($items_data){
-                                    $BookingItemsModel_update = BookingItems::find()->where(['booking_id'=>$model->id, 'menu_id' => $menu_data->id, 'item_id' => $items_data->id])->count();
-                                    if(empty($BookingItemsModel_update)){
+                                if ($items_data) {
+                                    $BookingItemsModel = BookingItems::find()->where(['booking_id' => $model->id, 'menu_id' => $menu_data->id,'item_id' => $items_data->id])->one();
+                                    if (empty($BookingItemsModel)) {
                                         $BookingItemsModel = new BookingItems();
-                                        $BookingItemsModel->scenario = 'viewdata';
-                                        $BookingItemsModel->booking_id = $model->id;
-                                        $BookingItemsModel->menu_id = $menu_data->id;
-                                        $BookingItemsModel->category_id = $menu_data->menuCategory->id;
-                                        $BookingItemsModel->item_id = $items_data->id;
-                                        $BookingItemsModel->item_category_id = $items_data->itemCategory->id;
-                                        $BookingItemsModel->weight = "";
-                                        $BookingItemsModel->unit = "";
-                                        $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
-                                        $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
-                                        if(!$BookingItemsModel->save()){
-                                            echo '<pre>'; print_r($BookingItemsModel->getErrors());echo '</pre>';exit;
-                                        }
+                                    }
+                                    $BookingItemsModel->scenario = 'viewdata';
+                                    $BookingItemsModel->booking_id = $model->id;
+                                    $BookingItemsModel->menu_category_id = $menu_data->menuCategory->id;
+                                    $BookingItemsModel->menu_id = $menu_data->id;
+                                    $BookingItemsModel->item_id = $items_data->id;
+                                    $BookingItemsModel->item_category_id = $items_data->itemCategory->id;
+                                    $BookingItemsModel->weight = ($BookingItemsModel->weight)?$BookingItemsModel->weight:'';
+                                    $BookingItemsModel->unit = ($BookingItemsModel->unit)?$BookingItemsModel->unit:'';
+                                    $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
+                                    $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
+                                    if (!$BookingItemsModel->save()) {
+                                        echo '<pre>';
+                                        print_r($BookingItemsModel->getErrors());
+                                        echo '</pre>';
+                                        exit;
                                     }
                                 }
                             }

@@ -38,18 +38,17 @@ class BookingItems extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            
-            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id'], 'required', 'on' => ['viewdata']],
-            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id', 'weight', 'unit'], 'required', 'on' => ['updateweight']],
-            [['booking_id', 'menu_id', 'category_id', 'item_id', 'item_category_id'], 'integer'],
+            [['booking_id', 'menu_id', 'menu_category_id', 'item_id', 'item_category_id'], 'required', 'on' => ['viewdata']],
+            [['booking_id', 'menu_id', 'item_id', 'item_category_id', 'weight', 'unit'], 'required', 'on' => ['updateweight']],
+            [['booking_id', 'menu_id', 'menu_category_id', 'item_id', 'item_category_id'], 'integer'],
             [['unit', 'INR'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'menu_list'], 'safe'],
             [['weight'], 'string', 'max' => 100],
             [['booking_id'], 'exist', 'skipOnError' => true, 'targetClass' => Booking::className(), 'targetAttribute' => ['booking_id' => 'id']],
+            [['menu_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['menu_category_id' => 'id']],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Items::className(), 'targetAttribute' => ['item_id' => 'id']],
             [['item_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemsCategories::className(), 'targetAttribute' => ['item_category_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -61,7 +60,6 @@ class BookingItems extends \yii\db\ActiveRecord {
             'id' => 'ID',
             'booking_id' => 'Booking ID',
             'menu_id' => 'Menu ID',
-            'category_id' => 'Category ID',
             'item_id' => 'Item ID',
             'item_category_id' => 'Item Category ID',
             'weight' => 'Weight',
@@ -107,14 +105,15 @@ class BookingItems extends \yii\db\ActiveRecord {
     public function getItemCategory() {
         return $this->hasOne(ItemsCategories::className(), ['id' => 'item_category_id']);
     }
-
+    
     /**
-     * Gets query for [[Category]].
+     * Gets query for [[MenuCategory]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory() {
-        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+    public function getMenuCategory()
+    {
+        return $this->hasOne(Categories::className(), ['id' => 'menu_category_id']);
     }
 
 }

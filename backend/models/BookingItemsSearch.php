@@ -23,8 +23,8 @@ class BookingItemsSearch extends BookingItems {
      */
     public function rules() {
         return [
-            [['id', 'booking_id', 'menu_id', 'item_id', 'item_category_id', 'category_id'], 'integer'],
-            [['weight', 'unit', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'booking_id', 'menu_category_id', 'menu_id', 'item_id', 'item_category_id'], 'integer'],
+            [['menu_list', 'weight', 'unit', 'INR', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -44,8 +44,8 @@ class BookingItemsSearch extends BookingItems {
      * @return ActiveDataProvider
      */
     public function search($params, $pageSize) {
-        $query = (isset($params['sort']) && $params['sort']) ? BookingItems::find()->where(['booking_id' => $this->booking->id]) : BookingItems::find()->where(['booking_id' => $this->booking->id])->orderBy(['id' => SORT_DESC]);
-
+        $query = (isset($params['sort']) && $params['sort']) ? BookingItems::find()->joinWith('menuCategory')->where(['booking_items.booking_id' => $this->booking->id])->orderBy(['categories.position' => SORT_ASC]) : BookingItems::find()->joinWith('menuCategory')->where(['booking_items.booking_id' => $this->booking->id])->orderBy(['categories.position' => SORT_ASC]);
+        
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -67,8 +67,8 @@ class BookingItemsSearch extends BookingItems {
         $query->andFilterWhere([
             'id' => $this->id,
             'booking_id' => $this->booking_id,
+            'menu_category_id' => $this->menu_category_id,
             'menu_id' => $this->menu_id,
-            'category_id' => $this->category_id,
             'item_id' => $this->item_id,
             'item_category_id' => $this->item_category_id,
             'created_at' => $this->created_at,
@@ -77,7 +77,7 @@ class BookingItemsSearch extends BookingItems {
 
         $query->andFilterWhere(['like', 'weight', $this->weight])
                 ->andFilterWhere(['like', 'unit', $this->unit]);
-
+        
         return $dataProvider;
     }
 

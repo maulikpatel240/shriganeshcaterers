@@ -132,6 +132,9 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return ucwords($model->name);
+                            }
                         ],
                         [
                             'attribute' => 'phone',
@@ -151,7 +154,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return date('d-m-Y h:i A', strtotime($model->datetime));
+                                return '<span class="text-bold">'.date('d-m-Y h:i A', strtotime($model->datetime)).'</span>';
                             },
                         ],
                         [
