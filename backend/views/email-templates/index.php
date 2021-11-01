@@ -314,7 +314,7 @@ Modal::end();
         $.ajax({
             url: $(this).attr('value'),
             beforeSend: function () {
-                $('#formmodal').modal('show')
+                $('#formmodal').modal('show');
                 $('#formmodal').find('#modalContent').html('');
                 $('.loader_div').show();
             },

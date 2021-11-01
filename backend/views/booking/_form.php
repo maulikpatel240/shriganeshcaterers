@@ -56,10 +56,13 @@ if ($model->menu) {
         <div class="col-md-6">
             <?= $form->field($model, 'people')->textInput() ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <?=$form->field($model, 'time_type')->dropDownList(['Breakfast' => 'Breakfast', 'Lunch' => 'Lunch', 'Dinner' => 'Dinner'], ['prompt'=>'', 'class'=>'form-select']);?>
+        </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'date')->textInput(['type' => 'date']) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'time')->textInput(['type' => 'time']) ?>
         </div>
         <div class="col-md-12">
@@ -71,7 +74,7 @@ if ($model->menu) {
             'options' => ['placeholder' => '--Select--', 'multiple' => true],
             'showToggleAll' => false,
             'pluginOptions' => [
-                'allowClear' => false,
+                'allowClear' => false
             ],
         ]);
         ?>

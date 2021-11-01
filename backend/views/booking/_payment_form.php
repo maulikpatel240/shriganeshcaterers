@@ -18,12 +18,12 @@ $model->menu = explode(",", $model->menu);
 $menuData = Menu::find()->joinWith('menuCategory')->where(['IN', 'menu.id', $model->menu])->orderBy(['categories.position' => SORT_ASC, 'menu.english' => SORT_ASC])->all();
 
 $menu = ArrayHelper::map($menuData, 'id', function($element) {
-            $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+            $category = $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
             $item_list = ucfirst($element->english) . ' ';
 //            return $item_list . ' : ' . $category;
             return $item_list;
         }, function($element) {
-            return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+            return $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
         });
 
 $html_menu_list = '';
@@ -35,9 +35,9 @@ if ($menu) {
             $menu_name_keys = array_keys($menu_name[$i]);
             $menu_name_values = array_values($menu_name[$i]);
             if ($menu_name_keys) {
-                $html_menu_list .= '<div class="card"><div class="card-header">B_Cat_No-'.($i+1).'.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div><div class="card-body"><ul class="list-group list-group-numbered">';
+                $html_menu_list .= '<div class="card"><div class="card-header">'.($i+1).'.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div><div class="card-body"><ul class="list-group list-group-numbered">';
                 for ($j = 0; $j < count($menu_name_keys); $j++) {
-                    $html_menu_list .= '<li class="list-group-item ml-4"><span class="ms-3 text-bold">' . $menu_name_keys[$j] . '- ' . $menu_name_values[$j] . '</span></li>';
+                    $html_menu_list .= '<li class="list-group-item ml-4"><span class="ms-3 text-primary text-bold">' . $menu_name_values[$j] . '</span></li>';
                 }
                 $html_menu_list .= '</ul></div></div></div>';
             }
@@ -49,33 +49,40 @@ if ($menu) {
 <div class="booking-form">
     <div class="row">
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Name</span>: <?= $model->name ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Name</span>: <?= $model->name ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Email</span>: <?= $model->email ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Email</span>: <?= $model->email ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Phone</span>: <?= $model->phone ?> <?= ($model->mobile) ? ', ' . $model->mobile : '' ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Phone</span>: <?= $model->phone ?> <?= ($model->mobile) ? ', ' . $model->mobile : '' ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">People</span>: <?= $model->people ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">People</span>: <?= $model->people ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Booking Time</span>: <?= date('d-M-Y H:i', strtotime($model->datetime)) ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Type of time</span>: <?= $model->time_type ?></p>
+        </div>
+        <div class="col-md-6">
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Booking Time</span>: <?= date('d-M, Y h:i A', strtotime($model->datetime)) ?></p>
+        </div>
+        <div class="col-md-12">
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Details</span>: <?= $model->message ?></p>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold">Total price</span>: <?= $model->total_price . ' &#8377;' ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold">Total price</span>: <?= $model->total_price . ' &#8377;' ?></p>
         </div>
         <div class="col-md-6">
-            <p class="font-weight-600 m-2 text-secondary"><span class="font-weight-bold"><?= ($model->partial_price >= 1) ? 'Total Pending Price (Partial)' : 'Total Pay Price'; ?></span>: <?= ($model->total_price - $model->partial_price) . ' &#8377;' ?></p>
+            <p class="font-weight-600 m-2 text-secondary"><span class="text-bold"><?= ($model->partial_price >= 1) ? 'Total Pending Price (Partial)' : 'Total Pay Price'; ?></span>: <?= ($model->total_price - $model->partial_price) . ' &#8377;' ?></p>
         </div>
     </div>
+    <hr>
+    <?=$html_menu_list;?>
     <?php if ($model->status != 'Paid') { ?>
         <hr>
-
         <?php $form = ActiveForm::begin(['id' => 'myform']); ?>
 
         <?php if ($model->status == 'Pending') { ?>
@@ -97,9 +104,7 @@ if ($menu) {
                 </div>
             </div>
             <?php
-        } else {
-            echo $html_menu_list;
-        }
+        } 
         ?>
         <?php if ($model->status == 'Booked' || $model->status == 'Partial') { ?>
             <div class="row">

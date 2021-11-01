@@ -108,21 +108,21 @@ Modal::end();
 <script>
     $(document).on('click', '.showmodelfield', function () {
         $('#modelAddfield').find('#modalContent').html('');
-        $('.loader_div').show();
-        if ($('#modelAddfield').data('bs.modal').isShown) {
-            $('#modelAddfield').find('#modalContent').load($(this).attr('value'), function () {
+        document.getElementById('modelAddfield-label').innerHTML = $(this).attr('title');
+        $.ajax({
+            url: $(this).attr('value'),
+            beforeSend: function () {
+                $('#modelAddfield').modal('show');
+                $('#modelAddfield').find('#modalContent').html('');
+                $('.loader_div').show();
+            },
+            success: function (response) {
+                $('#modelAddfield').find('#modalContent').html(response);
+            },
+            complete: function () {
                 $('.loader_div').hide();
-            });
-            //dynamiclly set the header for the modal via title tag
-            document.getElementById('modelAddfield-label').innerHTML = $(this).attr('title');
-        } else {
-            //if modal isn't open; open it and load content
-            $('#modelAddfield').modal('show').find('#modalContent').load($(this).attr('value'), function () {
-                $('.loader_div').hide();
-            });
-            //dynamiclly set the header for the modal via title tag
-            document.getElementById('modelAddfield-label').innerHTML = $(this).attr('title');
-        }
+            }
+        });
     });
     $(document).ready(function () {
         fieldlist('<?=$id?>');

@@ -17,7 +17,7 @@ class BookingSearch extends Booking {
     public function rules() {
         return [
             [['id', 'people'], 'integer'],
-            [['name', 'email', 'phone', 'datetime', 'message', 'created_at'], 'safe'],
+            [['name', 'email', 'phone', 'datetime', 'message', 'created_at', 'time_type'], 'safe'],
         ];
     }
 
@@ -70,6 +70,7 @@ class BookingSearch extends Booking {
                 ->andFilterWhere(['like', 'email', $this->email])
                 ->andFilterWhere(['like', 'phone', $this->phone])
                 ->andFilterWhere(['like', 'message', $this->message])
+                ->andFilterWhere(['like', 'time_type', $this->time_type])
                 ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;

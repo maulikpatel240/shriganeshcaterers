@@ -36,8 +36,8 @@ class Booking extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['name', 'phone', 'date', 'time', 'people', 'menu'], 'required', 'message' => Yii::t('app', 'Required'), 'on' => ['frontend']],
-            [['name', 'phone', 'date', 'time', 'people', 'menu', 'message'], 'required', 'on' => ['backend']],
+            [['name', 'phone', 'date', 'time', 'people', 'menu', 'time_type'], 'required', 'message' => Yii::t('app', 'Required'), 'on' => ['frontend']],
+            [['name', 'phone', 'date', 'time', 'people', 'menu', 'message', 'time_type'], 'required', 'on' => ['backend']],
             [['total_price'], 'required', 'on' => ['payment']],
             [['datetime', 'status_at', 'created_at', 'updated_at', 'paid_at', 'booking_id'], 'safe'],
             [['people'], 'integer'],
@@ -78,6 +78,7 @@ class Booking extends \yii\db\ActiveRecord {
             'total_pay_price' => 'Total Pay Price (₹)',
             'paid_at' => 'Paid At',
             'menu' => 'Menu',
+            'time_type' => 'Type Of Time',
         ];
     }
 

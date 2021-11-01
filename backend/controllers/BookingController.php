@@ -12,6 +12,7 @@ use backend\components\BaseController;
 use backend\models\BookingItems;
 use backend\models\BookingItemsSearch;
 use backend\models\Menu;
+use backend\models\Orders;
 use backend\models\Items;
 
 /**
@@ -53,9 +54,13 @@ class BookingController extends BaseController {
         $pageSize = Yii::$app->params['PAGE_SIZE'];
         $searchModel = new BookingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $pageSize);
+
+        $orderid = Yii::$app->request->get('OrdersSearch', '');
+        $orders = (isset($orderid['id']) && $orderid['id']) ? Orders::find()->where(['id' => $orderid['id']])->one()->id : '';
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'order_id' => $orders,
         ]);
     }
 
@@ -274,8 +279,35 @@ class BookingController extends BaseController {
             throw new \yii\web\HttpException('403', Yii::$app->params['permission_message']);
         }
         if (Yii::$app->request->isAjax) {
-            $model = new Booking();
-            $model->scenario = 'backend';
+            $order_id = Yii::$app->request->get('order_id', '');
+            $booking_id = Yii::$app->request->get('booking_id', '');
+            if($booking_id){
+                $model = $this->findModel($booking_id);
+                $model->scenario = 'backend';
+                $model->date = '';
+                $model->time = '';
+                $model->people = '';
+                $model->menu = '';
+                $model->total_price = '';
+                $model->time_type = '';
+            }else{
+                $model = new Booking();
+                $model->scenario = 'backend';
+                if($order_id){
+                    $orders = Orders::find()->where(['id' => $order_id])->one();
+                    if($orders){
+                        $model->name = $orders->name;
+                        $model->email = $orders->email;
+                        $model->phone = $orders->phone;
+                        $model->mobile = $orders->mobile;
+                        $model->people = $orders->people;
+                        $model->time_type = $orders->time_type;
+                        $model->date = date('Y-m-d', strtotime($orders->datetime));
+                        $model->time = date('H:i', strtotime($orders->datetime));
+                        $model->message = $orders->message;
+                    }
+                }
+            }
             if ($model->load(Yii::$app->request->post())) {
                 $model->datetime = $model->date . ' ' . $model->time;
                 $model->menu = ($model->menu) ? implode(",", $model->menu) : '';
@@ -303,7 +335,7 @@ class BookingController extends BaseController {
                             $menu_items = explode(",", $menu_data->items);
                             foreach ($menu_items as $items) {
                                 $items_data = Items::find()->where(['id' => $items])->one();
-                                if($items_data){
+                                if ($items_data) {
                                     $BookingItemsModel = new BookingItems();
                                     $BookingItemsModel->scenario = 'viewdata';
                                     $BookingItemsModel->booking_id = $model->id;
@@ -350,6 +382,7 @@ class BookingController extends BaseController {
         }
         if (Yii::$app->request->isAjax) {
             $model = $this->findModel($id);
+            $model->scenario = 'backend';
             $model->date = date('Y-m-d', strtotime($model->datetime));
             $model->time = date('H:i', strtotime($model->datetime));
             $beforeMenu = explode(",", $model->menu);
@@ -382,7 +415,7 @@ class BookingController extends BaseController {
                             foreach ($menu_items as $items) {
                                 $items_data = Items::find()->where(['id' => $items])->one();
                                 if ($items_data) {
-                                    $BookingItemsModel = BookingItems::find()->where(['booking_id' => $model->id, 'menu_id' => $menu_data->id,'item_id' => $items_data->id])->one();
+                                    $BookingItemsModel = BookingItems::find()->where(['booking_id' => $model->id, 'menu_id' => $menu_data->id, 'item_id' => $items_data->id])->one();
                                     if (empty($BookingItemsModel)) {
                                         $BookingItemsModel = new BookingItems();
                                     }
@@ -392,8 +425,8 @@ class BookingController extends BaseController {
                                     $BookingItemsModel->menu_id = $menu_data->id;
                                     $BookingItemsModel->item_id = $items_data->id;
                                     $BookingItemsModel->item_category_id = $items_data->itemCategory->id;
-                                    $BookingItemsModel->weight = ($BookingItemsModel->weight)?$BookingItemsModel->weight:'';
-                                    $BookingItemsModel->unit = ($BookingItemsModel->unit)?$BookingItemsModel->unit:'';
+                                    $BookingItemsModel->weight = ($BookingItemsModel->weight) ? $BookingItemsModel->weight : '';
+                                    $BookingItemsModel->unit = ($BookingItemsModel->unit) ? $BookingItemsModel->unit : '';
                                     $BookingItemsModel->created_at = Yii::$app->BackFunctions->currentDateTime();
                                     $BookingItemsModel->updated_at = Yii::$app->BackFunctions->currentDateTime();
                                     if (!$BookingItemsModel->save()) {

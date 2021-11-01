@@ -61,19 +61,19 @@ class MenuSearch extends Menu
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'menu_category_id' => $this->menu_category_id,
-            'status_at' => $this->status_at,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'menu.id' => $this->id,
+            'menu.menu_category_id' => $this->menu_category_id,
+            'menu.status_at' => $this->status_at,
+            'menu.created_at' => $this->created_at,
+            'menu.updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'english', $this->english])
-            ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'gujarati', $this->gujarati])
-            ->andFilterWhere(['like', 'hindi', $this->hindi])
-            ->andFilterWhere(['like', 'items', $this->items]);
+        $query->andFilterWhere(['like', 'menu.english', $this->english])
+            ->andFilterWhere(['like', 'menu.image', $this->image])
+            ->andFilterWhere(['like', 'menu.status', $this->status])
+            ->andFilterWhere(['like', 'menu.gujarati', $this->gujarati])
+            ->andFilterWhere(['like', 'menu.hindi', $this->hindi])
+            ->andFilterWhere(['like', 'menu.items', $this->items]);
 
         return $dataProvider;
     }

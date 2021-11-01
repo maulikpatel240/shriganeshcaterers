@@ -65,18 +65,18 @@ class BookingItemsSearch extends BookingItems {
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'booking_id' => $this->booking_id,
-            'menu_category_id' => $this->menu_category_id,
-            'menu_id' => $this->menu_id,
-            'item_id' => $this->item_id,
-            'item_category_id' => $this->item_category_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'booking_items.id' => $this->id,
+            'booking_items.booking_id' => $this->booking_id,
+            'booking_items.menu_category_id' => $this->menu_category_id,
+            'booking_items.menu_id' => $this->menu_id,
+            'booking_items.item_id' => $this->item_id,
+            'booking_items.item_category_id' => $this->item_category_id,
+            'booking_items.created_at' => $this->created_at,
+            'booking_items.updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'weight', $this->weight])
-                ->andFilterWhere(['like', 'unit', $this->unit]);
+        $query->andFilterWhere(['like', 'booking_items.weight', $this->weight])
+                ->andFilterWhere(['like', 'booking_items.unit', $this->unit]);
         
         return $dataProvider;
     }

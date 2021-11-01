@@ -39,6 +39,7 @@ if ($controller == 'site' && $action == 'index') {
     $chefs = $base_url . '#chefs';
     $contact = $base_url . '#contact';
 }
+$this->title = Yii::$app->FrontFunctions->sqlColumnTranslate($sconfig['site_name'], 'value');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -66,7 +67,7 @@ if ($controller == 'site' && $action == 'index') {
                     <i class="bi bi-phone d-flex align-items-center"><span><?= $sconfig['phone']['value']; ?></span></i>
                     <i class="bi bi-clock d-flex align-items-center ms-4"><span><?= $sconfig['email']['value']; ?></span></i>
                 </div>
-                <div class="languages d-none d-md-flex align-items-center">
+                <!--<div class="languages d-none d-md-flex align-items-center">
                     <ul>
                         <?php
                         if ($langs) {
@@ -80,7 +81,7 @@ if ($controller == 'site' && $action == 'index') {
                         }
                         ?>
                     </ul>
-                </div>
+                </div>-->
             </div>
         </div>
 

@@ -67,7 +67,7 @@ $gridColumns = [
         'value' => function ($model, $key, $index, $widget) {
             $menuname = $htmlmid = '';
             if ($model->menuCategory) {
-                $menuname = $model->menuCategory->id . '- ' . $model->menuCategory->gujarati . ' (' . ucfirst($model->menuCategory->english) . ')';
+                $menuname = $model->menuCategory->gujarati . ' (' . ucfirst($model->menuCategory->english) . ')';
                 $htmlmid = '<button type="button" class="btn btn-outline-success btn-sm mb-2">' . $menuname . '</button>';
             }
             return $menuname;
@@ -82,8 +82,8 @@ $gridColumns = [
         'filter' => $MenuData,
         'filterInputOptions' => ['class' => 'form-select'],
         'value' => function ($model, $key, $index, $widget) {
-            $menuname = $model->menu->id . '- ' . ucfirst($model->menu->english);
-            $htmlmid = '<button type="button" class="btn btn-outline-success btn-sm mb-2">' . $menuname . '</button>';
+            $menuname = (isset($model->menu->english)) ? ucfirst($model->menu->english) : "";
+            $htmlmid = '<button type="button" class="btn btn-outline-success btn-sm mb-2 text-bold">' . $menuname . '</button>';
             return $htmlmid;
         },
     ],
@@ -96,7 +96,7 @@ $gridColumns = [
         'filter' => $ItemsData,
         'filterInputOptions' => ['class' => 'form-select'],
         'value' => function ($model, $key, $index, $widget) {
-            return $model->item->id . '- <strong>' . $model->item->gujarati . '</strong>';
+            return '<strong>' . $model->item->gujarati . '</strong>';
         },
     ],
     [
@@ -184,37 +184,71 @@ $gridColumns = [
                     <div class="card-body">
                         <?php
                         $html_menu_list = '';
+                        $html_menu_list_menu = '';
                         $model->menu = explode(",", $model->menu);
                         if ($model->menu) {
                             $menuData = Menu::find()->joinWith('menuCategory')->where(['IN', 'menu.id', $model->menu])->orderBy(['categories.position' => SORT_ASC, 'menu.english' => SORT_ASC])->all();
                             $menu = ArrayHelper::map($menuData, 'id', function($element) {
-                                        $category = '' . $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+                                        $category = $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
                                         $item_list = ucfirst($element->english) . ' ';
                                         //            return $item_list . ' : ' . $category;
                                         return $item_list;
                                     }, function($element) {
-                                        return $element->menuCategory->id . '-' . $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
+                                        return $element->menuCategory->gujarati . ' (' . ucfirst($element->menuCategory->english) . ')';
                                     });
                             if ($menu) {
                                 $menu_category = array_keys($menu);
                                 $menu_name = array_values($menu);
+                                $no = 1;
                                 if ($menu_category) {
                                     for ($i = 0; $i < count($menu_category); $i++) {
                                         $menu_name_keys = array_keys($menu_name[$i]);
                                         $menu_name_values = array_values($menu_name[$i]);
                                         if ($menu_name_keys) {
-                                            $html_menu_list .= '<div class="card"><div class="card-header">B_Cat_No-' . ($i + 1) . '.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div><div class="card-body"><ul class="list-group list-group-numbered">';
+                                            $html_menu_list .= '<div class="card">'
+                                                    . '<div class="card-header">' . ($i + 1) . '.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div>'
+                                                    . '<div class="card-body">'
+                                                    . '<ul class="list-group list-group-numbered1">';
+                                            if (isset($menu_name_keys[0]) && $menu_name_keys[0] != 29) {
+                                                $html_menu_list_menu .= '<div class="card">'
+                                                        . '<div class="card-header">' . ($i + 1) . '.<span class="ms-3 text-bold">' . $menu_category[$i] . '</span></div>'
+                                                        . '<div class="card-body">'
+                                                        . '<ul class="list-group list-unstyled" style="list-style-type: none;">';
+                                            }
                                             for ($j = 0; $j < count($menu_name_keys); $j++) {
                                                 $htmlprint = '<div id="printableArea' . $menu_name_keys[$j] . '" class="d-none">' . \Yii::$app->view->renderFile('@app/views/booking/_print_data.php', ['menu_id' => $menu_name_keys[$j], 'booking_id' => $model->id]) . '</div>';
-                                                $html_menu_list .= '<li class="list-group-item ml-4">' . $htmlprint . '<a href="javascript:void(0);" onClick="printDiv(\'' . $menu_name_keys[$j] . '\');" id="' . $menu_name_keys[$j] . '" class="ms-3 text-bold">' . $menu_name_keys[$j] . '- ' . $menu_name_values[$j] . '</a></li>';
+                                                $html_menu_list .= '<li class="list-group-item ml-4">' . $htmlprint . ' <span class="text-bold">' . $no . '</span><a href="javascript:void(0);" onClick="printDiv(\'' . $menu_name_keys[$j] . '\');" id="' . $menu_name_keys[$j] . '" class="ms-3 text-bold">' . $menu_name_values[$j] . '</a></li>';
+                                                if ($menu_name_keys[$j] != 29) {
+                                                    $html_menu_list_menu .= '<li class="list-group-item ml-4"><h3 class="ms-3 text-bold">' . $no . ')  ' . $menu_name_values[$j] . '</h3></li>';
+                                                }
+                                                $no++;
                                             }
-                                            $html_menu_list .= '</ul></div></div></div>';
+                                            $html_menu_list .= '</ul>'
+                                                    . '</div>'
+                                                    . '</div>';
+                                            if (isset($menu_name_keys[0]) && $menu_name_keys[0] != 29) {
+                                                $html_menu_list_menu .= '</ul>'
+                                                        . '</div>'
+                                                        . '</div>';
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                         ?>
+                        <div id="menuAllArea" class="d-none">
+                            <h3>Booking ID : <?= $model->booking_id ?></h3>
+                            <h3>Name : <?= ucwords($model->name) ?></h3>
+                            <h3>Email : <?= ucfirst($model->email) ?></h3>
+                            <h3>People : <?= $model->people ?></h3>
+                            <h3>Details : <?= $model->message ?></h3>
+                            <h3>Type of Time : <?= $model->time_type ?></h3>
+                            <h3>Booked Date & Time : <?= Yii::$app->BackFunctions->DateTimeToLocal($model->datetime, 'd-M, Y h:i A  (d-m-Y H:i)') ?></h3>
+                            <hr>
+                            <h3 class="btn btn-outline-secondary">Menu</h3>
+                            <?= $html_menu_list_menu ?>
+                        </div>
                         <div class="table-responsive">
                             <?=
                             DetailView::widget([
@@ -231,15 +265,21 @@ $gridColumns = [
                                     'phone',
                                     'mobile',
                                     [
+                                        'attribute' => 'time_type',
+                                        'format' => 'html',
+                                        'value' => '<span class="text-bold text-dark">' . $model->time_type . '</span>',
+                                    ],
+                                    [
                                         'attribute' => 'datetime',
                                         'format' => 'html',
-                                        'value' => '<span class="text-bold text-warning">' . Yii::$app->BackFunctions->DateTimeToLocal($model->datetime, 'd-M, Y h:i a  (d-m-Y H:i)') . '</span>',
+                                        'value' => '<span class="text-bold text-warning">' . Yii::$app->BackFunctions->DateTimeToLocal($model->datetime, 'd-M, Y h:i A  (d-m-Y H:i)') . '</span>',
                                     ],
                                     'people',
                                     'message:ntext',
                                     'created_at',
                                     [
                                         'attribute' => 'menu',
+                                        'label' => '<a href="javascript:void(0);" onClick="printDiv(\'menuAll\');" id="menuAll" class="ms-3 text-bold">Menu</a>',
                                         'format' => 'raw',
                                         'value' => $html_menu_list,
                                     ],
@@ -336,7 +376,11 @@ $gridColumns = [
 </section>
 <script>
     function printDiv(id) {
-        var divToPrint = document.getElementById("printableArea" + id);
+        if (id === 'menuAll') {
+            var divToPrint = document.getElementById("menuAllArea");
+        } else {
+            var divToPrint = document.getElementById("printableArea" + id);
+        }
         newWin = window.open("");
         newWin.document.write(divToPrint.outerHTML);
         newWin.print();

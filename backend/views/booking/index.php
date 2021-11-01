@@ -20,7 +20,7 @@ if (empty(Yii::$app->BackFunctions->checkaccess(Yii::$app->controller->action->i
 //Create
 $createBtn = "";
 if (!empty(Yii::$app->BackFunctions->checkaccess('create', Yii::$app->controller->id))) {
-    $createBtn = Html::a('<i class="fas fa-plus"></i>', FALSE, ['value' => Url::to(['booking/create']), 'title' => 'Create booking', 'class' => 'showModalButton btn btn-primary']);
+    $createBtn = Html::a('<i class="fas fa-plus"></i>', FALSE, ['value' => Url::to(['booking/create', 'order_id' => $order_id]), 'title' => 'Create booking', 'class' => 'showModalButton btn btn-primary', 'id' => 'createbtn']);
 }
 //Export
 $exportBtn = '';
@@ -132,7 +132,10 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
+                            'value' => function ($model, $key, $index, $widget){
+                                if (!empty(Yii::$app->BackFunctions->checkaccess('create', Yii::$app->controller->id))) {
+                                   return Html::a(ucwords($model->name), FALSE, ['value' => Url::to(['booking/create', 'booking_id' => $model->id]), 'title' => 'Create booking', 'class' => 'showModalButton cursor-pointer']);
+                                }
                                 return ucwords($model->name);
                             }
                         ],
@@ -149,12 +152,23 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'format' => 'raw',
                         ],
                         [
+                            'attribute' => 'time_type',
+                            'vAlign' => 'middle',
+                            'hAlign' => 'left',
+                            'format' => 'raw',
+                            'filter' => ['Breakfast' => 'Breakfast', 'Lunch' => 'Lunch', 'Dinner' => 'Dinner'],
+                            'filterInputOptions' => ['class' => 'form-select'],
+                            'value' => function ($model, $key, $index, $widget) {
+                                return ucwords($model->time_type);
+                            }
+                        ],
+                        [
                             'attribute' => 'datetime',
                             'vAlign' => 'middle',
                             'hAlign' => 'left',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                return '<span class="text-bold">'.date('d-m-Y h:i A', strtotime($model->datetime)).'</span>';
+                                return '<span class="text-bold">' . date('d-m-Y h:i A', strtotime($model->datetime)) . '</span>';
                             },
                         ],
                         [
@@ -202,7 +216,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'value' => function ($model, $key, $index, $widget) {
                                 if ($model->status == 'Pending') {
                                     $btnbg = 'danger';
-                                }else if ($model->status == 'Booked') {
+                                } else if ($model->status == 'Booked') {
                                     $btnbg = 'secondary';
                                 } elseif ($model->status == 'Approved') {
                                     $btnbg = 'primary';
@@ -251,7 +265,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                             'class' => 'kartik\grid\ActionColumn',
                             'header' => 'Action',
                             'headerOptions' => ['width' => '80'],
-                            'width' => '130px',
+                            'width' => '150px',
                             'template' => '{access} {view} {update} {delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
@@ -277,7 +291,7 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                                         [
                                                             'value' => Url::to(['booking/update', 'id' => $model->id]),
                                                             'title' => 'Edit booking',
-                                                            'class' => 'showModalButton ms-1 me-1 text-primary',
+                                                            'class' => 'showModalButton ms-1 me-1 text-primary cursor-pointer',
                                                             'data-pjax' => '0',
                                                         ]
                                         );
@@ -313,7 +327,8 @@ if (!empty(Yii::$app->BackFunctions->checkaccess('status', Yii::$app->controller
                                 'class' => 'btn btn-outline-secondary',
                                 'title' => 'Reset',
                                 'data-pjax' => 1,
-                            ]),
+                            ]).
+                            Html::a('<i class="fas fa-arrow-left"></i>', Url::to(['/orders']), ['title' => 'View Orders', 'class' => 'btn btn-outline-dark']),
                             'options' => ['class' => 'btn-group me-2']
                         ],
                         '{export}',
@@ -384,6 +399,11 @@ Modal::end();
             });
         }
     }
+    $(document).ready(function () {
+<?php if ($order_id) { ?>
+            $('#createbtn').click();
+<?php } ?>
+    });
 //get the click of modal button to create / update item
 //we get the button by class not by ID because you can only have one id on a page and you can
 //have multiple classes therefore you can have multiple open modal buttons on a page all with or without

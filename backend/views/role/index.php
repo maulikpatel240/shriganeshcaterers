@@ -320,42 +320,16 @@ Modal::end();
         $.ajax({
             url: $(this).attr('value'),
             beforeSend: function () {
+                $('#formmodal').modal('show')
                 $('#formmodal').find('#modalContent').html('');
                 $('.loader_div').show();
             },
             success: function (response) {
-                $('#formmodal').modal('show').find('#modalContent').html(response);
+                $('#formmodal').find('#modalContent').html(response);
             },
             complete: function () {
                 $('.loader_div').hide();
-                $('#formmodal').modal('hide');
             }
         });
-    });
-    $(document).on("submit", "#roleForm", function () {
-        var data;
-        var data = new FormData(this);
-        var url = $(this).attr('action');
-        $.ajax({
-            url: url, // Url to which the request is send
-            type: "POST", // Type of request to be send, called as method
-            data: data,
-            contentType: false, // The content type used when sending data to the server.
-            cache: false, // To unable request pages to be cached
-            processData: false, // To send DOMDocument or non processed data file it is set to false
-            dataType: 'json',
-            beforeSend: function () {
-                $('.loader_div').show();
-            },
-            complete: function () {
-                $('.loader_div').hide();
-                $('#formmodal').modal('hide');
-            },
-            success: function (response)   // A function to be called if request succeeds
-            {
-                $.pjax.reload({container: "#gridtable-pjax"});
-            }
-        });
-        return false;
     });
 </script>
