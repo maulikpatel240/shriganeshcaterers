@@ -301,7 +301,6 @@ Modal::end();
     function applyjs(e) {
         var confirmalert = confirmationAlert(e, 'Are you sure want to apply?', 'text');
         if (confirmalert == true) {
-            ;
             var keys = $('#gridtable').yiiGridView('getSelectedRows');
             var applyoption = $('#applyoption').val();
             $.post({

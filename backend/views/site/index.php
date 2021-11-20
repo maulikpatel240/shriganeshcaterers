@@ -38,7 +38,7 @@ $this->title = 'Dashboard';
 
                     <div class="info-box-content">
                         <span class="info-box-text">Booking Approved</span>
-                        <span class="info-box-number"><?=$booking?></span>
+                        <span class="info-box-number"><?= $booking ?></span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -47,7 +47,7 @@ $this->title = 'Dashboard';
 
                     <div class="info-box-content">
                         <span class="info-box-text">Booking Paid</span>
-                        <span class="info-box-number"><?=$booking_paid?></span>
+                        <span class="info-box-number"><?= $booking_paid ?></span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -56,4 +56,39 @@ $this->title = 'Dashboard';
         </div>
     </div>
 </section>
+<div id="gridtable-ajax">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="https://raw.githubusercontent.com/defunkt/jquery-pjax/master/jquery.pjax.js"></script>
+<script>
 
+</script>

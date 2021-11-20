@@ -16,6 +16,34 @@ $submit_class = ($model->weight) ? 'btn btn-success' : 'btn btn-danger';
 $model->unit = [
     $model->id => $model->unit
 ];
+
+if(strtotime($model->created_at) > strtotime('2021-11-16 12:00:00')){
+    $unitdata = [
+        'કિલોગ્રામ' => 'કિલોગ્રામ',
+        'ગ્રામ' => 'ગ્રામ',
+        'લિટર' => 'લિટર',
+        'અન્ય' => 'અન્ય',
+        'પેકેટ' => 'પેકેટ',
+        'નંગ' => 'નંગ',
+        'પદ્દા' => 'પડા',
+        'બોટલ' => 'બોટલ',
+        'ડબ્બા' => 'ડબ્બા',
+        'ડઝન' => 'ડઝન'
+    ];
+}else{
+    $unitdata = [
+        'Kilogram' => 'કિલોગ્રામ',
+        'Gram' => 'ગ્રામ',
+        'Litre' => 'લિટર',
+        'Other' => 'અન્ય',
+        'Packet' => 'પેકેટ',
+        'Nang' => 'નંગ',
+        'Padda' => 'પડદા',
+        'Bottle' => 'બોટલ',
+        'Dabba' => 'ડબ્બા',
+        'Dozen' => 'ડઝન'
+    ];
+}
 ?>
 <style>
     [class*="field-bookingitems-"] {margin:0px !important;}
@@ -31,7 +59,7 @@ $model->unit = [
         <?= $form->field($model, "weight[" . $model->id . "]")->textInput(['value' => $model->weight, 'maxlength' => true, 'Placeholder' => '', 'class' => 'form-control bookingitems-weight text-primary text-bold'])->label(true) ?>
     </div>
     <div class="col-md-6  mb-2">
-        <?= $form->field($model, "unit[" . $model->id . "]")->dropDownList(['Kilogram' => 'Kilogram', 'Gram' => 'Gram', 'Litre' => 'Litre', 'Other' => 'Other'], ['prompt' => '---', 'class' => 'form-select bookingitems-unit'])->label(true) ?>
+        <?= $form->field($model, "unit[" . $model->id . "]")->dropDownList($unitdata, ['prompt' => '---', 'class' => 'form-select bookingitems-unit'])->label(true) ?>
     </div>
     <div class="col-md-9 mb-2">
         <?= $form->field($model, "INR[" . $model->id . "]", ['template' => '<div class="input-group">

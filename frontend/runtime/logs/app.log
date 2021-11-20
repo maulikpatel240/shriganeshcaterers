@@ -12756,3 +12756,294 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1635684230.2193
     'REQUEST_TIME' => 1635684230
 ]
+2021-11-15 21:19:13 [::1][-][-][warning][application] Unable to use cache for URL manager: Failed to instantiate component or class "cache".
+2021-11-15 21:19:10 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'src' => '1'
+    'cookieconsent_status' => 'dismiss'
+    'mode' => 'day'
+]
+
+$_SESSION = [
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_HTTPS' => 'on'
+    'REDIRECT_SSL_TLS_SNI' => 'localhost'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTPS' => 'on'
+    'SSL_TLS_SNI' => 'localhost'
+    'SSL_SERVER_S_DN_CN' => 'localhost'
+    'SSL_SERVER_I_DN_CN' => 'localhost'
+    'SSL_VERSION_INTERFACE' => 'mod_ssl/2.4.48'
+    'SSL_VERSION_LIBRARY' => 'OpenSSL/1.1.1k'
+    'SSL_PROTOCOL' => 'TLSv1.3'
+    'SSL_SECURE_RENEG' => 'false'
+    'SSL_COMPRESS_METHOD' => 'NULL'
+    'SSL_CIPHER' => 'TLS_AES_256_GCM_SHA384'
+    'SSL_CIPHER_EXPORT' => 'false'
+    'SSL_CIPHER_USEKEYSIZE' => '256'
+    'SSL_CIPHER_ALGKEYSIZE' => '256'
+    'SSL_CLIENT_VERIFY' => 'NONE'
+    'SSL_SERVER_M_VERSION' => '1'
+    'SSL_SERVER_M_SERIAL' => 'B5C752C98781B503'
+    'SSL_SERVER_V_START' => 'Nov 10 23:48:47 2009 GMT'
+    'SSL_SERVER_V_END' => 'Nov  8 23:48:47 2019 GMT'
+    'SSL_SERVER_S_DN' => 'CN=localhost'
+    'SSL_SERVER_I_DN' => 'CN=localhost'
+    'SSL_SERVER_A_KEY' => 'rsaEncryption'
+    'SSL_SERVER_A_SIG' => 'sha1WithRSAEncryption'
+    'SSL_SESSION_ID' => 'd17638621b850b2c4ba0f55e51f57fad22588dfa0a4bc763f929ab239db57758'
+    'SSL_SESSION_RESUMED' => 'Initial'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,gu;q=0.8'
+    'HTTP_COOKIE' => 'src=1; cookieconsent_status=dismiss; mode=day'
+    'PATH' => 'C:\\Python39\\Scripts\\;C:\\Python39\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\composer;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git LFS;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\SHREEJI\\AppData\\Local\\Microsoft\\WindowsApps;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\SHREEJI\\GitHubDesktop\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\npm;C:\\flutter\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PHAR;.PY;.PYW'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8 Server at localhost Port 443</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '443'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'https'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/git/shriganeshcaterers/frontend/web/index.php'
+    'REMOTE_PORT' => '50915'
+    'REDIRECT_URL' => '/git/shriganeshcaterers/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/git/shriganeshcaterers/'
+    'SCRIPT_NAME' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'PHP_SELF' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1636991350.0253
+    'REQUEST_TIME' => 1636991350
+]
+2021-11-15 21:58:12 [127.0.0.1][-][-][warning][application] Unable to use cache for URL manager: Failed to instantiate component or class "cache".
+2021-11-15 21:58:12 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SESSION = [
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_HTTPS' => 'on'
+    'REDIRECT_SSL_TLS_SNI' => 'localhost'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTPS' => 'on'
+    'SSL_TLS_SNI' => 'localhost'
+    'SSL_SERVER_S_DN_CN' => 'localhost'
+    'SSL_SERVER_I_DN_CN' => 'localhost'
+    'SSL_VERSION_INTERFACE' => 'mod_ssl/2.4.48'
+    'SSL_VERSION_LIBRARY' => 'OpenSSL/1.1.1k'
+    'SSL_PROTOCOL' => 'TLSv1.3'
+    'SSL_SECURE_RENEG' => 'false'
+    'SSL_COMPRESS_METHOD' => 'NULL'
+    'SSL_CIPHER' => 'TLS_AES_256_GCM_SHA384'
+    'SSL_CIPHER_EXPORT' => 'false'
+    'SSL_CIPHER_USEKEYSIZE' => '256'
+    'SSL_CIPHER_ALGKEYSIZE' => '256'
+    'SSL_CLIENT_VERIFY' => 'NONE'
+    'SSL_SERVER_M_VERSION' => '1'
+    'SSL_SERVER_M_SERIAL' => 'B5C752C98781B503'
+    'SSL_SERVER_V_START' => 'Nov 10 23:48:47 2009 GMT'
+    'SSL_SERVER_V_END' => 'Nov  8 23:48:47 2019 GMT'
+    'SSL_SERVER_S_DN' => 'CN=localhost'
+    'SSL_SERVER_I_DN' => 'CN=localhost'
+    'SSL_SERVER_A_KEY' => 'rsaEncryption'
+    'SSL_SERVER_A_SIG' => 'sha1WithRSAEncryption'
+    'SSL_SESSION_ID' => '4cecae4cbb2c316c28eb30f3161bd6ab65a06e3ae4f75c449497e409713719ff'
+    'SSL_SESSION_RESUMED' => 'Initial'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'PATH' => 'C:\\Python39\\Scripts\\;C:\\Python39\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\composer;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git LFS;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\SHREEJI\\AppData\\Local\\Microsoft\\WindowsApps;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\SHREEJI\\GitHubDesktop\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\npm;C:\\flutter\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PHAR;.PY;.PYW'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8 Server at localhost Port 443</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '443'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'https'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/git/shriganeshcaterers/frontend/web/index.php'
+    'REMOTE_PORT' => '51722'
+    'REDIRECT_URL' => '/git/shriganeshcaterers/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/git/shriganeshcaterers/'
+    'SCRIPT_NAME' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'PHP_SELF' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1636993692.2458
+    'REQUEST_TIME' => 1636993692
+]
+2021-11-16 21:45:48 [127.0.0.1][-][-][warning][application] Unable to use cache for URL manager: Failed to instantiate component or class "cache".
+2021-11-16 21:45:47 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SESSION = [
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_HTTPS' => 'on'
+    'REDIRECT_SSL_TLS_SNI' => 'localhost'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTPS' => 'on'
+    'SSL_TLS_SNI' => 'localhost'
+    'SSL_SERVER_S_DN_CN' => 'localhost'
+    'SSL_SERVER_I_DN_CN' => 'localhost'
+    'SSL_VERSION_INTERFACE' => 'mod_ssl/2.4.48'
+    'SSL_VERSION_LIBRARY' => 'OpenSSL/1.1.1k'
+    'SSL_PROTOCOL' => 'TLSv1.3'
+    'SSL_SECURE_RENEG' => 'false'
+    'SSL_COMPRESS_METHOD' => 'NULL'
+    'SSL_CIPHER' => 'TLS_AES_256_GCM_SHA384'
+    'SSL_CIPHER_EXPORT' => 'false'
+    'SSL_CIPHER_USEKEYSIZE' => '256'
+    'SSL_CIPHER_ALGKEYSIZE' => '256'
+    'SSL_CLIENT_VERIFY' => 'NONE'
+    'SSL_SERVER_M_VERSION' => '1'
+    'SSL_SERVER_M_SERIAL' => 'B5C752C98781B503'
+    'SSL_SERVER_V_START' => 'Nov 10 23:48:47 2009 GMT'
+    'SSL_SERVER_V_END' => 'Nov  8 23:48:47 2019 GMT'
+    'SSL_SERVER_S_DN' => 'CN=localhost'
+    'SSL_SERVER_I_DN' => 'CN=localhost'
+    'SSL_SERVER_A_KEY' => 'rsaEncryption'
+    'SSL_SERVER_A_SIG' => 'sha1WithRSAEncryption'
+    'SSL_SESSION_ID' => 'b6c504cffc0a87f01d6d207eddefd96fe085b29180c856e9a1a55fb93be07363'
+    'SSL_SESSION_RESUMED' => 'Initial'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'PATH' => 'C:\\Python39\\Scripts\\;C:\\Python39\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\composer;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git LFS;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\SHREEJI\\AppData\\Local\\Microsoft\\WindowsApps;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\SHREEJI\\AppData\\Local\\GitHubDesktop\\bin;C:\\ProgramData\\SHREEJI\\GitHubDesktop\\bin;C:\\Users\\SHREEJI\\AppData\\Roaming\\npm;C:\\flutter\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PHAR;.PY;.PYW'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8 Server at localhost Port 443</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.48 (Win64) OpenSSL/1.1.1k PHP/8.0.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '443'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'https'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'admin@example.com'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/git/shriganeshcaterers/frontend/web/index.php'
+    'REMOTE_PORT' => '59140'
+    'REDIRECT_URL' => '/git/shriganeshcaterers/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/git/shriganeshcaterers/'
+    'SCRIPT_NAME' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'PHP_SELF' => '/git/shriganeshcaterers/frontend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1637079345.8921
+    'REQUEST_TIME' => 1637079345
+]
