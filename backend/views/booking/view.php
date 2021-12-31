@@ -290,7 +290,7 @@ $gridColumns = [
                     </div>
                 </div>
                 <div class="booking-items-index">
-                    <?php
+                     <?php
 //                    echo ExportMenu::widget([
 //                        'dataProvider' => $dataProvider,
 //                        'columns' => $gridColumns,
@@ -361,7 +361,7 @@ $gridColumns = [
                         'toggleDataOptions' => ['minCount' => 10],
                         'exportConfig' => [
                             GridView::EXCEL => true,
-                        //GridView::PDF => true
+                            GridView::PDF => true
                         ],
                         'itemLabelSingle' => 'Booking Item List',
                         'itemLabelPlural' => 'Booking Items List',

@@ -14,6 +14,7 @@ use backend\models\BookingItemsSearch;
 use backend\models\Menu;
 use backend\models\Orders;
 use backend\models\Items;
+use kartik\mpdf\Pdf;
 
 /**
  * BookingController implements the CRUD actions for Booking model.
@@ -201,6 +202,31 @@ class BookingController extends BaseController {
         $searchModel = new BookingItemsSearch($model);
         $pageSize = Yii::$app->params['PAGE_SIZE'];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $pageSize);
+        if ($model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('view', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'model' => $model,
+                ]),
+                'options' => [
+                // any mpdf options you wish to set
+                ],
+                'methods' => [
+                    'SetTitle' => 'Privacy Policy - Krajee.com',
+                    'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+                    'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                    'SetAuthor' => 'Kartik Visweswaran',
+                    'SetCreator' => 'Kartik Visweswaran',
+                    'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+                ]
+            ]);
+            return $pdf->render();
+        }
         return $this->render('view', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
@@ -281,7 +307,7 @@ class BookingController extends BaseController {
         if (Yii::$app->request->isAjax) {
             $order_id = Yii::$app->request->get('order_id', '');
             $booking_id = Yii::$app->request->get('booking_id', '');
-            if($booking_id){
+            if ($booking_id) {
                 $model = $this->findModel($booking_id);
                 $model->scenario = 'backend';
                 $model->date = '';
@@ -290,12 +316,12 @@ class BookingController extends BaseController {
                 $model->menu = '';
                 $model->total_price = '';
                 $model->time_type = '';
-            }else{
+            } else {
                 $model = new Booking();
                 $model->scenario = 'backend';
-                if($order_id){
+                if ($order_id) {
                     $orders = Orders::find()->where(['id' => $order_id])->one();
-                    if($orders){
+                    if ($orders) {
                         $model->name = $orders->name;
                         $model->email = $orders->email;
                         $model->phone = $orders->phone;
@@ -482,6 +508,28 @@ class BookingController extends BaseController {
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionViewPrint() {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('view'),
+            'options' => [
+            // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'Privacy Policy - Krajee.com',
+                'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+                'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+                'SetFooter' => ['|Page {PAGENO}|'],
+                'SetAuthor' => 'Kartik Visweswaran',
+                'SetCreator' => 'Kartik Visweswaran',
+                'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+            ]
+        ]);
+        return $pdf->render();
     }
 
 }

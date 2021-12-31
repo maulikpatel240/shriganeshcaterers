@@ -44,6 +44,60 @@ if(strtotime($model->created_at) > strtotime('2021-11-16 12:00:00')){
         'Dozen' => 'ડઝન'
     ];
 }
+
+
+if(strtotime($model->created_at) > strtotime('2021-11-16 12:00:00') && strtotime($model->created_at) <= strtotime('2021-11-25 12:00:00')){
+    $unitdata = [
+        'કિલોગ્રામ' => 'કિલોગ્રામ',
+        'ગ્રામ' => 'ગ્રામ',
+        'લિટર' => 'લિટર',
+        'અન્ય' => 'અન્ય',
+        'પેકેટ' => 'પેકેટ',
+        'નંગ' => 'નંગ',
+        'પદ્દા' => 'પડા',
+        'બોટલ' => 'બોટલ',
+        'ડબ્બા' => 'ડબ્બા',
+        'ડઝન' => 'ડઝન'
+    ];
+}elseif(strtotime($model->created_at) > strtotime('2021-11-25 12:00:00')){
+    $unitdata = [
+        'Kilogram' => 'Kilogram',
+        'Gram' => 'Gram',
+        'Litre' => 'Litre',
+        'Other' => 'Other',
+        'Packet' => 'Packet',
+        'Nang' => 'Nang',
+        'Padda' => 'Padda',
+        'Bottle' => 'Bottle',
+        'Dabba' => 'Dabba',
+        'Dozen' => 'Dozen'
+    ];
+}else{
+    $unitdata = [
+        'Kilogram' => 'કિલોગ્રામ',
+        'Gram' => 'ગ્રામ',
+        'Litre' => 'લિટર',
+        'Other' => 'અન્ય',
+        'Packet' => 'પેકેટ',
+        'Nang' => 'નંગ',
+        'Padda' => 'પડદા',
+        'Bottle' => 'બોટલ',
+        'Dabba' => 'ડબ્બા',
+        'Dozen' => 'ડઝન'
+    ];
+}
+ $unitdata = [
+        'Kilogram' => 'Kilogram',
+        'Gram' => 'Gram',
+        'Litre' => 'Litre',
+        'Other' => 'Other',
+        'Packet' => 'Packet',
+        'Nang' => 'Nang',
+        'Padda' => 'Padda',
+        'Bottle' => 'Bottle',
+        'Dabba' => 'Dabba',
+        'Dozen' => 'Dozen'
+    ];
 ?>
 <style>
     [class*="field-bookingitems-"] {margin:0px !important;}
